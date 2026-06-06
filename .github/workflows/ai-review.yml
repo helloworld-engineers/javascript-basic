@@ -1,0 +1,57 @@
+name: AI Review
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get PR diff
+        run: |
+          gh pr diff ${{ github.event.pull_request.number }} > diff.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Review with OpenAI
+        run: |
+          REVIEW=$(curl -s https://api.openai.com/v1/responses \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -d @- <<EOF | jq -r '.output_text'
+          {
+            "model": "gpt-4.1-mini",
+            "input": [
+              {
+                "role": "system",
+                "content": "あなたは株式会社Hello worldの未経験エンジニア研修講師です。レビューは優しく行ってください。必ず良い点を先に伝え、改善点は初心者にも分かるように説明してください。"
+              },
+              {
+                "role": "user",
+                "content": "以下のPR差分をレビューしてください。出力形式は厳守してください。\n\n# 総合評価(100点満点)\n\n# 良かった点(3つ)\n\n# 改善点(3つ)\n\n# 次に意識すること\n\n差分:\n$(cat diff.txt)"
+              }
+            ]
+          }
+          EOF
+          )
+
+          echo "$REVIEW" > review.txt
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Comment PR
+        run: |
+          gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            -f body="$(cat review.txt)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
