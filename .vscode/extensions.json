@@ -1,0 +1,4 @@
+// このリポジトリを開いたときに、プラグインのインストール提案がされます
+{
+  "recommendations": ["esbenp.prettier-vscode"]
+}
