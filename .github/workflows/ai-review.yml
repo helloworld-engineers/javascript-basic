@@ -23,29 +23,32 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Review with OpenAI
+      - name: Create OpenAI request body
         run: |
-          REVIEW=$(curl -s https://api.openai.com/v1/responses \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -d @- <<EOF | jq -r '.output_text'
-          {
-            "model": "gpt-4.1-mini",
-            "input": [
+          DIFF=$(cat diff.txt)
+
+          jq -n --arg diff "$DIFF" '{
+            model: "gpt-4.1-mini",
+            input: [
               {
-                "role": "system",
-                "content": "あなたは株式会社Hello worldの未経験エンジニア研修講師です。レビューは優しく行ってください。必ず良い点を先に伝え、改善点は初心者にも分かるように説明してください。"
+                role: "system",
+                content: "あなたは株式会社Hello worldの未経験エンジニア研修講師です。レビューは優しく行ってください。必ず良い点を先に伝え、改善点は初心者にも分かるように説明してください。また、javascriptのコードを中心にコード単位で指摘してください。"
               },
               {
-                "role": "user",
-                "content": "以下のPR差分をレビューしてください。出力形式は厳守してください。\n\n# 総合評価(100点満点)\n\n# 良かった点(3つ)\n\n# 改善点(3つ)\n\n# 次に意識すること\n\n差分:\n$(cat diff.txt)"
+                role: "user",
+                content: ("以下のPR差分をレビューしてください。\n\n## 出力ルール（必ず守ること）\n- 下記の4セクションを**必ずすべて**出力する\n- 各セクションの見出しは変えない\n- セクション内は箇条書き（`-`）で記述する\n- コードの指摘は必ずファイル名と行番号を添える（例: `script.js:12`）\n- 日本語で出力する\n- マークダウン形式で出力する\n\n## 出力フォーマット\n\n# 総合評価（100点満点）\n点数と、その理由を1〜2文で書く。\n\n# 良かった点（3つ）\n- （良かった点1）\n- （良かった点2）\n- （良かった点3）\n\n# 改善点\n指摘箇所ごとに以下の形式で書く:\n- `ファイル名:行番号` — 問題の説明。修正例があればコードブロックで示す。\n\n# 次に意識すること\n今回の差分から導き出した、次回以降のPRで意識してほしいことを1〜3点書く。\n\n---\n差分:\n" + $diff)
               }
             ]
-          }
-          EOF
-          )
+          }' > request.json
 
-          echo "$REVIEW" > review.txt
+      - name: Review with OpenAI
+        run: |
+          curl -s https://api.openai.com/v1/responses \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -d @request.json > response.json
+
+          jq -r '.output_text // .output[0].content[0].text // .error.message // "AIレビューの生成に失敗しました。Actionsログの response.json を確認してください。"' response.json > review.txt
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
