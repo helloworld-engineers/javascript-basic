@@ -2,6 +2,19 @@
 
 javascript研修で使用するテンプレート
 
+## はじめ方
+
+root に自分の名前でディレクトリを作成し、その中で作業してください。
+
+```
+template-javascript-basic/
+├── yamada-taro/     # 例: 自分の名前でディレクトリを作成する
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+└── ...
+```
+
 ## ディレクトリ構成
 
 ```
