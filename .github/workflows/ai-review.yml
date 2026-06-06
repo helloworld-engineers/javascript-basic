@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Get PR diff
         run: |
           gh pr diff ${{ github.event.pull_request.number }} > diff.txt
@@ -22,18 +25,19 @@ jobs:
 
       - name: Review with OpenAI
         run: |
-          PROMPT=$(jq -Rs . < diff.txt)
+          DIFF=$(jq -Rs . < diff.txt)
 
           curl -s https://api.openai.com/v1/responses \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $OPENAI_API_KEY" \
             -d "{
               \"model\": \"gpt-4.1-mini\",
-              \"input\": \"あなたは株式会社Hello worldの未経験エンジニア研修講師です。以下のPR差分をレビューしてください。出力形式は、総合評価点、良かった点3つ、改善点3つ、次に意識すること、の順です。優しく初心者向けに説明してください。\\n\\n差分:\\n${PROMPT}\"
+              \"input\": \"あなたは株式会社Hello worldの未経験エンジニア研修講師です。以下のPR差分をレビューしてください。必ず初心者向けに優しく説明してください。出力形式は、# 総合評価(100点満点)、# 良かった点(3つ)、# 改善点(3つ)、# 次に意識すること、の順にしてください。\\n\\n差分:\\n${DIFF}\"
             }" > response.json
 
           cat response.json
-          jq -r '.output_text // .output[0].content[0].text // "AIレビューの生成に失敗しました。response.jsonを確認してください。"' response.json > review.txt
+
+          jq -r '.output_text // .output[0].content[0].text // "AIレビューの生成に失敗しました。Actionsログの response.json を確認してください。"' response.json > review.txt
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
