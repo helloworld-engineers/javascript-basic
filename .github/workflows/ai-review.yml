@@ -23,21 +23,32 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create OpenAI request body
+        run: |
+          jq -n --rawfile diff diff.txt '{
+            model: "gpt-4.1-mini",
+            input: [
+              {
+                role: "system",
+                content: "あなたは株式会社Hello worldの未経験エンジニア研修講師です。レビューは優しく行ってください。必ず良い点を先に伝え、改善点は初心者にも分かるように説明してください。"
+              },
+              {
+                role: "user",
+                content: "以下のPR差分をレビューしてください。出力形式は厳守してください。\n\n# 総合評価(100点満点)\n\n# 良かった点(3つ)\n\n# 改善点(3つ)\n\n# 次に意識すること\n\n差分:\n" + $diff
+              }
+            ]
+          }' > request.json
+
       - name: Review with OpenAI
         run: |
-          DIFF=$(jq -Rs . < diff.txt)
-
           curl -s https://api.openai.com/v1/responses \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -d "{
-              \"model\": \"gpt-4.1-mini\",
-              \"input\": \"あなたは株式会社Hello worldの未経験エンジニア研修講師です。以下のPR差分をレビューしてください。必ず初心者向けに優しく説明してください。出力形式は、# 総合評価(100点満点)、# 良かった点(3つ)、# 改善点(3つ)、# 次に意識すること、の順にしてください。\\n\\n差分:\\n${DIFF}\"
-            }" > response.json
+            -d @request.json > response.json
 
           cat response.json
 
-          jq -r '.output_text // .output[0].content[0].text // "AIレビューの生成に失敗しました。Actionsログの response.json を確認してください。"' response.json > review.txt
+          jq -r '.output_text // .output[0].content[0].text // .error.message // "AIレビューの生成に失敗しました。Actionsログの response.json を確認してください。"' response.json > review.txt
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
