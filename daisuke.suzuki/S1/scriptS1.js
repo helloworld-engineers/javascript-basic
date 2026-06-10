@@ -1,9 +1,8 @@
-let rnd = 0;
+let round = 0;
 let scr1 = 0;
 let scr2 = 0;
 
 const diceNum1 = document.getElementById("dice1pc");
-//console.log(diceNum1);
 const diceNum2 = document.getElementById("dice2pc");
 const battleBtn = document.getElementById("battleBtn");
 const maxRound = 3;
@@ -20,7 +19,7 @@ function rollDice() {
 
 //ボタンクリックでサイコロを振る
 battleBtn.addEventListener("click", () => {
-  if (rnd <= maxRound) {
+  if (round < maxRound) {
     const num1 = rollDice();
     const num2 = rollDice();
     diceNum1.src = num1 + ".jpg";
@@ -30,12 +29,12 @@ battleBtn.addEventListener("click", () => {
     } else if (num1 < num2) {
       scr2++;
     }
-    rnd++;
+    round++;
     plr1Score.textContent = `プレイヤー1 : ${scr1} ポイント`;
     plr2Score.textContent = `プレイヤー2 : ${scr2} ポイント`;
-    roundCount.textContent = `ラウンド数  : ${rnd} ラウンド`;
+    roundCount.textContent = `ラウンド数 : ${round} ラウンド`;
   }
-  if (maxRound === rnd) {
+  if (maxRound === round) {
     document.getElementById("battleBtn").disabled = true;
     if (scr1 > scr2) {
       result.textContent = "プレイヤー1WIN";
@@ -44,6 +43,5 @@ battleBtn.addEventListener("click", () => {
     } else {
       result.textContent = "DRAW...";
     }
-    return;
   }
 });

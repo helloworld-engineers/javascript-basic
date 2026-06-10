@@ -33,10 +33,13 @@ body {
 .dice {
   width: 80px;
   height: 80px;
-  opacity: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dicepc {
+  opacity: 70%;
 }
 
 .bottom-area {
@@ -47,7 +50,7 @@ body {
 
 .b-box {
   width: 30%;
-  padding: 20px;
+  padding: 20px 0;
   border: 1px solid #aaa;
   text-align: center;
   background: #eee;
