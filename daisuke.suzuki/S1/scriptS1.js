@@ -2,7 +2,9 @@ let round = 0;
 let playerScore1 = 0;
 let playerScore2 = 0;
 
-const maxRound = 3;
+const MAX_ROUND = 3;
+const MAX_DICE_NUM = 6;
+const MIN_DICE_NUM = 1;
 const roundCount = document.getElementById("round");
 const plr1Score = document.getElementById("score1");
 const plr2Score = document.getElementById("score2");
@@ -13,7 +15,7 @@ const diceNum2 = document.getElementById("dice2pc");
 
 //サイコロを振って出た値を返す
 function rollDice() {
-  const num = Math.floor(Math.random() * 6) + 1;
+  const num = Math.floor(Math.random() * MAX_DICE_NUM) + MIN_DICE_NUM;
   return num;
 }
 
@@ -32,7 +34,6 @@ function determineWinner() {
 function scoreList() {
   plr1Score.textContent = `プレイヤー1 : ${playerScore1} ポイント`;
   plr2Score.textContent = `プレイヤー2 : ${playerScore2} ポイント`;
-  ``;
   roundCount.textContent = `ラウンド数 : ${round} ラウンド`;
 }
 
@@ -43,7 +44,7 @@ function dicePic(diceNum, number) {
 
 //ボタンクリックでサイコロを振る
 battleBtn.addEventListener("click", () => {
-  if (round < maxRound) {
+  if (round < MAX_ROUND) {
     const num1 = rollDice();
     const num2 = rollDice();
     dicePic(diceNum1, num1);
@@ -56,7 +57,7 @@ battleBtn.addEventListener("click", () => {
     round++;
     scoreList();
   }
-  if (maxRound === round) {
+  if (MAX_ROUND === round) {
     document.getElementById("battleBtn").disabled = true;
     determineWinner();
   }
