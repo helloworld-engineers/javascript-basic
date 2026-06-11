@@ -1,25 +1,28 @@
+// 定数
+const DICE_MAX_VALUE = 6;
+const MAX_ROUND_NUMBER = 3;
 // プレイヤー名でサイコロの目のイラストが変わる関数
 // 指定されているイメージファイルはそれぞれサイコロの目のイメージ図になります。
 const playerScore = (playerNumber) => {
   const changeImage = document.getElementById(playerNumber);
-  const score = Math.floor(Math.random() * 6) + 1;
+  // マジックナンバーを修正する
+  const score = Math.floor(Math.random() * DICE_MAX_VALUE) + 1;
   changeImage.src = `saikoro-illust${score}.png`;
   return score;
 };
 
-const gameResult = { round: 0, player1: 0, player2: 0 };
+// DOM要素を取得
 const gameBtn = document.getElementById("game");
 const newRound = document.getElementById("round");
 const newPlayer1Count = document.getElementById("player1Count");
 const newPlayer2Count = document.getElementById("player2Count");
+const newResult = document.getElementById("result");
+
+const gameResult = { round: 0, player1: 0, player2: 0 };
 // ボタンを押した時に実行される関数
 gameBtn.addEventListener("click", () => {
-  if (gameResult.round >= 3) {
-    return (disabled = true);
-  }
   const gamePoint1 = playerScore("player1");
   const gamePoint2 = playerScore("player2");
-
   if (gamePoint1 > gamePoint2) {
     // プレイヤー1のポイント数を変更
     gameResult.player1++;
@@ -31,11 +34,11 @@ gameBtn.addEventListener("click", () => {
   }
   //ラウンド数更新
   gameResult.round++;
-  const newResult = document.getElementById("result");
   newRound.textContent = `ラウンド数:${gameResult.round}ラウンド`;
 
   // 3ラウンド目のポイント数を判定
-  if (gameResult.round === 3) {
+  if (gameResult.round === MAX_ROUND_NUMBER) {
+    gameBtn.disabled = true;
     if (gameResult.player1 > gameResult.player2) {
       newResult.textContent = "プレイヤー1の勝ち";
     }
@@ -47,3 +50,7 @@ gameBtn.addEventListener("click", () => {
     }
   }
 });
+
+const playRound = (message) => {
+  newResult.textContent = message;
+};
