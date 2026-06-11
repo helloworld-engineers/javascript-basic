@@ -50,7 +50,3 @@ gameBtn.addEventListener("click", () => {
     }
   }
 });
-
-const playRound = (message) => {
-  newResult.textContent = message;
-};
