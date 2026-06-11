@@ -17,17 +17,26 @@ function shuffle(array) {
   return result;
 }
 
+function countCorrect(array) {
+  return array.filter((value, index) => value === index).length;
+}
+
+function shuffleZeroCorrect(array) {
+  let result;
+  do {
+    result = shuffle(array);
+  } while (countCorrect(result) !== 0);
+  return result;
+}
+
 // 描画
 function render() {
   order.forEach((index) => {
     row.appendChild(containers[index]);
   });
   updateResult();
+  bindEvents();
 }
-
-// 初期表示
-bindEvents();
-render();
 
 // 正解判定
 function updateResult() {
@@ -59,15 +68,23 @@ function bindEvents() {
   const leftArrows = document.querySelectorAll(".left-arrow");
   const rightArrows = document.querySelectorAll(".right-arrow");
   leftArrows.forEach((arrow, index) => {
-    arrow.addEventListener(`click`, () => moveLeft(index));
+    arrow.onclick = () => moveLeft(index);
   });
   rightArrows.forEach((arrow, index) => {
-    arrow.addEventListener(`click`, () => moveRight(index));
+    arrow.onclick = () => moveRight(index);
   });
+  console.log(order);
 }
 
 // リセット
 resetBtn.addEventListener("click", () => {
-  order = shuffle(order);
+  if (countCorrect(order) === 0) {
+    resetBtn.ariaDisabled;
+  }
+  order = shuffleZeroCorrect(order);
   render();
 });
+
+// 初期表示
+order = shuffleZeroCorrect(order);
+render();

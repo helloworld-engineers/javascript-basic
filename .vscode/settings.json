@@ -3,8 +3,5 @@
   "editor.formatOnSave": true,
 
   "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  }
+  "editor.insertSpaces": true
 }
