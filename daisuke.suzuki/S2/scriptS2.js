@@ -15,7 +15,6 @@ function shuffle(array) {
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
-  console.log(result);
 }
 
 // 描画
@@ -24,16 +23,15 @@ function render() {
     row.appendChild(containers[index]);
   });
   updateResult();
-  bindEvents();
 }
+
+// 初期表示
+bindEvents();
+render();
 
 // 正解判定
 function updateResult() {
   const count = order.filter((value, index) => value === index).length;
-  if (count === order.length) {
-    resultText.textContent = "クリア！";
-    return;
-  }
   resultText.textContent = `${count}個正解しています。`;
 }
 
@@ -61,10 +59,10 @@ function bindEvents() {
   const leftArrows = document.querySelectorAll(".left-arrow");
   const rightArrows = document.querySelectorAll(".right-arrow");
   leftArrows.forEach((arrow, index) => {
-    arrow.onclick = () => moveLeft(index);
+    arrow.addEventListener(`click`, () => moveLeft(index));
   });
   rightArrows.forEach((arrow, index) => {
-    arrow.onclick = () => moveRight(index);
+    arrow.addEventListener(`click`, () => moveRight(index));
   });
 }
 
@@ -73,6 +71,3 @@ resetBtn.addEventListener("click", () => {
   order = shuffle(order);
   render();
 });
-
-// 初期表示
-render();
