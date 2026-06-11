@@ -1,0 +1,55 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 30px;
+}
+
+.gameResult {
+  text-align: right;
+  padding: 10px 300px 0;
+}
+
+.player {
+  text-align: center;
+  border: 1px, solid, #000;
+  padding: 20px;
+  width: 455px;
+}
+
+.container {
+  display: flex;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageSize {
+  height: 100px;
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.gameBtn {
+  border: 1px solid #000;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  width: 200px;
+}
+
+.result {
+  border: 1px solid #000;
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  margin: 0;
+}
