@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Javascript応用課題1</title>
+  </head>
+  <body>
+    <header>
+      <p id="round" class="gameResult">ラウンド数:0ラウンド</p>
+      <p id="player1Count" class="gameResult">プレイヤー1:0ポイント</p>
+      <p id="player2Count" class="gameResult">プレイヤー2:0ポイント</p>
+    </header>
+    <div class="layout">
+      <div class="player">プレイヤー1</div>
+      <div>
+        <img
+          src="saikoro-illust1.png"
+          alt="サイコロ1の画像"
+          class="imageSize"
+          id="player1"
+        />
+      </div>
+      <div>
+        <img
+          src="saikoro-illust1.png"
+          alt="サイコロ1の画像"
+          class="imageSize"
+          id="player2"
+        />
+      </div>
+      <div class="player">プレイヤー2</div>
+      <div class="game">
+        <button type="submit" value="勝負" id="game" class="gameBtn">
+          勝負
+        </button>
+        <p class="result" id="result">勝敗</p>
+      </div>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>
