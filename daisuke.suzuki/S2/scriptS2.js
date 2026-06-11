@@ -73,14 +73,15 @@ function bindEvents() {
   rightArrows.forEach((arrow, index) => {
     arrow.onclick = () => moveRight(index);
   });
-  console.log(order);
+  if (countCorrect(order) === 0) {
+    resetBtn.disabled = true;
+  } else if (countCorrect(order) > 0) {
+    resetBtn.disabled = false;
+  }
 }
 
 // リセット
 resetBtn.addEventListener("click", () => {
-  if (countCorrect(order) === 0) {
-    resetBtn.ariaDisabled;
-  }
   order = shuffleZeroCorrect(order);
   render();
 });
