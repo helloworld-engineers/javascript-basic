@@ -7,6 +7,22 @@ let order = [...INITIAL_ORDER];
 
 const containers = [...document.querySelectorAll(".container")];
 
+//矢印に関して一度だけイベント登録
+row.addEventListener("click", (e) => {
+  const left = e.target.closest(".left-arrow");
+  const right = e.target.closest(".right-arrow");
+  if (!left && !right) return;
+  const container = e.target.closest(".container");
+  const index = [...row.children].indexOf(container);
+  if (left && index > 0) {
+    swap(index, index - 1);
+  }
+  if (right && index < order.length - 1) {
+    swap(index, index + 1);
+  }
+  render();
+});
+
 // シャッフル
 function shuffle(array) {
   const result = [...array];
@@ -29,19 +45,15 @@ function shuffleZeroCorrect(array) {
   return result;
 }
 
-// 描画
-function render() {
-  order.forEach((index) => {
-    row.appendChild(containers[index]);
-  });
-  updateResult();
-  bindEvents();
-}
-
 // 正解判定
 function updateResult() {
   const count = order.filter((value, index) => value === index).length;
   resultText.textContent = `${count}個正解しています。`;
+  if (countCorrect(order) === 0) {
+    resetBtn.disabled = true;
+  } else if (countCorrect(order) > 0) {
+    resetBtn.disabled = false;
+  }
 }
 
 // 入れ替え
@@ -49,36 +61,34 @@ function swap(index1, index2) {
   [order[index1], order[index2]] = [order[index2], order[index1]];
 }
 
-// 左移動
-function moveLeft(index) {
-  if (index === 0) return;
-  swap(index, index - 1);
-  render();
-}
-
-// 右移動
-function moveRight(index) {
-  if (index === order.length - 1) return;
-  swap(index, index + 1);
-  render();
+// 描画
+function render() {
+  order.forEach((index) => {
+    row.appendChild(containers[index]);
+  });
+  updateResult();
+  //bindEvents();
 }
 
 // イベント登録
-function bindEvents() {
+/*function bindEvents() {
   const leftArrows = document.querySelectorAll(".left-arrow");
   const rightArrows = document.querySelectorAll(".right-arrow");
   leftArrows.forEach((arrow, index) => {
-    arrow.onclick = () => moveLeft(index);
+    arrow.onclick = () => {
+      if (index === 0) return;
+      swap(index, index - 1);
+      render();
+    };
   });
   rightArrows.forEach((arrow, index) => {
-    arrow.onclick = () => moveRight(index);
+    arrow.onclick = () => {
+      if (index === order.length - 1) return;
+      swap(index, index + 1);
+      render();
+    };
   });
-  if (countCorrect(order) === 0) {
-    resetBtn.disabled = true;
-  } else if (countCorrect(order) > 0) {
-    resetBtn.disabled = false;
-  }
-}
+}*/
 
 // リセット
 resetBtn.addEventListener("click", () => {
