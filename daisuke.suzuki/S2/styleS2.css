@@ -1,0 +1,86 @@
+body {
+  background: #fff;
+  font-family: sans-serif;
+}
+
+.wrapper {
+  margin: 50px auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  margin: 50px auto;
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+}
+
+/*矢印、円、箱のセット*/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  transition: 0.2s;
+}
+/*矢印と円*/
+.object {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.box {
+  width: 100px;
+  height: 160px;
+  border: 1px solid #000000;
+}
+
+.arrow {
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+}
+
+/* color */
+.circle1 {
+  background: #e7aca3;
+}
+.circle2 {
+  background: #a9bfd1;
+}
+.circle3 {
+  background: #e7d9a8;
+}
+.circle4 {
+  background: #d4bcc7;
+}
+
+/* テキスト */
+.result-text {
+  margin: 20px;
+}
+
+/* ボタン */
+.btn-row {
+  display: flex;
+  gap: 30px;
+}
+
+.resetBtn {
+  padding: 10px 30px;
+  border-radius: 20%;
+  cursor: pointer;
+}
