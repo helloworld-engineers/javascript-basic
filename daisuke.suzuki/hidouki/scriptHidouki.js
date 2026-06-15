@@ -10,13 +10,21 @@ async function fetchDog() {
     //loading
     statusText.textContent = "読み込み中・・・";
     btn.disabled = true;
+    if (data.message) {
+      img.src = data.message;
+      statusText.textContent = "表示中";
+    } else {
+      throw new Error("画像が取得できませんでした");
+    }
     const res = await fetch(API_URL);
     const data = await res.json();
+
     //showing
     img.src = data.message;
     statusText.textContent = "表示中";
   } catch (error) {
     //error
+    console.error(error);
     statusText.textContent = "エラーが発生中";
   } finally {
     btn.disabled = false;
