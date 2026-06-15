@@ -7,9 +7,6 @@ let order = [...INITIAL_ORDER];
 
 const containers = [...document.querySelectorAll(".container")];
 
-const renderLeftArrows = row.querySelectorAll(".left-arrow");
-const renderRightArrows = row.querySelectorAll(".right-arrow");
-
 // シャッフル
 function shuffle(array) {
   const result = [...array];
@@ -65,10 +62,7 @@ function bindEvents() {
     arrow.onclick = () => {
       if (index === 0) return;
       swap(index, index - 1);
-      order.forEach((i) => {
-        row.appendChild(containers[i]);
-      });
-      updateResult();
+      render();
       bindEvents();
     };
   });
@@ -76,10 +70,7 @@ function bindEvents() {
     arrow.onclick = () => {
       if (index === order.length - 1) return;
       swap(index, index + 1);
-      order.forEach((index) => {
-        row.appendChild(containers[index]);
-      });
-      updateResult();
+      render();
       bindEvents();
     };
   });
