@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 60px;
+}
+
+.circleBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4%;
+}
+
+.Circle {
+  padding: 50px;
+  border: 1px solid #000;
+  border-radius: 50%;
+}
+
+.boxContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2%;
+}
+
+.box {
+  padding: 80px;
+  height: 110px;
+  border: 1px solid #000;
+}
+
+.correct {
+  text-align: center;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  gap: 3%;
+}
+
+.btn {
+  background-color: #ffff;
+  border-radius: 15%;
+  padding: 9px;
+}
+
+.leftBtn {
+  width: 30px;
+}
+
+.rightBtn {
+  width: 40px;
+}
