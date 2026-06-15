@@ -10,6 +10,7 @@ const shuffleArray = (array) => {
 };
 
 // 正解の数を表示する関数
+const newCorrectText = document.getElementById("correctText");
 const correctDisplay = (selectColor) => {
   let correctNum = 0;
   for (let i = 0; i < correctArray.length; i++) {
@@ -38,23 +39,20 @@ newResetBtn.addEventListener("click", () => {
       shuffleArray(randomArray);
       i = 0;
     }
-    if (randomArray[i] !== correctArray[i]) {
-      i++;
-    }
+    i++;
   }
-  console.log(randomArray);
   circleColors(randomArray);
   correctDisplay(randomArray);
 });
 
 // ボールのデフォルトの色を指定
 // let defaultColoers = ["red", "blue", "yellow", "pink"];
-const balls = document.querySelectorAll(".Circle");
+const balls = document.querySelectorAll(".circle");
 circleColors(randomArray);
 
 // 右矢印を押した時の処理
 const moveRights = document.querySelectorAll(".rightBtn");
-for (let i = 0; i < moveRights.length; i++)
+for (let i = 0; i < moveRights.length; i++) {
   moveRights[i].addEventListener("click", () => {
     if (i === moveRights.length - 1) {
       return;
@@ -64,10 +62,11 @@ for (let i = 0; i < moveRights.length; i++)
     randomArray[i + 1] = temp;
     circleColors(randomArray);
   });
+}
 
 // 左矢印を押した時の処理
 const moveLefts = document.querySelectorAll(".leftBtn");
-for (let i = 0; i < moveLefts.length; i++)
+for (let i = 0; i < moveLefts.length; i++) {
   moveLefts[i].addEventListener("click", () => {
     if (i === 0) {
       return;
@@ -77,8 +76,7 @@ for (let i = 0; i < moveLefts.length; i++)
     randomArray[i - 1] = temp;
     circleColors(randomArray);
   });
-
-const newCorrectText = document.getElementById("correctText");
+}
 
 // チェックボタンをした時の正解の数の識別,表示
 const newStartBtn = document.getElementById("startBtn");
