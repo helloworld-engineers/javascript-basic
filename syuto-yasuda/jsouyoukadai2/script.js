@@ -1,5 +1,13 @@
 // イメージイラストはそれぞれ左矢印、右矢印のイラストになります。
 
+// DOM取得
+const balls = document.querySelectorAll(".circle");
+const newStartBtn = document.getElementById("startBtn");
+const newCorrectText = document.getElementById("correctText");
+const newResetBtn = document.getElementById("resetBtn");
+const moveLefts = document.querySelectorAll(".leftBtn");
+const moveRights = document.querySelectorAll(".rightBtn");
+
 // シャッフルする関数
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -10,7 +18,6 @@ const shuffleArray = (array) => {
 };
 
 // 正解の数を表示する関数
-const newCorrectText = document.getElementById("correctText");
 const correctDisplay = (selectColor) => {
   let correctNum = 0;
   for (let i = 0; i < correctArray.length; i++) {
@@ -29,7 +36,6 @@ const circleColors = (colors) => {
 };
 
 // リセットボタン
-const newResetBtn = document.getElementById("resetBtn");
 const correctArray = ["pink", "red", "blue", "yellow"];
 let randomArray = shuffleArray(["red", "blue", "yellow", "pink"]);
 newResetBtn.addEventListener("click", () => {
@@ -44,14 +50,10 @@ newResetBtn.addEventListener("click", () => {
   circleColors(randomArray);
   correctDisplay(randomArray);
 });
-
 // ボールのデフォルトの色を指定
-// let defaultColoers = ["red", "blue", "yellow", "pink"];
-const balls = document.querySelectorAll(".circle");
 circleColors(randomArray);
 
 // 右矢印を押した時の処理
-const moveRights = document.querySelectorAll(".rightBtn");
 for (let i = 0; i < moveRights.length; i++) {
   moveRights[i].addEventListener("click", () => {
     if (i === moveRights.length - 1) {
@@ -65,7 +67,6 @@ for (let i = 0; i < moveRights.length; i++) {
 }
 
 // 左矢印を押した時の処理
-const moveLefts = document.querySelectorAll(".leftBtn");
 for (let i = 0; i < moveLefts.length; i++) {
   moveLefts[i].addEventListener("click", () => {
     if (i === 0) {
@@ -79,7 +80,6 @@ for (let i = 0; i < moveLefts.length; i++) {
 }
 
 // チェックボタンをした時の正解の数の識別,表示
-const newStartBtn = document.getElementById("startBtn");
 newStartBtn.addEventListener("click", () => {
   correctDisplay(randomArray);
 });
