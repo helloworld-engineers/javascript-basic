@@ -8,6 +8,9 @@ const newResetBtn = document.getElementById("resetBtn");
 const moveLefts = document.querySelectorAll(".leftBtn");
 const moveRights = document.querySelectorAll(".rightBtn");
 
+// 正解の配列の色
+const correctArray = ["pink", "red", "blue", "yellow"];
+
 // シャッフルする関数
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -36,7 +39,6 @@ const circleColors = (colors) => {
 };
 
 // リセットボタン
-const correctArray = ["pink", "red", "blue", "yellow"];
 let randomArray = shuffleArray(["red", "blue", "yellow", "pink"]);
 newResetBtn.addEventListener("click", () => {
   let i = 0;
