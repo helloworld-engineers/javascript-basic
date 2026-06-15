@@ -7,21 +7,8 @@ let order = [...INITIAL_ORDER];
 
 const containers = [...document.querySelectorAll(".container")];
 
-//矢印に関して一度だけイベント登録
-row.addEventListener("click", (e) => {
-  const left = e.target.closest(".left-arrow");
-  const right = e.target.closest(".right-arrow");
-  if (!left && !right) return;
-  const container = e.target.closest(".container");
-  const index = [...row.children].indexOf(container);
-  if (left && index > 0) {
-    swap(index, index - 1);
-  }
-  if (right && index < order.length - 1) {
-    swap(index, index + 1);
-  }
-  render();
-});
+const renderLeftArrows = row.querySelectorAll(".left-arrow");
+const renderRightArrows = row.querySelectorAll(".right-arrow");
 
 // シャッフル
 function shuffle(array) {
@@ -47,7 +34,7 @@ function shuffleZeroCorrect(array) {
 
 // 正解判定
 function updateResult() {
-  const count = order.filter((value, index) => value === index).length;
+  const count = countCorrect(order);
   resultText.textContent = `${count}個正解しています。`;
   if (countCorrect(order) === 0) {
     resetBtn.disabled = true;
@@ -67,35 +54,45 @@ function render() {
     row.appendChild(containers[index]);
   });
   updateResult();
-  //bindEvents();
 }
 
-// イベント登録
-/*function bindEvents() {
+// 初期のみイベント登録
+function bindEvents() {
   const leftArrows = document.querySelectorAll(".left-arrow");
   const rightArrows = document.querySelectorAll(".right-arrow");
+
   leftArrows.forEach((arrow, index) => {
     arrow.onclick = () => {
       if (index === 0) return;
       swap(index, index - 1);
-      render();
+      order.forEach((i) => {
+        row.appendChild(containers[i]);
+      });
+      updateResult();
+      bindEvents();
     };
   });
   rightArrows.forEach((arrow, index) => {
     arrow.onclick = () => {
       if (index === order.length - 1) return;
       swap(index, index + 1);
-      render();
+      order.forEach((index) => {
+        row.appendChild(containers[index]);
+      });
+      updateResult();
+      bindEvents();
     };
   });
-}*/
+}
 
 // リセット
 resetBtn.addEventListener("click", () => {
   order = shuffleZeroCorrect(order);
   render();
+  bindEvents();
 });
 
-// 初期表示
+// // 初期表示
 order = shuffleZeroCorrect(order);
 render();
+bindEvents();

@@ -1,55 +1,54 @@
 <!doctype html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>並び替えゲーム</title>
+    <link rel="stylesheet" href="styleS2.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>並び替えゲーム</title>
-  <link rel="stylesheet" href="styleS2.css" />
-</head>
-
-<body>
-  <div class="wrapper">
-    <div class="row">
-      <div class="container">
-        <div class="object">
-          <button class="arrow left-arrow">⇦</button>
-          <div class="circle circle1"></div>
-          <button class="arrow right-arrow">⇨</button>
+  <body>
+    <div class="wrapper">
+      <div class="row">
+        <div class="container">
+          <div class="object">
+            <button class="arrow left-arrow" id="arrow-1">⇦</button>
+            <div class="circle circle1"></div>
+            <button class="arrow right-arrow">⇨</button>
+          </div>
+          <div class="box box1"></div>
         </div>
-        <div class="box box1"></div>
+        <div class="container">
+          <div class="object">
+            <button class="arrow left-arrow" id="arrow-2">⇦</button>
+            <div class="circle circle2"></div>
+            <button class="arrow right-arrow">⇨</button>
+          </div>
+          <div class="box box2"></div>
+        </div>
+        <div class="container">
+          <div class="object">
+            <button class="arrow left-arrow" id="arrow-3">⇦</button>
+            <div class="circle circle3"></div>
+            <button class="arrow right-arrow">⇨</button>
+          </div>
+          <div class="box box3"></div>
+        </div>
+        <div class="container">
+          <div class="object">
+            <button class="arrow left-arrow" id="arrow-4">⇦</button>
+            <div class="circle circle4"></div>
+            <button class="arrow right-arrow">⇨</button>
+          </div>
+          <div class="box box4"></div>
+        </div>
       </div>
-      <div class="container">
-        <div class="object">
-          <button class="arrow left-arrow">⇦</button>
-          <div class="circle circle2"></div>
-          <button class="arrow right-arrow">⇨</button>
+      <div class="b-box">
+        <p class="result-text">x個正解しています。</p>
+        <div class="btn-row">
+          <button class="resetBtn">リセット</button>
         </div>
-        <div class="box box2"></div>
-      </div>
-      <div class="container">
-        <div class="object">
-          <button class="arrow left-arrow">⇦</button>
-          <div class="circle circle3"></div>
-          <button class="arrow right-arrow">⇨</button>
-        </div>
-        <div class="box box3"></div>
-      </div>
-      <div class="container">
-        <div class="object">
-          <button class="arrow left-arrow">⇦</button>
-          <div class="circle circle4"></div>
-          <button class="arrow right-arrow">⇨</button>
-        </div>
-        <div class="box box4"></div>
       </div>
     </div>
-    <div class="b-box">
-      <p class="result-text">x個正解しています。</p>
-      <div class="btn-row">
-        <button class="resetBtn">リセット</button>
-      </div>
-    </div>
-  </div>
-  <script src="scriptS2.js"></script>
-</body>
-</html
+    <script src="scriptS2.js"></script>
+  </body>
+</html>
