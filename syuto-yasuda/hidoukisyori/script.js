@@ -12,7 +12,7 @@ async function getDate() {
     }
     const date = await response.json();
     const result = document.getElementById("dogEvent");
-    result.innerHTML = `<img src = ${date.message} class="dogSize" >`;
+    result.innerHTML = `<img src=${date.message} class="dogSize" >`;
   } catch (error) {
     console.error(error.message);
   } finally {

@@ -1,23 +1,23 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    padding: 40px;
-    gap: 30px;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 40px;
+  gap: 30px;
 }
 
-.containerText{
-    text-align: center;
+.containerText {
+  text-align: center;
 }
 
-.dogSize{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+.dogSize {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
-.loading{
-    display: none;
+.loading {
+  display: none;
 }
