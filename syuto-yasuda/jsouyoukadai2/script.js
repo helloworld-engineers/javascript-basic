@@ -39,7 +39,7 @@ const circleColors = (colors) => {
 };
 
 // リセットボタン
-let randomArray = shuffleArray(["red", "blue", "yellow", "pink"]);
+let randomArray = shuffleArray([...correctArray]);
 newResetBtn.addEventListener("click", () => {
   let i = 0;
   while (i < correctArray.length) {
