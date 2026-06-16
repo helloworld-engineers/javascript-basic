@@ -1,6 +1,7 @@
 const newBtn = document.getElementById("btn");
 const newLoading = document.getElementById("loading");
 const API_URL = "https://dog.ceo/api/breeds/image/random";
+const result = document.getElementById("dogEvent");
 
 // DogAPIから犬の画像を表示する関数
 async function getDogImage() {
@@ -10,11 +11,10 @@ async function getDogImage() {
     if (!response.ok) {
       throw new Error("Failed to fetch");
     }
-    const dogDate = await response.json();
-    const result = document.getElementById("dogEvent");
-    result.innerHTML = `<img src="${dogDate.message}" class="dogSize" >`;
+    const dogData = await response.json();
+    result.innerHTML = `<img src="${dogData.message}" class="dogSize" >`;
   } catch (error) {
-    console.error(error.message);
+    result.innerHTML = "<p>画像の取得に失敗しました</p>";
   } finally {
     newLoading.style.display = "none";
   }
