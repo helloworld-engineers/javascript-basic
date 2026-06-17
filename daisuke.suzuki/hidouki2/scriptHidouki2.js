@@ -2,29 +2,29 @@
 const API_URL = "https://pokeapi.co/api/v2/pokemon";
 
 //検索
-const inputedId = document.getElementById("pokemonId");
-const srcBtn = document.getElementById("srcBtn");
-const status = document.getElementById("status");
+const inputIdEl = document.getElementById("inputId");
+const searchBtnEl = document.getElementById("searchBtn");
+const statusText = document.getElementById("status");
 
 //情報
-const nameE1 = document.getElementById("name");
-const imgE1 = document.getElementById("pokeImg");
-const idE1 = document.getElementById("pokeId");
-const typesE1 = document.getElementById("types");
-const heightE1 = document.getElementById("height");
-const weightE1 = document.getElementById("weight");
+const nameEl = document.getElementById("name");
+const imgEl = document.getElementById("pokeImg");
+const idEl = document.getElementById("pokeId");
+const typesEl = document.getElementById("types");
+const heightEl = document.getElementById("height");
+const weightEl = document.getElementById("weight");
 
 //履歴
-const historyE1 = document.getElementById("history");
+const historyEl = document.getElementById("searchHistory");
 const noHistoryText = document.getElementById("noHistory");
 
 //一覧
 const count = 1350;
 const limit = 20;
 let currentPage = 1;
-const list = document.getElementById("list");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
+const listEl = document.getElementById("list");
+const prevBtnEl = document.getElementById("prevBtn");
+const nextBtnEl = document.getElementById("nextBtn");
 const pageText = document.getElementById("page");
 
 //////////履歴//////////
@@ -46,7 +46,7 @@ function saveHistory(item) {
 function renderHistory() {
   const history = getHistory();
 
-  historyE1.innerHTML = "";
+  historyEl.innerHTML = "";
 
   if (history.length === 0) {
     noHistoryText.style.display = "block";
@@ -59,26 +59,26 @@ function renderHistory() {
 
     li.textContent = `ID: ${h.id} ${h.name}`;
 
-    historyE1.appendChild(li);
+    historyEl.appendChild(li);
   });
 }
 //////////////////////////////
 
 //////////検索////////////////
 //入力チェック
-inputedId.addEventListener("input", () => {
-  srcBtn.disabled = inputedId.value === "";
+inputIdEl.addEventListener("input", () => {
+  searchBtnEl.disabled = inputIdEl.value === "";
 });
 
 //基本と詳細情報取得及び表示
 async function searchPokemon() {
-  const id = inputedId.value;
+  const id = inputIdEl.value;
   try {
-    imgE1.style.display = "block";
-    status.style.display = "block";
-    status.textContent = "loading...";
-    status.className = "loading";
-    srcBtn.disabled = true;
+    imgEl.style.display = "block";
+    statusText.style.display = "block";
+    statusText.textContent = "loading...";
+    statusText.className = "loading";
+    searchBtnEl.disabled = true;
 
     //要素取得
     const res = await fetch(`${API_URL}/${id}/`);
@@ -86,17 +86,17 @@ async function searchPokemon() {
     const data = await res.json();
 
     //情報を表示
-    nameE1.textContent = data.name;
-    idE1.textContent = `ID: ${data.id}`;
-    imgE1.src = data.sprites.front_default;
-    typesE1.textContent =
+    nameEl.textContent = data.name;
+    idEl.textContent = `ID: ${data.id}`;
+    imgEl.src = data.sprites.front_default;
+    typesEl.textContent =
       "タイプ: " + data.types.map((typeInfo) => typeInfo.type.name).join(",");
     const height = data.height / 10;
     const weight = data.weight / 10;
-    heightE1.textContent = "高さ: " + height + "m";
-    weightE1.textContent = "重さ: " + weight + "kg";
+    heightEl.textContent = "高さ: " + height + "m";
+    weightEl.textContent = "重さ: " + weight + "kg";
 
-    status.textContent = "SUCCESS!";
+    statusText.textContent = "SUCCESS!";
 
     saveHistory({
       id: data.id,
@@ -106,21 +106,21 @@ async function searchPokemon() {
     renderHistory();
   } catch (error) {
     // エラー表示
-    status.textContent = `ID ${id} というポケモンは存在しません`;
+    statusText.textContent = `ID ${id} というポケモンは存在しません`;
   } finally {
-    srcBtn.disabled = false;
+    searchBtnEl.disabled = false;
   }
 }
 
 //検索ボタンにてイベント実施
-srcBtn.addEventListener("click", () => {
+searchBtnEl.addEventListener("click", () => {
   searchPokemon();
 });
 //////////////////////////////
 
 ///////////////一覧//////////////
 function renderList(pokemons) {
-  list.innerHTML = "";
+  listEl.innerHTML = "";
 
   pokemons.forEach((p) => {
     const div = document.createElement("div");
@@ -137,14 +137,14 @@ function renderList(pokemons) {
         <p>高さ: ${p.height / 10}m / 重さ: ${p.weight / 10}kg</p>
       </div>
     `;
-    list.appendChild(div);
+    listEl.appendChild(div);
   });
 }
 
 async function fetchList(page) {
   const offset = (page - 1) * limit;
-  status.textContent = "loading...";
-  status.className = "loading";
+  statusText.textContent = "loading...";
+  statusText.className = "loading";
 
   //要素取得
   const res = await fetch(`${API_URL}?offset=${offset}&limit=${limit}`);
@@ -162,14 +162,14 @@ async function fetchList(page) {
 ////////////////////////////////////
 
 //////////ページネーション//////////
-prevBtn.addEventListener("click", () => {
+prevBtnEl.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     fetchList(currentPage);
   }
 });
 
-nextBtn.addEventListener("click", () => {
+nextBtnEl.addEventListener("click", () => {
   if (currentPage < Math.ceil(count / limit)) {
     console.log(currentPage);
     currentPage++;

@@ -10,8 +10,8 @@
     <div class="container">
       <div class="left">
         <h2>ポケモン検索</h2>
-        <input type="number" id="pokemonId" placeholder="IDを入力" />
-        <button id="srcBtn" disabled>検索</button>
+        <input type="number" id="inputId" placeholder="IDを入力" />
+        <button id="searchBtn" disabled>検索</button>
         <p id="status"></p>
 
         <div class="card">
@@ -28,7 +28,7 @@
 
       <div class="right">
         <h3>履歴</h3>
-        <ul id="history">
+        <ul id="searchHistory">
           <li id="noHistory">履歴なし</li>
         </ul>
       </div>
@@ -38,9 +38,9 @@
     <div class="bottom">
       <h2>ポケモン一覧</h2>
       <div id="pagenation">
-        <button id="prev">前へ</button>
+        <button id="prevBtn">前へ</button>
         <span id="page"></span>
-        <button id="next">後へ</button>
+        <button id="nextBtn">後へ</button>
       </div>
       <br />
       <div id="list" class="grid"></div>
