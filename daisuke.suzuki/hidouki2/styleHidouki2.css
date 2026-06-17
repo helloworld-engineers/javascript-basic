@@ -37,8 +37,10 @@ body {
   color: blue;
 }
 
-.name {
-  font-size: 30px;
+#name {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 #pokeImg {

@@ -36,8 +36,10 @@ function getHistory() {
 //履歴保存
 function saveHistory(item) {
   let history = getHistory();
-  history.unshift(item);
-  localStorage.setItem("history", JSON.stringify(history));
+  if (!history.find((h) => h.id === item.id)) {
+    history.unshift(item);
+    localStorage.setItem("history", JSON.stringify(history));
+  }
 }
 
 //履歴表示
@@ -85,9 +87,6 @@ async function searchPokemon() {
 
     //情報を表示
     nameE1.textContent = data.name;
-    nameE1.style.fontSize = "20px"; // 単位の 'px' を追加
-    nameE1.style.fontWeight = "bold"; // 文字を太くする
-    nameE1.style.textTransform = "capitalize";
     idE1.textContent = `ID: ${data.id}`;
     imgE1.src = data.sprites.front_default;
     typesE1.textContent =
@@ -110,7 +109,6 @@ async function searchPokemon() {
     status.textContent = `ID ${id} というポケモンは存在しません`;
   } finally {
     srcBtn.disabled = false;
-    status.style.display = "none";
   }
 }
 
@@ -172,7 +170,7 @@ prevBtn.addEventListener("click", () => {
 });
 
 nextBtn.addEventListener("click", () => {
-  if (currentPage <= Math.floor(count / limit)) {
+  if (currentPage < Math.ceil(count / limit)) {
     console.log(currentPage);
     currentPage++;
   }
