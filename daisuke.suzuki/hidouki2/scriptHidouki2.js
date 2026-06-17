@@ -49,8 +49,6 @@ function saveHistory(item) {
 function renderHistory() {
   const history = getHistory();
 
-  historyEl.innerHTML = "";
-
   if (history.length === 0) {
     noHistoryText.style.display = "block";
     return;
