@@ -7,21 +7,24 @@ const searchBtnEl = document.getElementById("searchBtn");
 const statusText = document.getElementById("status");
 
 //情報
-const nameEl = document.getElementById("name");
-const imgEl = document.getElementById("pokeImg");
-const idEl = document.getElementById("pokeId");
-const typesEl = document.getElementById("types");
-const heightEl = document.getElementById("height");
-const weightEl = document.getElementById("weight");
+const nameEl = document.getElementById("pokemonName");
+const imgEl = document.getElementById("pokemonImg");
+const idEl = document.getElementById("pokemonId");
+const typesEl = document.getElementById("pokemonTypes");
+const heightEl = document.getElementById("pokemonHeight");
+const weightEl = document.getElementById("pokemonWeight");
 
 //履歴
 const historyEl = document.getElementById("searchHistory");
 const noHistoryText = document.getElementById("noHistory");
 
 //一覧
-const count = 1350;
+let countAll = 0;
 const limit = 20;
 let currentPage = 1;
+const maxVisiblePages = 5;
+const SIDE_RANGE = 1; // 現在ページの左右に何個出すか
+const EDGE_THRESHOLD = 2; // 省略(...)を出す境界
 const listEl = document.getElementById("list");
 const prevBtnEl = document.getElementById("prevBtn");
 const nextBtnEl = document.getElementById("nextBtn");
@@ -151,6 +154,7 @@ async function fetchList(page) {
   if (!res.ok) throw new Error();
   const data = await res.json();
 
+  countAll = data.count;
   const details = await Promise.all(
     data.results.map((pokemon) =>
       fetch(pokemon.url).then((item) => item.json()),
@@ -158,45 +162,52 @@ async function fetchList(page) {
   );
   renderList(details);
   renderPageNumbers();
+  updateButtons();
 }
 ////////////////////////////////////
 
 //////////ページネーション//////////
+function updateButtons() {
+  const totalPages = Math.ceil(countAll / limit);
+
+  prevBtnEl.disabled = currentPage === 1;
+  nextBtnEl.disabled = currentPage === totalPages;
+}
+
 prevBtnEl.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
-    fetchList(currentPage);
   }
+  fetchList(currentPage);
 });
 
 nextBtnEl.addEventListener("click", () => {
-  if (currentPage < Math.ceil(count / limit)) {
-    console.log(currentPage);
+  if (currentPage < Math.ceil(countAll / limit)) {
     currentPage++;
   }
   fetchList(currentPage);
 });
 
 function renderPageNumbers() {
-  const totalPages = Math.ceil(count / limit);
+  const totalPages = Math.ceil(countAll / limit);
 
   let pages = [];
 
   //...がいらない場合
-  if (totalPages <= 5) {
+  if (totalPages <= maxVisiblePages) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
   } else {
     pages.push(1);
 
-    if (currentPage > 3) pages.push("...");
-    for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+    if (currentPage > EDGE_THRESHOLD + 1) pages.push("...");
+    for (let i = currentPage - SIDE_RANGE; i <= currentPage + SIDE_RANGE; i++) {
       if (i > 1 && i < totalPages) {
         pages.push(i);
       }
     }
-    if (currentPage < totalPages - 2) pages.push("...");
+    if (currentPage < totalPages - EDGE_THRESHOLD) pages.push("...");
 
     pages.push(totalPages);
   }
