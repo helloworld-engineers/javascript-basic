@@ -151,7 +151,7 @@ searchBtn.addEventListener("click", () => {
   const searchId = inputText.value;
   const searchResult = `${API_URL}/${searchId}/`;
   newSearchError.innerHTML = "";
-  if (searchId === "") {
+  if (searchId.trim() === "") {
     return;
   }
   async function pokemonSearch() {
