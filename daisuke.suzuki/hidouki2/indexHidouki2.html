@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APIページネーション</title>
+    <link rel="stylesheet" href="styleHidouki2.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <h2>ポケモン検索</h2>
+        <input type="number" id="inputId" placeholder="IDを入力" />
+        <button id="searchBtn" disabled>検索</button>
+        <p id="status"></p>
+
+        <div class="card">
+          <img id="pokemonImg" alt="ポケモン画像" class="src-img" />
+          <div class="info">
+            <p id="pokemonName"></p>
+            <p id="pokemonId"></p>
+            <p id="pokemonTypes"></p>
+            <p id="pokemonHeight"></p>
+            <p id="pokemonWeight"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <h3>履歴</h3>
+        <ul id="searchHistory">
+          <li id="noHistory">履歴なし</li>
+        </ul>
+      </div>
+    </div>
+    <hr />
+
+    <div class="bottom">
+      <h2>ポケモン一覧</h2>
+      <div id="pagenation">
+        <button id="prevBtn">前へ</button>
+        <span id="page"></span>
+        <button id="nextBtn">後へ</button>
+      </div>
+      <br />
+      <div id="list" class="grid"></div>
+    </div>
+
+    <script src="scriptHidouki2.js"></script>
+  </body>
+</html>
