@@ -1,3 +1,4 @@
+const BORDER_COLOR = "#000000";
 const newNext = document.getElementById("next");
 const newPageNum = document.getElementById("pageNum");
 const newPokemonData = document.getElementById("pokemonData");
@@ -46,7 +47,7 @@ async function pagenation(offset, limit) {
     for (let i = 0; i < range.length; i++) {
       const newPage = document.createElement("div");
       newPage.textContent = `${range[i]}`;
-      newPage.style.border = "1px solid #000000";
+      newPage.style.border = `1px solid ${BORDER_COLOR}`;
       newPage.style.padding = "10px";
       newPageNum.appendChild(newPage);
     }
