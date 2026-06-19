@@ -6,7 +6,7 @@ const searchBtn = document.getElementById("search");
 const inputText = document.getElementById("inputId");
 const newPokemonSearch = document.getElementById("pokemonSearch");
 const newSearchError = document.getElementById("searchError");
-const newSearhHistory = document.getElementById("searchHistory");
+const newSearchHistory = document.getElementById("searchHistory");
 const searchLoading = document.getElementById("searchLoading");
 const API_URL = `https://pokeapi.co/api/v2/pokemon`;
 
@@ -14,6 +14,7 @@ const API_URL = `https://pokeapi.co/api/v2/pokemon`;
 let offset = 0;
 let limit = 20;
 let currentPage = 1;
+let pageMax = 0;
 
 // ページネーションを表示する関数
 async function pagenation(offset, limit) {
@@ -25,7 +26,7 @@ async function pagenation(offset, limit) {
     }
     const result = await response.json();
     const total = result.count;
-    const pageMax = Math.ceil(total / limit);
+    pageMax = Math.ceil(total / limit);
     let range = [];
     for (let i = 1; i <= pageMax; i++) {
       if (
@@ -40,6 +41,7 @@ async function pagenation(offset, limit) {
         range.push("...");
       }
     }
+    // ページの作成
     newPageNum.innerHTML = "";
     for (let i = 0; i < range.length; i++) {
       const newPage = document.createElement("div");
@@ -107,7 +109,7 @@ async function pagenation(offset, limit) {
       createName.textContent = pokeData[i].name;
       createHeightWeight.textContent = `高さ: ${pokeData[i].height}/重さ: ${pokeData[i].weight}kg`;
       createId.textContent = `ID: ${pokeData[i].id}`;
-      createType.textContent = `タイプ: ${typesArray.join()}`;
+      createType.textContent = `タイプ: ${typesArray.join(", ")}`;
 
       newPokemonData.appendChild(createData);
       createData.appendChild(createImage);
@@ -125,7 +127,7 @@ pagenation(offset, limit);
 
 // 次へボタンを押した時の処理
 newNext.addEventListener("click", () => {
-  if (currentPage === 68) {
+  if (currentPage === pageMax) {
     return;
   }
   offset += 20;
@@ -166,11 +168,11 @@ searchBtn.addEventListener("click", () => {
         name: search.name,
       };
       pokemonHistory.unshift(result);
-      newSearhHistory.innerHTML = "";
+      newSearchHistory.innerHTML = "";
       pokemonHistory.forEach((pokemon) => {
         const resultHistory = document.createElement("div");
         resultHistory.textContent = `ID: ${pokemon.id} ${pokemon.name}`;
-        newSearhHistory.appendChild(resultHistory);
+        newSearchHistory.appendChild(resultHistory);
       });
     } catch (error) {
       newSearchError.textContent = `ID: ${searchId} というポケモンは存在しません`;
