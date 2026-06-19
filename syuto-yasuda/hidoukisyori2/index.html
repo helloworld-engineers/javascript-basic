@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>非同期処理課題2</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="title">ポケモン一覧</h1>
+    </header>
+    <div class="searchArea">
+      <form class="searchForm" id="pokemonSearch">
+        <input type="text" placeholder="IDを入力してください" id="inputId" class="inputSize"/>
+        <input type="button" value="検索" id="search" class="btnSize"></button>
+        <div id="searchLoading"></div>
+        <div id="searchError"></div>
+      </form>
+    <div class="searchHistory" id="searchHistory">履歴なし</div>
+    </div>
+    <div class="layout">
+      <div class="pagenation">
+        <button type="submit" id="previous">前へ</button>
+        <div class="page" id="pageNum" class="pageNum"></div>
+        <button type="submit" id="next">次へ</button>
+      </div>
+      <div id="pokemonData" class="pokeData"></div>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>
