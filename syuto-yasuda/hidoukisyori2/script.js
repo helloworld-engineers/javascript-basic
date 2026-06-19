@@ -80,7 +80,6 @@ async function pagenation(offset, limit) {
     }
 
     // ポケモンのイメージ画像を出力する
-    let pokemonArray = [];
     newPokemonData.innerHTML = "";
     for (let i = 0; i < pokeData.length; i++) {
       const createImage = document.createElement("img");
