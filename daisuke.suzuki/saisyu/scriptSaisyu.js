@@ -15,7 +15,7 @@ const DIRECTION = {
   RIGHT: "RIGHT",
 };
 
-const isMoveValid = true;
+let isMoveValid = true;
 
 const WORLD = {
   minX: -30,
@@ -49,17 +49,17 @@ const MAPS = [
 
 //マップ機能：移動関数
 function move(direction, playerStatus) {
-  if (DIRECTION === "UP") {
-    playerStatus.position.y = -1;
+  if (direction === DIRECTION.UP) {
+    playerStatus.position.y -= 1;
   }
-  if (DIRECTION === "DOWN") {
-    playerStatus.position.y = +1;
+  if (direction === DIRECTION.DOWN) {
+    playerStatus.position.y += 1;
   }
-  if (DIRECTION === "LEFT") {
-    playerStatus.position.x = -1;
+  if (direction === DIRECTION.LEFT) {
+    playerStatus.position.x -= 1;
   }
-  if (DIRECTION === "RIGHT") {
-    playerStatus.position.x = +1;
+  if (direction === DIRECTION.RIGHT) {
+    playerStatus.position.x += 1;
   }
 }
 
@@ -104,6 +104,7 @@ function changeAria(playerStatus, MAPS) {
       playerStatus.position.y >= map.area.minY &&
       playerStatus.position.y <= map.area.maxY,
   );
+  if (!nextMap) return false;
   if (nextMap.id !== playerStatus.mapId) {
     playerStatus.mapId = nextMap.id;
     return true;
