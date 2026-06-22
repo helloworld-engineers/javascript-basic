@@ -37,7 +37,7 @@ const pagenatoinRange = (pageMax, currentPage) => {
 };
 
 // ページネーションを表示する関数
-const pagenationRander = (pageMax, currentPage) => {
+const pagenationRender = (pageMax, currentPage) => {
   const newRange = pagenatoinRange(pageMax, currentPage);
   newPageNum.innerHTML = "";
   for (let i = 0; i < newRange.length; i++) {
@@ -121,6 +121,34 @@ const pokemonImageRender = (pokeData) => {
   }
 };
 
+// ポケモンを検索する時の関数
+async function pokemonSearch(searchUrl, searchId) {
+  try {
+    searchLoading.textContent = "検索中...";
+    newSearchError.textContent = "";
+    const searchResponse = await fetch(searchUrl);
+    if (!searchResponse.ok) {
+      throw new Error("Failed to fetch");
+    }
+    const search = await searchResponse.json();
+    const result = {
+      id: search.id,
+      name: search.name,
+    };
+    pokemonHistory.unshift(result);
+    newSearchHistory.innerHTML = "";
+    pokemonHistory.forEach((pokemon) => {
+      const resultHistory = document.createElement("div");
+      resultHistory.textContent = `ID: ${pokemon.id} ${pokemon.name}`;
+      newSearchHistory.appendChild(resultHistory);
+    });
+  } catch (error) {
+    newSearchError.textContent = `ID: ${searchId} というポケモンは存在しません`;
+  } finally {
+    searchLoading.textContent = "";
+  }
+}
+
 // pokeAPIからの情報を処理する関数
 async function pagenation(offset, limit) {
   try {
@@ -133,11 +161,12 @@ async function pagenation(offset, limit) {
     const total = result.count;
     pageMax = Math.ceil(total / limit);
     // ページネーションを表示
-    pagenationRander(pageMax, currentPage);
+    pagenationRender(pageMax, currentPage);
 
-    // １回目のfetchの配列の中の要素分ループ
+    // pokeAPIの中のurlの情報を取得
     const data = result.results;
-    const pokeData = await fetchPokemonData(data);
+    const fetchData = await fetchPokemonData(data);
+    const pokeData = await Promise.all(fetchData);
 
     // ポケモンのイメージ画像を出力する
     newPokemonData.innerHTML = "";
@@ -172,36 +201,11 @@ newPrevious.addEventListener("click", () => {
 let pokemonHistory = [];
 searchBtn.addEventListener("click", () => {
   const searchId = inputText.value;
-  const searchResult = `${API_URL}/${searchId}/`;
+  const searchUrl = `${API_URL}/${searchId}/`;
   newSearchError.innerHTML = "";
   if (searchId.trim() === "") {
     return;
   }
-  async function pokemonSearch() {
-    try {
-      searchLoading.textContent = "検索中...";
-      newSearchError.textContent = "";
-      const searchResponse = await fetch(searchResult);
-      if (!searchResponse.ok) {
-        throw new Error("Failed to fetch");
-      }
-      const search = await searchResponse.json();
-      const result = {
-        id: search.id,
-        name: search.name,
-      };
-      pokemonHistory.unshift(result);
-      newSearchHistory.innerHTML = "";
-      pokemonHistory.forEach((pokemon) => {
-        const resultHistory = document.createElement("div");
-        resultHistory.textContent = `ID: ${pokemon.id} ${pokemon.name}`;
-        newSearchHistory.appendChild(resultHistory);
-      });
-    } catch (error) {
-      newSearchError.textContent = `ID: ${searchId} というポケモンは存在しません`;
-    } finally {
-      searchLoading.textContent = "";
-    }
-  }
-  pokemonSearch();
+  // ポケモンの検索をした時の処理
+  pokemonSearch(searchUrl, searchId);
 });
