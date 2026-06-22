@@ -17,7 +17,111 @@ let limit = 20;
 let currentPage = 1;
 let pageMax = 0;
 
+// ページネーションの数値を計算する関数
+const pagenatoinRange = (pageMax, currentPage) => {
+  let range = [];
+  for (let i = 1; i <= pageMax; i++) {
+    if (
+      i === 1 ||
+      i === pageMax ||
+      i === currentPage ||
+      i === currentPage - 1 ||
+      i === currentPage + 1
+    ) {
+      range.push(i);
+    } else if (range[range.length - 1] !== "...") {
+      range.push("...");
+    }
+  }
+  return range;
+};
+
 // ページネーションを表示する関数
+const pagenationRander = (pageMax, currentPage) => {
+  const newRange = pagenatoinRange(pageMax, currentPage);
+  newPageNum.innerHTML = "";
+  for (let i = 0; i < newRange.length; i++) {
+    const newPage = document.createElement("div");
+    newPage.textContent = `${newRange[i]}`;
+    newPage.style.border = `1px solid ${BORDER_COLOR}`;
+    newPage.style.padding = "10px";
+    newPageNum.appendChild(newPage);
+  }
+};
+
+// pokeAPIの中のurlを取得する関数
+async function fetchPokemonData(data) {
+  let pokeData = [];
+  for (let i = 0; i < data.length; i++) {
+    // pokeAPIの中のURLをfetch
+    const url = data[i].url;
+    const responseData = await fetch(url);
+    if (!responseData.ok) {
+      throw new Error("Failed to fetch");
+    }
+    //pokeAPIのurlからポケモンの情報を取得
+    const resultData = await responseData.json();
+    const pokemonImage = resultData.sprites.front_default;
+    const pokemonName = resultData.name;
+    const pokemonHeight = resultData.height;
+    const pokeWight = resultData.weight;
+    const pokeId = resultData.id;
+    const pokeType = resultData.types;
+    const dataBase = {
+      id: pokeId,
+      name: pokemonName,
+      weight: pokeWight,
+      types: pokeType,
+      height: pokemonHeight,
+      image: pokemonImage,
+    };
+    pokeData.push(dataBase);
+  }
+  return pokeData;
+}
+
+// ポケモンを表示する関数
+const pokemonImageRender = (pokeData) => {
+  for (let i = 0; i < pokeData.length; i++) {
+    const createImage = document.createElement("img");
+    createImage.src = pokeData[i].image;
+
+    const createData = document.createElement("div");
+    createData.style.display = "flex";
+    createData.style.backgroundColor = "#f8f8f8";
+
+    const createStatus = document.createElement("div");
+    createStatus.style.display = "flex";
+    createStatus.style.flexDirection = "column";
+
+    const createName = document.createElement("div");
+    const createHeightWeight = document.createElement("div");
+    const createId = document.createElement("div");
+    const createType = document.createElement("div");
+
+    // 配列で受け取ったタイプの処理
+    let typesArray = [];
+    for (let j = 0; j < pokeData[i].types.length; j++) {
+      const typeName = pokeData[i].types[j].type.name;
+      typesArray.push(typeName);
+    }
+
+    createName.textContent = pokeData[i].name;
+    createHeightWeight.textContent = `高さ: ${pokeData[i].height}/重さ: ${pokeData[i].weight}kg`;
+    createId.textContent = `ID: ${pokeData[i].id}`;
+    createType.textContent = `タイプ: ${typesArray.join(", ")}`;
+
+    newPokemonData.appendChild(createData);
+    createData.appendChild(createImage);
+    createData.appendChild(createStatus);
+    createStatus.appendChild(createName);
+    createStatus.appendChild(createId);
+    createStatus.appendChild(createType);
+    createStatus.appendChild(createHeightWeight);
+  }
+};
+
+// pokeAPIからの情報を処理する関数
 async function pagenation(offset, limit) {
   try {
     newPokemonData.textContent = "ローディング中";
@@ -28,97 +132,16 @@ async function pagenation(offset, limit) {
     const result = await response.json();
     const total = result.count;
     pageMax = Math.ceil(total / limit);
-    let range = [];
-    for (let i = 1; i <= pageMax; i++) {
-      if (
-        i === 1 ||
-        i === pageMax ||
-        i === currentPage ||
-        i === currentPage - 1 ||
-        i === currentPage + 1
-      ) {
-        range.push(i);
-      } else if (range[range.length - 1] !== "...") {
-        range.push("...");
-      }
-    }
-    // ページの作成
-    newPageNum.innerHTML = "";
-    for (let i = 0; i < range.length; i++) {
-      const newPage = document.createElement("div");
-      newPage.textContent = `${range[i]}`;
-      newPage.style.border = `1px solid ${BORDER_COLOR}`;
-      newPage.style.padding = "10px";
-      newPageNum.appendChild(newPage);
-    }
+    // ページネーションを表示
+    pagenationRander(pageMax, currentPage);
+
     // １回目のfetchの配列の中の要素分ループ
     const data = result.results;
-    let pokeData = [];
-    for (let i = 0; i < data.length; i++) {
-      // pokeAPIの中のURLをfetch
-      const url = data[i].url;
-      const responseData = await fetch(url);
-      if (!responseData.ok) {
-        throw new Error("Failed to fetch");
-      }
-      //pokeAPIのurlからポケモンの情報を取得
-      const resultData = await responseData.json();
-      const pokemonImage = resultData.sprites.front_default;
-      const pokemonName = resultData.name;
-      const pokemonHeight = resultData.height;
-      const pokeWight = resultData.weight;
-      const pokeId = resultData.id;
-      const pokeType = resultData.types;
-      const dataBase = {
-        id: pokeId,
-        name: pokemonName,
-        weight: pokeWight,
-        types: pokeType,
-        height: pokemonHeight,
-        image: pokemonImage,
-      };
-      pokeData.push(dataBase);
-    }
+    const pokeData = await fetchPokemonData(data);
 
     // ポケモンのイメージ画像を出力する
     newPokemonData.innerHTML = "";
-    for (let i = 0; i < pokeData.length; i++) {
-      const createImage = document.createElement("img");
-      createImage.src = pokeData[i].image;
-
-      const createData = document.createElement("div");
-      createData.style.display = "flex";
-      createData.style.backgroundColor = "#f8f8f8";
-
-      const createStatus = document.createElement("div");
-      createStatus.style.display = "flex";
-      createStatus.style.flexDirection = "column";
-
-      const createName = document.createElement("div");
-      const createHeightWeight = document.createElement("div");
-      const createId = document.createElement("div");
-      const createType = document.createElement("div");
-
-      // 配列で受け取ったタイプの処理
-      let typesArray = [];
-      for (let j = 0; j < pokeData[i].types.length; j++) {
-        const typeName = pokeData[i].types[j].type.name;
-        typesArray.push(typeName);
-      }
-
-      createName.textContent = pokeData[i].name;
-      createHeightWeight.textContent = `高さ: ${pokeData[i].height}/重さ: ${pokeData[i].weight}kg`;
-      createId.textContent = `ID: ${pokeData[i].id}`;
-      createType.textContent = `タイプ: ${typesArray.join(", ")}`;
-
-      newPokemonData.appendChild(createData);
-      createData.appendChild(createImage);
-      createData.appendChild(createStatus);
-      createStatus.appendChild(createName);
-      createStatus.appendChild(createId);
-      createStatus.appendChild(createType);
-      createStatus.appendChild(createHeightWeight);
-    }
+    pokemonImageRender(pokeData);
   } catch (error) {
     newPokemonData.innerHTML = "<p>ポケモンの取得に失敗しました</p>";
   }
