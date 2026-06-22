@@ -173,7 +173,7 @@ async function pagenation(offset, limit) {
     newPokemonData.innerHTML = "";
     pokemonImageRender(pokeData);
   } catch (error) {
-    newPokemonData.innerHTML = "<p>ポケモンの取得に失敗しました</p>";
+    newPokemonData.textContent = "ポケモンの取得に失敗しました";
   }
 }
 pagenation(offset, limit);
