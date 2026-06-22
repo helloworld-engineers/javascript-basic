@@ -44,7 +44,8 @@ body {
   background-position: center;
 }
 
-//each map ここはJSにてバックグラウンドを変えます
+//each map 
+TODO: ここはJSにてバックグラウンドを変えます
 .grass{
   background-image: url("grass.png");
 }
@@ -81,7 +82,7 @@ body {
 /*battle button*/
 .battle-actions {
   position: absolute;
-  width: 20px;
+  width: 200px;
   display: flex;
   justify-content: center;
   gap: 40px;
