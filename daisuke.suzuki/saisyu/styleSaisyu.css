@@ -34,6 +34,28 @@ body {
 #battle-view {
   display: none;
 }
+/*
+#map-view{
+  background-size: cover;
+  background-position: center;
+}
+
+//each map ここはJSにてバックグラウンドを変えます
+.grass{
+  background-image: url("grass.png");
+}
+
+.volcano{
+  background-image: url("volcano.png");
+}
+
+.seashore{
+  background-image: url("seashore.png");
+}
+
+.village{
+  background-image: url("village.png");
+}*/
 
 /*chara*/
 .character {
