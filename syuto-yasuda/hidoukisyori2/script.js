@@ -1,4 +1,5 @@
 const BORDER_COLOR = "#000000";
+const CREATEDATA_COLOR = "#f8f8f8";
 const newNext = document.getElementById("next");
 const newPageNum = document.getElementById("pageNum");
 const newPokemonData = document.getElementById("pokemonData");
@@ -88,7 +89,7 @@ const pokemonImageRender = (pokeData) => {
 
     const createData = document.createElement("div");
     createData.style.display = "flex";
-    createData.style.backgroundColor = "#f8f8f8";
+    createData.style.backgroundColor = CREATEDATA_COLOR;
 
     const createStatus = document.createElement("div");
     createStatus.style.display = "flex";
