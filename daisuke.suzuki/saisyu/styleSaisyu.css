@@ -138,10 +138,22 @@ TODO: ここはJSにてバックグラウンドを変えます
 /*log*/
 .log-area {
   height: 550px;
-  padding: 10px;
+  padding-left: 10px;
   overflow-y: auto;
 }
 
 #log-list {
+  margin-top: 60px;
   padding-left: 20px;
+}
+
+.logTitle {
+  margin: 0;
+  width: 180px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: #ffffff;
 }
