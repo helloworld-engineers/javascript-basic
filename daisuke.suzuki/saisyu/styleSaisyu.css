@@ -34,6 +34,10 @@ body {
 #battle-view {
   display: none;
 }
+
+/*#map-view {
+  display: none;
+}*/
 /*
 #map-view{
   background-size: cover;
@@ -81,6 +85,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 40px;
+  display: none;
 }
 
 #btn-attack,
