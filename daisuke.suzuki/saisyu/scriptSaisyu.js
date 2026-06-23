@@ -34,7 +34,24 @@ const MONSTERS = {
   },
 };
 
-//ステータス管理：モンスターの状態データ
+//レベルテーブル
+const LEVEL_TABLE = {
+  1: 10,
+  2: 20,
+  3: 30,
+  4: 40,
+  5: 50,
+  6: 60,
+  7: 70,
+  8: 80,
+  9: 90,
+  10: 100,
+  11: 110,
+  12: 120,
+  13: 130,
+  14: 140,
+  15: 150,
+};
 
 //マップマスタデータ
 const MAPS = {
@@ -117,7 +134,7 @@ function borderCheck(direction, playerStatus) {
 //マップ機能：現在地判定
 function mapCheck(playerStatus, MAPS) {
   const { x, y } = playerStatus.position;
-  return Object.entries(MAPS).find(([id, map]) => {
+  const entry = Object.entries(MAPS).find(([id, map]) => {
     return (
       x >= map.area.minX &&
       x <= map.area.maxX &&
@@ -155,10 +172,55 @@ function encountCheck(playerStatus, MAPS) {
 function appearMonsterCheck(MONSTERS) {
   const rand = Math.random();
   if (rand <= MONSTERS["metal_slime"].encounterRate) {
-    return MONSTERS["metal_slime"];
+    return { id: "metal_slime", ...MONSTERS["metal_slime"] };
   } else if (rand <= MONSTERS["dragon"].encounterRate) {
-    return MONSTERS["dragon"];
+    return { id: "dragon", ...MONSTERS["dragon"] };
   } else {
-    return MONSTERS["slime"];
+    return { id: "slime", ...MONSTERS["slime"] };
+  }
+}
+
+//モンスター生成
+function createMonster(monsterId, MONSTERS) {
+  const base = MONSTERS[monsterId];
+  return {
+    enemyId: monsterId,
+    name: base.name,
+    maxHp: base.hp,
+    currentHp: base.hp,
+    attack: base.attack,
+    exp: base.exp,
+  };
+}
+
+//ステータス管理：モンスターの状態
+const monsterId = appearMonsterCheck(MONSTERS).id;
+const monsterStatus = createMonster(monsterId, MONSTERS);
+
+//ステータス管理：ダメージ計算
+function culcHp(currentHp, damage) {
+  const nextHp = Math.max(currentHp - damage, 0);
+  const isDead = nextHp === 0;
+  return {
+    nextHp,
+    isDead,
+  };
+}
+
+//ステータス管理：レベルアップ
+function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
+  let nextExp = currentExp + gainedExp;
+  let nextLevel = currentLevel;
+  let isLevelUp = false;
+  while (isLevelUp === true) {
+    const needExp = LEVEL_TABLE[nextLevel];
+    if (!needExp) break;
+    if (nextExp >= needEXP) {
+      nextExp -= needExp;
+      nextLevel += 1;
+      isLevalUp = true;
+    } else {
+      break;
+    }
   }
 }
