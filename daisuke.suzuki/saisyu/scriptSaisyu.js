@@ -10,39 +10,36 @@ const playerStatus = {
 };
 
 //モンスターマスタデータ
-const MONSTERS = [
-  {
-    id: "slime",
+const MONSTERS = {
+  slime: {
     name: "スライム",
     hp: 20,
     attack: 10,
     exp: 10,
     encounterRate: 0.65,
   },
-  {
-    id: "dragon",
+  dragon: {
     name: "ドラゴン",
     hp: 40,
     attack: 20,
     exp: 15,
     encounterRate: 0.25,
   },
-  {
-    id: "metal_slime",
+  metal_slime: {
     name: "メタルスライム",
     hp: 20,
     attack: 10,
     exp: 30,
     encounterRate: 0.1,
   },
-];
+};
 
 //マップマスタデータ
 const MAPS = {
   grass: {
     name: "草原",
     area: { minX: -30, maxX: 0, minY: -30, maxY: 0 },
-    encounterRate: 0.2,
+    encounterRate: 0.4,
   },
   volcano: {
     name: "火山",
@@ -52,12 +49,12 @@ const MAPS = {
   village: {
     name: "村",
     area: { minX: -30, maxX: 0, minY: 1, maxY: 30 },
-    encounterRate: 0.05,
+    encounterRate: 0.4,
   },
   seashore: {
     name: "海辺",
     area: { minX: 1, maxX: 30, minY: 1, maxY: 30 },
-    encounterRate: 0.15,
+    encounterRate: 0.4,
   },
 };
 
@@ -138,5 +135,3 @@ function changeAria(playerStatus, MAPS) {
   }
   return false;
 }
-
-//マスターデータ：
