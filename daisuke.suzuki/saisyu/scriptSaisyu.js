@@ -96,20 +96,10 @@ function borderCheck(direction, playerStatus) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
-  switch (direction) {
-    case DIRECTION.UP:
-      nextY -= 1;
-      break;
-    case DIRECTION.DOWN:
-      nextY += 1;
-      break;
-    case DIRECTION.LEFT:
-      nextX -= 1;
-      break;
-    case DIRECTION.RIGHT:
-      nextX += 1;
-      break;
-  }
+  if (direction === DIRECTION.UP) nextY -= 1;
+  if (direction === DIRECTION.DOWN) nextY += 1;
+  if (direction === DIRECTION.LEFT) nextX -= 1;
+  if (direction === DIRECTION.RIGHT) nextX += 1;
   if (
     nextX >= WORLD.minX &&
     nextX <= WORLD.maxX &&
