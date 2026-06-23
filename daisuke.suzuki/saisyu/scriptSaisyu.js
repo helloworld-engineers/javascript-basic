@@ -10,32 +10,29 @@ const playerStatus = {
 };
 
 //モンスターマスタデータ
-const MONSTERS = [
-  {
-    id: "slime",
+const MONSTERS = {
+  slime: {
     name: "スライム",
     hp: 20,
     attack: 10,
     exp: 10,
     encounterRate: 0.65,
   },
-  {
-    id: "dragon",
+  dragon: {
     name: "ドラゴン",
     hp: 40,
     attack: 20,
     exp: 15,
     encounterRate: 0.25,
   },
-  {
-    id: "metal_slime",
+  metal_slime: {
     name: "メタルスライム",
     hp: 20,
     attack: 10,
     exp: 30,
     encounterRate: 0.1,
   },
-];
+};
 
 //マップマスタデータ
 const MAPS = {
@@ -138,5 +135,3 @@ function changeAria(playerStatus, MAPS) {
   }
   return false;
 }
-
-//マスターデータ：
