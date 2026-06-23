@@ -96,10 +96,20 @@ function borderCheck(direction, playerStatus) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
-  if (direction === DIRECTION.UP) nextY -= 1;
-  if (direction === DIRECTION.DOWN) nextY += 1;
-  if (direction === DIRECTION.LEFT) nextX -= 1;
-  if (direction === DIRECTION.RIGHT) nextX += 1;
+  switch (direction) {
+    case DIRECTION.UP:
+      nextY -= 1;
+      break;
+    case DIRECTION.DOWN:
+      nextY += 1;
+      break;
+    case DIRECTION.LEFT:
+      nextX -= 1;
+      break;
+    case DIRECTION.RIGHT:
+      nextX += 1;
+      break;
+  }
   if (
     nextX >= WORLD.minX &&
     nextX <= WORLD.maxX &&
@@ -138,14 +148,14 @@ function changeAria(playerStatus, MAPS) {
 
 //エンカウント機能：エンカウント判定
 function encountCheck(playerStatus, MAPS) {
-  let rand = Math.random();
+  const rand = Math.random();
   const currentMap = MAPS[playerStatus.mapId];
   return rand < currentMap.encounterRate;
 }
 
 //エンカウント機能：出現モンスター判定
 function appearMonsterCheck(MONSTERS) {
-  let rand = Math.random();
+  const rand = Math.random();
   if (rand <= MONSTERS["metal_slime"].encounterRate) {
     return MONSTERS["metal_slime"];
   } else if (rand <= MONSTERS["dragon"].encounterRate) {
