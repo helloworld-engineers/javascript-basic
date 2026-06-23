@@ -1,4 +1,4 @@
-//マスターデータ：プレイヤーマスタデータ
+//マスターデータ：プレイヤーマスタデータ：状態データ
 const playerStatus = {
   hp: 100,
   maxHp: 100,
@@ -32,6 +32,25 @@ const MONSTERS = {
     exp: 30,
     encounterRate: 0.1,
   },
+};
+
+//レベルテーブル
+const LEVEL_TABLE = {
+  1: 10,
+  2: 20,
+  3: 30,
+  4: 40,
+  5: 50,
+  6: 60,
+  7: 70,
+  8: 80,
+  9: 90,
+  10: 100,
+  11: 110,
+  12: 120,
+  13: 130,
+  14: 140,
+  15: 150,
 };
 
 //マップマスタデータ
@@ -96,10 +115,10 @@ function borderCheck(direction, playerStatus) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
-  if (direction === "UP") nextY -= 1;
-  if (direction === "DOWN") nextY += 1;
-  if (direction === "LEFT") nextX -= 1;
-  if (direction === "RIGHT") nextX += 1;
+  if (direction === DIRECTION.UP) nextY -= 1;
+  if (direction === DIRECTION.DOWN) nextY += 1;
+  if (direction === DIRECTION.LEFT) nextX -= 1;
+  if (direction === DIRECTION.RIGHT) nextX += 1;
   if (
     nextX >= WORLD.minX &&
     nextX <= WORLD.maxX &&
@@ -115,7 +134,7 @@ function borderCheck(direction, playerStatus) {
 //マップ機能：現在地判定
 function mapCheck(playerStatus, MAPS) {
   const { x, y } = playerStatus.position;
-  return MAPS.find((map) => {
+  const entry = Object.entries(MAPS).find(([id, map]) => {
     return (
       x >= map.area.minX &&
       x <= map.area.maxX &&
@@ -123,6 +142,12 @@ function mapCheck(playerStatus, MAPS) {
       y <= map.area.maxY
     );
   });
+  if (!entry) return null;
+  const [id, map] = entry;
+  return {
+    id,
+    ...map,
+  };
 }
 
 //マップ機能：エリア遷移(座標変更前後のマップ情報比較)
@@ -134,4 +159,23 @@ function changeAria(playerStatus, MAPS) {
     return true;
   }
   return false;
+}
+
+//エンカウント機能：エンカウント判定
+function encountCheck(playerStatus, MAPS) {
+  const rand = Math.random();
+  const currentMap = MAPS[playerStatus.mapId];
+  return rand < currentMap.encounterRate;
+}
+
+//エンカウント機能：出現モンスター判定
+function appearMonsterCheck(MONSTERS) {
+  const rand = Math.random();
+  if (rand <= MONSTERS["metal_slime"].encounterRate) {
+    return { id: "metal_slime", ...MONSTERS["metal_slime"] };
+  } else if (rand <= MONSTERS["dragon"].encounterRate) {
+    return { id: "dragon", ...MONSTERS["dragon"] };
+  } else {
+    return { id: "slime", ...MONSTERS["slime"] };
+  }
 }
