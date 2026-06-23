@@ -218,7 +218,7 @@ function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
     if (nextExp >= needEXP) {
       nextExp -= needExp;
       nextLevel += 1;
-      isLevalUp = true;
+      isLevelUp = true;
     } else {
       break;
     }
