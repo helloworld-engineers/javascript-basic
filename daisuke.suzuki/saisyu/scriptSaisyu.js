@@ -39,7 +39,7 @@ const MAPS = {
   grass: {
     name: "草原",
     area: { minX: -30, maxX: 0, minY: -30, maxY: 0 },
-    encounterRate: 0.2,
+    encounterRate: 0.4,
   },
   volcano: {
     name: "火山",
@@ -49,12 +49,12 @@ const MAPS = {
   village: {
     name: "村",
     area: { minX: -30, maxX: 0, minY: 1, maxY: 30 },
-    encounterRate: 0.05,
+    encounterRate: 0.4,
   },
   seashore: {
     name: "海辺",
     area: { minX: 1, maxX: 30, minY: 1, maxY: 30 },
-    encounterRate: 0.15,
+    encounterRate: 0.4,
   },
 };
 
