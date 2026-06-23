@@ -1,4 +1,4 @@
-//マスターデータ：プレイヤーマスタデータ
+//マスターデータ：プレイヤーマスタデータ：状態データ
 const playerStatus = {
   hp: 100,
   maxHp: 100,
@@ -33,6 +33,8 @@ const MONSTERS = {
     encounterRate: 0.1,
   },
 };
+
+//ステータス管理：モンスターの状態データ
 
 //マップマスタデータ
 const MAPS = {
@@ -115,7 +117,7 @@ function borderCheck(direction, playerStatus) {
 //マップ機能：現在地判定
 function mapCheck(playerStatus, MAPS) {
   const { x, y } = playerStatus.position;
-  return MAPS.find((map) => {
+  return Object.entries(MAPS).find(([id, map]) => {
     return (
       x >= map.area.minX &&
       x <= map.area.maxX &&
@@ -123,6 +125,12 @@ function mapCheck(playerStatus, MAPS) {
       y <= map.area.maxY
     );
   });
+  if (!entry) return null;
+  const [id, map] = entry;
+  return {
+    id,
+    ...map,
+  };
 }
 
 //マップ機能：エリア遷移(座標変更前後のマップ情報比較)
