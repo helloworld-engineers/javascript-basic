@@ -64,23 +64,21 @@ const canMove = (direction) => {
 
 // 現在のエリアを判定する関数
 const areaCheck = (playerPosition) => {
-  let currentArea = [];
   if (playerPosition.x === 0 || playerPosition.y === 0) {
-    currentArea.push("grassland");
+    return "grassland";
   }
   if (playerPosition.x > 0 && playerPosition.y > 0) {
-    currentArea.push("sky");
+    return "sky";
   }
   if (playerPosition.x > 0 && playerPosition.y < 0) {
-    currentArea.push("sea");
+    return "sea";
   }
   if (playerPosition.x < 0 && playerPosition.y < 0) {
-    currentArea.push("castle");
+    return "castle";
   }
   if (playerPosition.x < 0 && playerPosition.y > 0) {
-    currentArea.push("volcano");
+    return "volcano";
   }
-  return currentArea;
 };
 
 // 上ボタンを押した時の処理
@@ -91,6 +89,7 @@ upBtn.addEventListener("click", () => {
   }
   moveCharacter(direction);
   areaCheck(playerPosition);
+  const currentArea = areaCheck(playerPosition);
   // Todo: ログに出力する
 });
 
@@ -102,6 +101,7 @@ downBtn.addEventListener("click", () => {
   }
   moveCharacter(direction);
   areaCheck(playerPosition);
+  const currentArea = areaCheck(playerPosition);
   // Todo: ログに出力する
 });
 
@@ -113,6 +113,7 @@ leftBtn.addEventListener("click", () => {
   }
   moveCharacter(direction);
   areaCheck(playerPosition);
+  const currentArea = areaCheck(playerPosition);
   // Todo: ログに出力する
 });
 
@@ -124,5 +125,6 @@ rightBtn.addEventListener("click", () => {
   }
   moveCharacter(direction);
   areaCheck(playerPosition);
+  const currentArea = areaCheck(playerPosition);
   // Todo: ログに出力する
 });
