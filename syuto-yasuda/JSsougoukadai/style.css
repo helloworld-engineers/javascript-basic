@@ -31,7 +31,7 @@
   flex-direction: column;
   width: 200px;
   height: 800px;
-  overflow: scroll;
+  overflow-y: auto;
   text-align: center;
   padding: 30px;
 }
