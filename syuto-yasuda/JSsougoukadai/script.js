@@ -26,5 +26,3 @@ const masterMonsters = {
     appearanceRate: 10,
   },
 };
-
-let currentMonsters = randomMonster(MasterMonsters);
