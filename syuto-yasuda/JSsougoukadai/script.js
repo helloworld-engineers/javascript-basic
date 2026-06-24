@@ -2,6 +2,8 @@ const newUpBtn = document.getElementById("upBtn");
 const newLeftBtn = document.getElementById("leftBtn");
 const newRightBtn = document.getElementById("rightBtn");
 const newDownBtn = document.getElementById("downBtn");
+const MAX_POSIOTION = 30;
+const MIN_POSITION = -30;
 
 let player = {
   HP: 100,
@@ -48,41 +50,55 @@ const moveCharacter = (direction) => {
   if (direction === "right") {
     playerPosition.x += 1;
   }
+  console.log(playerPosition);
   return playerPosition;
+};
+
+// マップの上限か判定をする関数
+const canMove = (direction) => {
+  if (direction === "up" && playerPosition.y < MAX_POSIOTION) return false;
+  if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
+  if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
+  if (direction === "right" && playerPosition.x < MAX_POSIOTION) return false;
+  return true;
 };
 
 // 上ボタンを押した時の処理
 newUpBtn.addEventListener("click", () => {
-  if (playerPosition.y === 30) {
+  const direction = "up";
+  if (canMove(direction)) {
     return;
   }
-  const direction = "up";
   moveCharacter(direction);
+  // .todoログに出力する
 });
 
 // 下ボタンを押した時の処理
 newDownBtn.addEventListener("click", () => {
-  if (playerPosition.y === -30) {
+  const direction = "down";
+  if (canMove(direction)) {
     return;
   }
-  const direction = "down";
   moveCharacter(direction);
+  // .todoログに出力する
 });
 
 // 左ボタンを押した時の処理
 newLeftBtn.addEventListener("click", () => {
-  if (playerPosition.x === -30) {
+  const direction = "left";
+  if (canMove(direction)) {
     return;
   }
-  const direction = "left";
   moveCharacter(direction);
+  // .todoログに出力する
 });
 
 // 右ボタンを押した時の処理
 newRightBtn.addEventListener("click", () => {
-  if (playerPosition.x === 30) {
+  const direction = "right";
+  if (canMove(direction)) {
     return;
   }
-  const direction = "right";
   moveCharacter(direction);
+  // .todoログに出力する
 });
