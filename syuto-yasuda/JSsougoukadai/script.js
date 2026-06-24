@@ -79,6 +79,7 @@ const areaCheck = (playerPosition) => {
   if (playerPosition.x < 0 && playerPosition.y > 0) {
     return "volcano";
   }
+  return unkhown; //どこにも当てはまらない時の保険
 };
 
 // 上ボタンを押した時の処理
@@ -90,7 +91,7 @@ upBtn.addEventListener("click", () => {
   moveCharacter(direction);
   areaCheck(playerPosition);
   const currentArea = areaCheck(playerPosition);
-  // Todo: ログに出力する
+  // Todo: 移動ログ出力する
 });
 
 // 下ボタンを押した時の処理
@@ -102,7 +103,7 @@ downBtn.addEventListener("click", () => {
   moveCharacter(direction);
   areaCheck(playerPosition);
   const currentArea = areaCheck(playerPosition);
-  // Todo: ログに出力する
+  // Todo: 移動ログを出力する
 });
 
 // 左ボタンを押した時の処理
@@ -114,7 +115,7 @@ leftBtn.addEventListener("click", () => {
   moveCharacter(direction);
   areaCheck(playerPosition);
   const currentArea = areaCheck(playerPosition);
-  // Todo: ログに出力する
+  // Todo: 移動ログを出力する
 });
 
 // 右ボタンを押した時の処理
@@ -126,5 +127,5 @@ rightBtn.addEventListener("click", () => {
   moveCharacter(direction);
   areaCheck(playerPosition);
   const currentArea = areaCheck(playerPosition);
-  // Todo: ログに出力する
+  // Todo: 移動ログを出力する
 });
