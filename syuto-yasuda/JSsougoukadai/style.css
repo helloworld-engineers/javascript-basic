@@ -1,0 +1,75 @@
+.layout {
+  display: flex;
+  padding: 30px;
+  margin: 30px;
+  gap: 20px;
+}
+
+.gameArea {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000;
+  width: 800px;
+}
+
+.playerImage {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.characterStatus {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  align-items: flex-start;
+}
+
+.logArea {
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 800px;
+  overflow: scroll;
+  text-align: center;
+  padding: 30px;
+}
+
+.rightLeft {
+  display: flex;
+  gap: 48px;
+}
+
+.clickBtn {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.direction {
+  width: 100px;
+}
+
+.top,
+.down {
+  margin-left: 75px;
+}
+
+.imageContainer {
+  margin: auto;
+}
+
+.top {
+  transform: rotate(180deg);
+}
+
+.left {
+  transform: rotate(90deg);
+}
+
+.right {
+  transform: rotate(-90deg);
+}
