@@ -1,3 +1,10 @@
+const upBtn = document.getElementById("upBtn");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const downBtn = document.getElementById("downBtn");
+const MAX_POSIOTION = 30;
+const MIN_POSITION = -30;
+
 let player = {
   HP: 100,
   attack: 10,
@@ -27,4 +34,70 @@ const masterMonsters = {
   },
 };
 
-let currentMonsters = randomMonster(MasterMonsters);
+// 移動キーを押した時にプレイヤーの位置を移動する関数
+const moveCharacter = (direction) => {
+  if (direction === "up") {
+    playerPosition.y += 1;
+  }
+  if (direction === "down") {
+    playerPosition.y -= 1;
+  }
+
+  if (direction === "left") {
+    playerPosition.x -= 1;
+  }
+
+  if (direction === "right") {
+    playerPosition.x += 1;
+  }
+  return playerPosition;
+};
+
+// マップの上限か判定をする関数
+const canMove = (direction) => {
+  if (direction === "up" && playerPosition.y < MAX_POSIOTION) return false;
+  if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
+  if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
+  if (direction === "right" && playerPosition.x < MAX_POSIOTION) return false;
+  return true;
+};
+
+// 上ボタンを押した時の処理
+upBtn.addEventListener("click", () => {
+  const direction = "up";
+  if (canMove(direction)) {
+    return;
+  }
+  moveCharacter(direction);
+  // Todo: ログに出力する
+});
+
+// 下ボタンを押した時の処理
+downBtn.addEventListener("click", () => {
+  const direction = "down";
+  if (canMove(direction)) {
+    return;
+  }
+  moveCharacter(direction);
+  // Todo: ログに出力する
+});
+
+// 左ボタンを押した時の処理
+leftBtn.addEventListener("click", () => {
+  const direction = "left";
+  if (canMove(direction)) {
+    return;
+  }
+  moveCharacter(direction);
+  // Todo: ログに出力する
+});
+
+// 右ボタンを押した時の処理
+rightBtn.addEventListener("click", () => {
+  const direction = "right";
+  if (canMove(direction)) {
+    return;
+  }
+  moveCharacter(direction);
+  // Todo: ログに出力する
+});
