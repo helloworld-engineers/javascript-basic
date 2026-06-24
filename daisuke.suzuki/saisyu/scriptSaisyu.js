@@ -258,7 +258,6 @@ function isEscapeSuccess(escapeRate) {
 //戦闘時：勝利時経験値処理
 function applyExp(playerStatus, enemyStatus) {
   const gainExp = enemyStatus.exp;
-
   const levelResult = levelUp(
     playerStatus.exp,
     gainExp,
