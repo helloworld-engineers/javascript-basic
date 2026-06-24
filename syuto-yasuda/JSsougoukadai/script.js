@@ -62,6 +62,25 @@ const canMove = (direction) => {
   return true;
 };
 
+// モンスターが出現するか決める関数
+const encounterCheck = () => {
+  return Math.random() < 0.4;
+};
+
+// 出現するモンスターを決める関数
+const randomMonsters = (masterMonsters) => {
+  let selectMonster;
+  const randomNum = Math.random();
+  if (randomNum <= 0.1) {
+    selectMonster = masterMonsters.metalslime;
+  } else if (randomNum <= 0.35) {
+    selectMonster = masterMonsters.doragon;
+  } else {
+    selectMonster = masterMonsters.slime;
+  }
+  return selectMonster;
+};
+
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
   const direction = "up";
@@ -69,6 +88,7 @@ upBtn.addEventListener("click", () => {
     return;
   }
   moveCharacter(direction);
+  encounterCheck();
   // Todo: ログに出力する
 });
 
