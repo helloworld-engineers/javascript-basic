@@ -1,7 +1,7 @@
-const newUpBtn = document.getElementById("upBtn");
-const newLeftBtn = document.getElementById("leftBtn");
-const newRightBtn = document.getElementById("rightBtn");
-const newDownBtn = document.getElementById("downBtn");
+const upBtn = document.getElementById("upBtn");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const downBtn = document.getElementById("downBtn");
 const MAX_POSIOTION = 30;
 const MIN_POSITION = -30;
 
@@ -64,41 +64,41 @@ const canMove = (direction) => {
 };
 
 // 上ボタンを押した時の処理
-newUpBtn.addEventListener("click", () => {
+upBtn.addEventListener("click", () => {
   const direction = "up";
   if (canMove(direction)) {
     return;
   }
   moveCharacter(direction);
-  // .todoログに出力する
+  // Todo: ログに出力する
 });
 
 // 下ボタンを押した時の処理
-newDownBtn.addEventListener("click", () => {
+downBtn.addEventListener("click", () => {
   const direction = "down";
   if (canMove(direction)) {
     return;
   }
   moveCharacter(direction);
-  // .todoログに出力する
+  // Todo: ログに出力する
 });
 
 // 左ボタンを押した時の処理
-newLeftBtn.addEventListener("click", () => {
+leftBtn.addEventListener("click", () => {
   const direction = "left";
   if (canMove(direction)) {
     return;
   }
   moveCharacter(direction);
-  // .todoログに出力する
+  // Todo: ログに出力する
 });
 
 // 右ボタンを押した時の処理
-newRightBtn.addEventListener("click", () => {
+rightBtn.addEventListener("click", () => {
   const direction = "right";
   if (canMove(direction)) {
     return;
   }
   moveCharacter(direction);
-  // .todoログに出力する
+  // Todo: ログに出力する
 });
