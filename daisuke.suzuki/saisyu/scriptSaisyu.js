@@ -233,3 +233,96 @@ function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
     isLevelUp,
   };
 }
+
+//戦闘時：戦闘開始
+function startBtl(playerStatus, enemyStatus) {
+  return {
+    playerHp: playerStatus.hp,
+    enemyHp: enemyStatus.currentHp,
+  };
+}
+//戦闘時：両者ステータス生成
+let battleState = startBtl(playerStatus, monsterStatus);
+
+//戦闘時：攻撃処理
+function calcDamage(attackerAtk) {
+  return Math.max(1, attackerAtk);
+}
+
+//戦闘時：逃走処理
+function isEscapeSuccess(escapeRate) {
+  let rand = Math.random();
+  return rand < escapeRate;
+}
+
+//戦闘時：勝利時経験値処理
+function applyExp(playerStatus, enemyStatus) {
+  const gainExp = enemyStatus.exp;
+  const levelResult = levelUp(
+    playerStatus.exp,
+    gainExp,
+    playerStatus.level,
+    LEVEL_TABLE,
+  );
+  playerStatus.exp = levelResult.nextExp;
+  playerStatus.level = levelResult.nextLevel;
+  return {
+    gainExp,
+    isLevelUp: levelResult.isLevelUp,
+  };
+}
+
+//戦闘時：プレイヤー攻撃時処理
+function inputAttack(state, playerAtk, enemyAtk) {
+  //プレイヤー攻撃
+  const damage = calcDamage(playerAtk);
+  const playerResult = calcHp(state.enemyHp, damage);
+  state.enemyHp = playerResult.nextHp;
+  //log
+  console.log(`敵に${damage}ダメージ！ 残りHP: ${state.enemyHp}`); //ログに追加予定
+  //敵死亡判定
+  if (playerResult.isDead) {
+    //log
+    console.log("敵は倒れた！"); //ログに追加予定
+    return "win";
+  }
+  //敵の攻撃
+  const enemyDamage = calcDamage(enemyAtk);
+  const enemyResult = calcHp(state.playerHp, enemyDamage);
+  state.playerHp = enemyResult.nextHp;
+  console.log(
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`, //ログに追加予定
+  );
+  //プレイヤー死亡判定
+  if (enemyResult.isDead) {
+    console.log("敗北..."); //ログに追加予定
+    return "lose";
+  }
+  return "continue";
+}
+
+//戦闘時：プレイヤー逃走処理
+function inputEscape(state, enemyAtk, escapeRate) {
+  if (isEscapeSuccess(escapeRate)) {
+    //log
+    console.log("逃走成功！"); //ログに追加予定
+    return "escape";
+  }
+  //log
+  console.log("逃走失敗"); //ログに追加予定
+  //失敗したら敵攻撃
+  const enemyDamage = calcDamage(enemyAtk);
+  const enemyResult = calcHp(state.playerHp, enemyDamage);
+  state.playerHp = enemyResult.nextHp;
+  //log
+  console.log(
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`, //ログに追加予定
+  );
+  //プレイヤー死亡判定
+  if (enemyResult.isDead) {
+    //log
+    console.log("敗北..."); //ログに追加予定
+    return "lose";
+  }
+  return "continue";
+}
