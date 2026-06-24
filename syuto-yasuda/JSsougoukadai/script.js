@@ -50,7 +50,6 @@ const moveCharacter = (direction) => {
   if (direction === "right") {
     playerPosition.x += 1;
   }
-  console.log(playerPosition);
   return playerPosition;
 };
 
