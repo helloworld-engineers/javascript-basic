@@ -241,6 +241,8 @@ function startBtl(playerStatus, enemyStatus) {
     enemyHp: enemyStatus.currentHp,
   };
 }
+//戦闘時：両者ステータス生成
+let battleState = startBtl(playerStatus, monsterStatus);
 
 //戦闘時：攻撃処理
 function calcDamage(attackerAtk) {
@@ -270,8 +272,6 @@ function applyExp(playerStatus, enemyStatus) {
     isLevelUp: levelResult.isLevelUp,
   };
 }
-
-let battleState = startBtl(playerStatus, monsterStatus);
 
 //戦闘時：プレイヤー攻撃時処理
 function inputAttack(state, playerAtk, enemyAtk) {
@@ -303,7 +303,7 @@ function inputAttack(state, playerAtk, enemyAtk) {
 }
 
 //戦闘時：プレイヤー逃走処理
-function inputEscape(state, enemyAtk) {
+function inputEscape(state, enemyAtk, escapeRate) {
   if (isEscapeSuccess(escapeRate)) {
     //log
     console.log("逃走成功！"); //ログに追加予定
