@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS総合課題</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <div class="gameArea">
+        <div class="characterStatus">
+          <div class="statusText">HP:<span id="hp">100</span></div>
+          <div class="statusText">攻撃力:<span id="attack">10</span></div>
+          <div class="statusText">レベル:<span id="level">1</span></div>
+        </div>
+        <div class="imageContainer">
+          <img src="syuzinnkou.jpeg" alt="主人公の画像" class="playerImage" />
+        </div>
+        <div class="clickBtn">
+          <img src="down.png" alt="上矢印" class="direction top" />
+          <div class="rightLeft">
+            <img src="down.png" alt="左矢印" class="direction left" />
+            <img src="down.png" alt="右矢印" class="direction right" />
+          </div>
+          <img src="down.png" alt="下矢印" class="direction down" />
+        </div>
+      </div>
+      <div class="logArea">ログ</div>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>
