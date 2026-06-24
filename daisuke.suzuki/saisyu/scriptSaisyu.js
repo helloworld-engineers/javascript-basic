@@ -12,6 +12,7 @@ const playerStatus = {
 //モンスターマスタデータ
 const MONSTERS = {
   slime: {
+    id: "slime",
     name: "スライム",
     hp: 20,
     attack: 10,
@@ -19,6 +20,7 @@ const MONSTERS = {
     encounterRate: 0.65,
   },
   dragon: {
+    id: "dragon",
     name: "ドラゴン",
     hp: 40,
     attack: 20,
@@ -26,6 +28,7 @@ const MONSTERS = {
     encounterRate: 0.25,
   },
   metal_slime: {
+    id: "metal_slime",
     name: "メタルスライム",
     hp: 20,
     attack: 10,
@@ -77,6 +80,10 @@ const MAPS = {
   },
 };
 
+//逃走成功確率
+const escapeRate = 0.5;
+
+//移動方向
 const DIRECTION = {
   UP: "UP",
   DOWN: "DOWN",
@@ -84,8 +91,7 @@ const DIRECTION = {
   RIGHT: "RIGHT",
 };
 
-let isMoveValid = true;
-
+//フィールドの範囲
 const WORLD = {
   minX: -30,
   maxX: 30,
@@ -115,20 +121,18 @@ function borderCheck(direction, playerStatus) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
+
   if (direction === DIRECTION.UP) nextY -= 1;
   if (direction === DIRECTION.DOWN) nextY += 1;
   if (direction === DIRECTION.LEFT) nextX -= 1;
   if (direction === DIRECTION.RIGHT) nextX += 1;
-  if (
+
+  return (
     nextX >= WORLD.minX &&
     nextX <= WORLD.maxX &&
     nextY >= WORLD.minY &&
     nextY <= WORLD.maxY
-  ) {
-    isMoveValid = true;
-  } else {
-    isMoveValid = false;
-  }
+  );
 }
 
 //マップ機能：現在地判定
@@ -172,16 +176,16 @@ function encountCheck(playerStatus, MAPS) {
 function appearMonsterCheck(MONSTERS) {
   const rand = Math.random();
   if (rand <= MONSTERS["metal_slime"].encounterRate) {
-    return { id: "metal_slime", ...MONSTERS["metal_slime"] };
+    return "metal_slime";
   } else if (rand <= MONSTERS["dragon"].encounterRate) {
-    return { id: "dragon", ...MONSTERS["dragon"] };
+    return "dragon";
   } else {
-    return { id: "slime", ...MONSTERS["slime"] };
+    return "slime";
   }
 }
 
 //モンスター生成
-function createMonster(monsterId, MONSTERS) {
+function createMonster(MONSTERS, monsterId) {
   const base = MONSTERS[monsterId];
   return {
     enemyId: monsterId,
@@ -194,11 +198,11 @@ function createMonster(monsterId, MONSTERS) {
 }
 
 //ステータス管理：モンスターの状態
-const monsterId = appearMonsterCheck(MONSTERS).id;
-const monsterStatus = createMonster(monsterId, MONSTERS);
+const monsterId = appearMonsterCheck(MONSTERS);
+const monsterStatus = createMonster(MONSTERS, monsterId);
 
 //ステータス管理：ダメージ計算
-function culcHp(currentHp, damage) {
+function calcHp(currentHp, damage) {
   const nextHp = Math.max(currentHp - damage, 0);
   const isDead = nextHp === 0;
   return {
@@ -212,10 +216,10 @@ function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
   let nextExp = currentExp + gainedExp;
   let nextLevel = currentLevel;
   let isLevelUp = false;
-  while (isLevelUp === true) {
+  while (true) {
     const needExp = LEVEL_TABLE[nextLevel];
     if (!needExp) break;
-    if (nextExp >= needEXP) {
+    if (nextExp >= needExp) {
       nextExp -= needExp;
       nextLevel += 1;
       isLevelUp = true;
@@ -223,4 +227,9 @@ function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
       break;
     }
   }
+  return {
+    nextExp,
+    nextLevel,
+    isLevelUp,
+  };
 }
