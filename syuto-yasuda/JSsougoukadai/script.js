@@ -131,7 +131,7 @@ const judgeEscape = () => {
 };
 
 // ゲームオーバーの関数
-const gameOver = (isDie) => {
+const gameOver = () => {
   if (isDie(player)) {
     alert("ゲームオーバー");
   }
