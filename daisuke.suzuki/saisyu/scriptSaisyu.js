@@ -99,6 +99,30 @@ const WORLD = {
   maxY: 30,
 };
 
+//画面遷移：画面状態
+let MODE = {
+  MAP: "MAP",
+  BATTLE: "BATTLE",
+};
+let currentMode = MODE.MAP;
+//画面遷移：画面遷移
+function changeMode(nextMode) {
+  currentMode = nextMode;
+
+  if (currentMode === MODE.MAP) {
+    document.getElementById("map-screen").style.display = "block";
+    document.getElementById("battle-screen").style.display = "none";
+  }
+
+  if (currentMode === MODE.BATTLE) {
+    document.getElementById("map-screen").style.display = "none";
+    document.getElementById("battle-screen").style.display = "block";
+  }
+}
+
+changeMode(currentMode);
+console.log(currentMode);
+
 //ログ表示：ログ配列
 let logList = [];
 const LOG_TYPE = {
