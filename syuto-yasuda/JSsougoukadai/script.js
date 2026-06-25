@@ -4,6 +4,9 @@ const rightBtn = document.getElementById("rightBtn");
 const downBtn = document.getElementById("downBtn");
 const MAX_POSIOTION = 30;
 const MIN_POSITION = -30;
+const METALSLIME_RATE = 0.1;
+const DORADON_RATE = 0.35;
+const ENCOUNT_RATE = 0.4;
 
 let player = {
   HP: 100,
@@ -62,6 +65,25 @@ const canMove = (direction) => {
   return true;
 };
 
+// モンスターが出現するか決める関数
+const encounterCheck = () => {
+  return Math.random() < ENCOUNT_RATE;
+};
+
+// 出現するモンスターを決める関数
+const randomMonsters = (masterMonsters) => {
+  let selectMonster;
+  const randomNum = Math.random();
+  if (randomNum <= METALSLIME_RATE) {
+    selectMonster = masterMonsters.metalslime;
+  } else if (randomNum <= DORADON_RATE) {
+    selectMonster = masterMonsters.doragon;
+  } else {
+    selectMonster = masterMonsters.slime;
+  }
+  return selectMonster;
+};
+
 // 現在のエリアを判定する関数
 const areaCheck = (playerPosition) => {
   if (playerPosition.x === 0 || playerPosition.y === 0) {
@@ -89,6 +111,7 @@ upBtn.addEventListener("click", () => {
     return;
   }
   moveCharacter(direction);
+  // Todo: ログに出力する
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログ出力する
 });
