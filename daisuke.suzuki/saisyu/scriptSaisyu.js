@@ -37,10 +37,10 @@ const MONSTERS = {
   },
 };
 
-//レベルテーブル
+//レベルテーブル 30ずつでレベルアップする
 const LEVEL_TABLE = {
-  1: 10,
-  2: 20,
+  1: 30,
+  2: 30,
   3: 30,
   4: 40,
   5: 50,
@@ -98,6 +98,60 @@ const WORLD = {
   minY: -30,
   maxY: 30,
 };
+
+//画面遷移：画面状態
+let MODE = {
+  MAP: "MAP",
+  BATTLE: "BATTLE",
+};
+let currentMode = MODE.MAP;
+//画面遷移：画面遷移
+function changeMode(nextMode) {
+  currentMode = nextMode;
+
+  if (currentMode === MODE.MAP) {
+    document.getElementById("map-screen").style.display = "block";
+    document.getElementById("battle-screen").style.display = "none";
+  }
+
+  if (currentMode === MODE.BATTLE) {
+    document.getElementById("map-screen").style.display = "none";
+    document.getElementById("battle-screen").style.display = "block";
+  }
+}
+
+changeMode(currentMode);
+console.log(currentMode);
+
+//ログ表示：ログ配列
+let logList = [];
+const LOG_TYPE = {
+  INFO: "INFO",
+  SYSTEM: "SYSTEM",
+  BATTLE: "BATTLE",
+};
+
+//ログ表示：ログ追加
+function addLog(message, type = LOG_TYPE.INFO) {
+  logList.push({
+    message,
+    type,
+  });
+  renderLogs(message, type);
+}
+
+//ログ表示：ログ描画
+function renderLogs(message, type = LOG_TYPE.INFO) {
+  const ul = document.getElementById("log-list");
+  ul.innerHTML = ""; // まずリストを空にする
+  logList.forEach(({ message, type }) => {
+    const li = document.createElement("li");
+    li.className = `log ${type}`;
+    li.textContent = message;
+    ul.appendChild(li);
+  });
+  ul.scrollTop = ul.scrollHeight;
+}
 
 //マップ機能：移動関数
 function move(direction, playerStatus) {
@@ -315,13 +369,14 @@ function inputEscape(state, enemyAtk, escapeRate) {
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
   //log
-  console.log(
-    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`, //ログに追加予定
+  addLog(
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
+    LOG_TYPE.BATTLE,
   );
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
     //log
-    console.log("敗北..."); //ログに追加予定
+    addLog("敗北...", LOG_TYPE.SYSTEM);
     return "lose";
   }
   return "continue";

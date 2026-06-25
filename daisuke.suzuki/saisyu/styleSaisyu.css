@@ -30,14 +30,18 @@ body {
   overflow: hidden;
 }
 
-/*map*/
-#battle-view {
-  display: none;
+#battle-screen {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
 }
 
-/*#map-view {
-  display: none;
-}*/
+/*map*/
+#battle-view {
+  flex: 1;
+}
 /*
 #map-view{
   background-size: cover;
@@ -81,12 +85,13 @@ TODO: ここはJSにてバックグラウンドを変えます
 
 /*battle button*/
 .battle-actions {
-  position: absolute;
-  width: 200px;
+  position: relative;
+  width: 500px;
   display: flex;
   justify-content: center;
   gap: 40px;
-  display: none;
+  margin-top: auto;
+  margin-bottom: 40px;
 }
 
 #btn-attack,
