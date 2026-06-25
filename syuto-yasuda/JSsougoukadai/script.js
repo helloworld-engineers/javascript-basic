@@ -6,7 +6,7 @@ const characterImage = document.getElementById("characterImage");
 const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
 const BTN_BACKGROUND_COLOR = "#fff";
-const MAX_POSIOTION = 30;
+const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
 const DORADON_RATE = 0.35;
@@ -66,15 +66,16 @@ const movePlayer = (direction) => {
   if (direction === "right") {
     playerPosition.x += 1;
   }
+  console.log(playerPosition);
   return playerPosition;
 };
 
 // マップの上限か判定をする関数
 const canMove = (direction) => {
-  if (direction === "up" && playerPosition.y < MAX_POSIOTION) return false;
+  if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
   if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
   if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "right" && playerPosition.x < MAX_POSIOTION) return false;
+  if (direction === "right" && playerPosition.x < MAX_POSITION) return false;
   return true;
 };
 
@@ -140,7 +141,7 @@ const judgeEscape = () => {
 
 // ゲームオーバーの関数
 const gameOver = (isDie) => {
-  if (isDie(character)) {
+  if (isDie(player)) {
     alert("ゲームオーバー");
   }
 };
