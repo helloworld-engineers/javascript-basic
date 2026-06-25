@@ -36,35 +36,35 @@ body {
   flex-direction: column;
   gap: 50px;
   align-items: center;
+  display: none;
 }
 
 /*map*/
 #battle-view {
   flex: 1;
 }
-/*
-#map-view{
+
+/*eachmap*/
+
+.grass-map {
+  background-image: url("grass.jpg");
   background-size: cover;
-  background-position: center;
 }
 
-//each map 
-TODO: ここはJSにてバックグラウンドを変えます
-.grass{
-  background-image: url("grass.png");
+.volcano-map {
+  background-image: url("volucano.jpg");
+  background-size: cover;
 }
 
-.volcano{
-  background-image: url("volcano.png");
+.seashore-map {
+  background-image: url("seashore.jpg");
+  background-size: cover;
 }
 
-.seashore{
-  background-image: url("seashore.png");
+.village-map {
+  background-image: url("village.jpeg");
+  background-size: cover;
 }
-
-.village{
-  background-image: url("village.png");
-}*/
 
 /*chara*/
 .character {
@@ -86,12 +86,11 @@ TODO: ここはJSにてバックグラウンドを変えます
 /*battle button*/
 .battle-actions {
   position: relative;
-  width: 500px;
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: auto;
-  margin-bottom: 40px;
+  margin-top: 80px;
 }
 
 #btn-attack,
@@ -116,19 +115,19 @@ TODO: ここはJSにてバックグラウンドを変えます
 }
 
 /*controller @position*/
-.c-button[data-dir="up"] {
+.c-button[id="UP"] {
   grid-column: 2;
   grid-row: 1;
 }
-.c-button[data-dir="right"] {
+.c-button[id="RIGHT"] {
   grid-column: 3;
   grid-row: 2;
 }
-.c-button[data-dir="down"] {
+.c-button[id="DOWN"] {
   grid-column: 2;
   grid-row: 3;
 }
-.c-button[data-dir="left"] {
+.c-button[id="LEFT"] {
   grid-column: 1;
   grid-row: 2;
 }
