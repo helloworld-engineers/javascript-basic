@@ -80,6 +80,25 @@ const randomMonsters = (masterMonsters) => {
   }
   return selectMonster;
 };
+// 現在のエリアを判定する関数
+const areaCheck = (playerPosition) => {
+  if (playerPosition.x === 0 || playerPosition.y === 0) {
+    return "grassland";
+  }
+  if (playerPosition.x > 0 && playerPosition.y > 0) {
+    return "sky";
+  }
+  if (playerPosition.x > 0 && playerPosition.y < 0) {
+    return "sea";
+  }
+  if (playerPosition.x < 0 && playerPosition.y < 0) {
+    return "castle";
+  }
+  if (playerPosition.x < 0 && playerPosition.y > 0) {
+    return "volcano";
+  }
+  return "grassland"; //どこにも当てはまらない時の保険
+};
 
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
@@ -90,6 +109,8 @@ upBtn.addEventListener("click", () => {
   moveCharacter(direction);
   encounterCheck();
   // Todo: ログに出力する
+  const currentArea = areaCheck(playerPosition);
+  // Todo: 移動ログ出力する
 });
 
 // 下ボタンを押した時の処理
@@ -99,7 +120,8 @@ downBtn.addEventListener("click", () => {
     return;
   }
   moveCharacter(direction);
-  // Todo: ログに出力する
+  const currentArea = areaCheck(playerPosition);
+  // Todo: 移動ログを出力する
 });
 
 // 左ボタンを押した時の処理
@@ -109,7 +131,8 @@ leftBtn.addEventListener("click", () => {
     return;
   }
   moveCharacter(direction);
-  // Todo: ログに出力する
+  const currentArea = areaCheck(playerPosition);
+  // Todo: 移動ログを出力する
 });
 
 // 右ボタンを押した時の処理
@@ -119,5 +142,6 @@ rightBtn.addEventListener("click", () => {
     return;
   }
   moveCharacter(direction);
-  // Todo: ログに出力する
+  const currentArea = areaCheck(playerPosition);
+  // Todo: 移動ログを出力する
 });
