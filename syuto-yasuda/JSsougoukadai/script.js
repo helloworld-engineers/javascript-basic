@@ -2,7 +2,10 @@ const upBtn = document.getElementById("upBtn");
 const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 const downBtn = document.getElementById("downBtn");
-const MAX_POSIOTION = 30;
+const characterImage = document.getElementById("characterImage");
+const gameArea = document.getElementById("gameArea");
+const battleEscape = document.getElementById("battleEscape");
+const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
 const DORADON_RATE = 0.35;
@@ -22,23 +25,32 @@ const masterMonsters = {
     attack: 10,
     exp: 10,
     appearanceRate: 65,
+    imagePath: "slime.jpeg",
   },
   doragon: {
     HP: 40,
     attack: 20,
     exp: 15,
     appearanceRate: 25,
+    imagePath: "doragon.jpeg",
   },
   metalslime: {
     HP: 20,
     attack: 10,
     exp: 30,
     appearanceRate: 10,
+    imagePath: "metalslime.jpeg",
   },
 };
 
-// 移動キーを押した時にプレイヤーの位置を移動する関数
-const moveCharacter = (direction) => {
+// モンスターに遭遇するまでfalseにする
+let isBattle = false;
+
+// 移動キーを押した時にプレイヤーの位置を移動する関数、isBttleがtrueの時移動できない
+const movePlayer = (direction) => {
+  if (isBattle) {
+    return;
+  }
   if (direction === "up") {
     playerPosition.y += 1;
   }
@@ -53,15 +65,16 @@ const moveCharacter = (direction) => {
   if (direction === "right") {
     playerPosition.x += 1;
   }
+  console.log(playerPosition);
   return playerPosition;
 };
 
 // マップの上限か判定をする関数
 const canMove = (direction) => {
-  if (direction === "up" && playerPosition.y < MAX_POSIOTION) return false;
+  if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
   if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
   if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "right" && playerPosition.x < MAX_POSIOTION) return false;
+  if (direction === "right" && playerPosition.x < MAX_POSITION) return false;
   return true;
 };
 
@@ -72,16 +85,56 @@ const encounterCheck = () => {
 
 // 出現するモンスターを決める関数
 const randomMonsters = (masterMonsters) => {
-  let selectMonster;
+  let monster;
   const randomNum = Math.random();
   if (randomNum <= METALSLIME_RATE) {
-    selectMonster = masterMonsters.metalslime;
+    monster = masterMonsters.metalslime;
   } else if (randomNum <= DORADON_RATE) {
-    selectMonster = masterMonsters.doragon;
+    monster = masterMonsters.doragon;
   } else {
-    selectMonster = masterMonsters.slime;
+    monster = masterMonsters.slime;
   }
-  return selectMonster;
+  return monster;
+};
+const currentMonsters = randomMonsters(masterMonsters);
+
+// バトル画面に遷移する関数
+const changeBattle = (currentMonsters) => {
+  isBattle = true;
+  characterImage.src = currentMonsters.imagePath;
+
+  const battleBtn = document.createElement("button");
+  battleBtn.classList.add("buttons");
+  battleBtn.textContent = "戦う";
+
+  const escapeBtn = document.createElement("button");
+  escapeBtn.classList.add("buttons");
+  escapeBtn.textContent = "逃げる";
+
+  battleEscape.appendChild(battleBtn);
+  battleEscape.appendChild(escapeBtn);
+};
+
+// HP計算する関数
+const calculationHP = (target, attacker) => {
+  target.HP -= attacker.attack;
+};
+
+// 生死判定する関数
+const isDie = (character) => {
+  return character.HP <= 0;
+};
+
+// 逃げれるか判定する関数
+const judgeEscape = () => {
+  return Math.random() <= 0.5;
+};
+
+// ゲームオーバーの関数
+const gameOver = () => {
+  if (isDie(player)) {
+    alert("ゲームオーバー");
+  }
 };
 
 // 現在のエリアを判定する関数
@@ -110,8 +163,7 @@ upBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
-  // Todo: ログに出力する
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログ出力する
 });
@@ -122,7 +174,7 @@ downBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });
@@ -133,7 +185,7 @@ leftBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });
@@ -144,7 +196,7 @@ rightBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });

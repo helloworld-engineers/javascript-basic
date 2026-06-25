@@ -15,35 +15,43 @@
           <div class="statusText">レベル:<span id="level">1</span></div>
         </div>
         <div class="imageContainer">
-          <img src="syuzinnkou.jpeg" alt="主人公の画像" class="playerImage" />
-        </div>
-        <div class="clickBtn">
           <img
-            src="direction.png"
-            alt="上矢印"
-            class="direction top"
-            id="upBtn"
+            src="syuzinnkou.jpeg"
+            alt="主人公の画像"
+            class="playerImage"
+            id="characterImage"
           />
-          <div class="rightLeft">
+        </div>
+        <div class="battleContainer" id="gameArea">
+          <div class="clickBtn">
             <img
               src="direction.png"
-              alt="左矢印"
-              class="direction left"
-              id="leftBtn"
+              alt="上矢印"
+              class="direction top"
+              id="upBtn"
             />
+            <div class="rightLeft">
+              <img
+                src="direction.png"
+                alt="左矢印"
+                class="direction left"
+                id="leftBtn"
+              />
+              <img
+                src="direction.png"
+                alt="右矢印"
+                class="direction right"
+                id="rightBtn"
+              />
+            </div>
             <img
               src="direction.png"
-              alt="右矢印"
-              class="direction right"
-              id="rightBtn"
+              alt="下矢印"
+              class="direction down"
+              id="downBtn"
             />
           </div>
-          <img
-            src="direction.png"
-            alt="下矢印"
-            class="direction down"
-            id="downBtn"
-          />
+          <div class="btnArea" id="battleEscape"></div>
         </div>
       </div>
       <div class="logArea">ログ</div>
