@@ -41,6 +41,19 @@
   gap: 48px;
 }
 
+.battleContainer {
+  display: flex;
+  padding: 30px;
+}
+
+.btnArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  gap: 30px;
+}
+
 .clickBtn {
   padding: 30px;
   display: flex;

@@ -2,6 +2,10 @@ const upBtn = document.getElementById("upBtn");
 const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 const downBtn = document.getElementById("downBtn");
+const characterImage = document.getElementById("characterImage");
+const gameArea = document.getElementById("gameArea");
+const battleEscape = document.getElementById("battleEscape");
+const BTN_BACKGROUND_COLOR = "#fff";
 const MAX_POSIOTION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
@@ -22,23 +26,32 @@ const masterMonsters = {
     attack: 10,
     exp: 10,
     appearanceRate: 65,
+    imagePath: "slime.jpeg",
   },
   doragon: {
     HP: 40,
     attack: 20,
     exp: 15,
     appearanceRate: 25,
+    imagePath: "doragon.jpeg",
   },
   metalslime: {
     HP: 20,
     attack: 10,
     exp: 30,
     appearanceRate: 10,
+    imagePath: "metalslime.jpeg",
   },
 };
 
-// 移動キーを押した時にプレイヤーの位置を移動する関数
-const moveCharacter = (direction) => {
+// モンスターに遭遇するまでfalseにする
+let isBattle = false;
+
+// 移動キーを押した時にプレイヤーの位置を移動する関数、isBttleがtrueの時移動できない
+const movePlayer = (direction) => {
+  if (isBattle) {
+    return;
+  }
   if (direction === "up") {
     playerPosition.y += 1;
   }
@@ -72,16 +85,64 @@ const encounterCheck = () => {
 
 // 出現するモンスターを決める関数
 const randomMonsters = (masterMonsters) => {
-  let selectMonster;
+  let monster;
   const randomNum = Math.random();
   if (randomNum <= METALSLIME_RATE) {
-    selectMonster = masterMonsters.metalslime;
+    monster = masterMonsters.metalslime;
   } else if (randomNum <= DORADON_RATE) {
-    selectMonster = masterMonsters.doragon;
+    monster = masterMonsters.doragon;
   } else {
-    selectMonster = masterMonsters.slime;
+    monster = masterMonsters.slime;
   }
-  return selectMonster;
+  return monster;
+};
+const currentMonsters = randomMonsters(masterMonsters);
+
+// モンスターに遭遇した時にtrueにする
+const startBattle = (encounterCheck) => {
+  isBattle = true;
+};
+
+// バトル画面に遷移する関数
+const changeBattle = (currentMonsters) => {
+  characterImage.src = currentMonsters.imagePath;
+  startBattle();
+  const battleBtn = document.createElement("button");
+  battleBtn.textContent = "戦う";
+  battleBtn.style.width = "150px";
+  battleBtn.style.height = "65px";
+  battleBtn.style.backgroundColor = BTN_BACKGROUND_COLOR;
+
+  const escapeBtn = document.createElement("button");
+  escapeBtn.textContent = "逃げる";
+  escapeBtn.style.width = "150px";
+  escapeBtn.style.height = "65px";
+  escapeBtn.style.backgroundColor = BTN_BACKGROUND_COLOR;
+
+  battleEscape.appendChild(battleBtn);
+  battleEscape.appendChild(escapeBtn);
+};
+
+// HP計算する関数
+const calculationHP = (target, attacker) => {
+  target.HP -= attacker.attack;
+};
+
+// 生死判定する関数
+const isDie = (character) => {
+  return character.HP <= 0;
+};
+
+// 逃げれるか判定する関数
+const judgeEscape = () => {
+  return Math.random() <= 0.5;
+};
+
+// ゲームオーバーの関数
+const gameOver = (isDie) => {
+  if (isDie(character)) {
+    alert("ゲームオーバー");
+  }
 };
 
 // 現在のエリアを判定する関数
@@ -110,8 +171,7 @@ upBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
-  // Todo: ログに出力する
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログ出力する
 });
@@ -122,7 +182,7 @@ downBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });
@@ -133,7 +193,7 @@ leftBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });
@@ -144,7 +204,7 @@ rightBtn.addEventListener("click", () => {
   if (canMove(direction)) {
     return;
   }
-  moveCharacter(direction);
+  movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
   // Todo: 移動ログを出力する
 });
