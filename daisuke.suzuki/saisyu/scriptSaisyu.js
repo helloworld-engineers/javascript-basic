@@ -42,18 +42,18 @@ const LEVEL_TABLE = {
   1: 30,
   2: 30,
   3: 30,
-  4: 40,
-  5: 50,
-  6: 60,
-  7: 70,
-  8: 80,
-  9: 90,
-  10: 100,
-  11: 110,
-  12: 120,
-  13: 130,
-  14: 140,
-  15: 150,
+  4: 30,
+  5: 30,
+  6: 30,
+  7: 30,
+  8: 30,
+  9: 30,
+  10: 30,
+  11: 30,
+  12: 30,
+  13: 30,
+  14: 30,
+  15: 30,
 };
 
 //マップマスタデータ
@@ -333,23 +333,26 @@ function inputAttack(state, playerAtk, enemyAtk) {
   const playerResult = calcHp(state.enemyHp, damage);
   state.enemyHp = playerResult.nextHp;
   //log
-  console.log(`敵に${damage}ダメージ！ 残りHP: ${state.enemyHp}`); //ログに追加予定
+  addLog(`敵に${damage}ダメージ！ 残りHP: ${state.enemyHp}`, LOG_TYPE.BATTLE);
   //敵死亡判定
   if (playerResult.isDead) {
     //log
-    console.log("敵は倒れた！"); //ログに追加予定
+    addLog("敵は倒れた！", "system");
     return "win";
   }
   //敵の攻撃
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
-  console.log(
-    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`, //ログに追加予定
+  //log
+  addLog(
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
+    LOG_TYPE.BATTLE,
   );
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
-    console.log("敗北..."); //ログに追加予定
+    //log
+    addLog("敗北...", LOG_TYPE.SYSTEM);
     return "lose";
   }
   return "continue";
@@ -359,11 +362,11 @@ function inputAttack(state, playerAtk, enemyAtk) {
 function inputEscape(state, enemyAtk, escapeRate) {
   if (isEscapeSuccess(escapeRate)) {
     //log
-    console.log("逃走成功！"); //ログに追加予定
+    addLog("逃走成功！", LOG_TYPE.SYSTEM);
     return "escape";
   }
   //log
-  console.log("逃走失敗"); //ログに追加予定
+  addLog("逃走失敗...", LOG_TYPE.SYSTEM);
   //失敗したら敵攻撃
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
