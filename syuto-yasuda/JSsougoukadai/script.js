@@ -99,15 +99,11 @@ const randomMonsters = (masterMonsters) => {
 };
 const currentMonsters = randomMonsters(masterMonsters);
 
-// モンスターに遭遇した時にtrueにする
-const startBattle = (encounterCheck) => {
-  isBattle = true;
-};
-
 // バトル画面に遷移する関数
 const changeBattle = (currentMonsters) => {
+  isBattle = true;
   characterImage.src = currentMonsters.imagePath;
-  startBattle();
+
   const battleBtn = document.createElement("button");
   battleBtn.textContent = "戦う";
   battleBtn.style.width = "150px";
