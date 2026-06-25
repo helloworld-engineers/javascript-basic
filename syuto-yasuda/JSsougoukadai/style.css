@@ -86,3 +86,9 @@
 .right {
   transform: rotate(-90deg);
 }
+
+.buttons {
+  width: 150px;
+  height: 65px;
+  background-color: #fff;
+}

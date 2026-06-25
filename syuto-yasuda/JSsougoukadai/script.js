@@ -5,7 +5,6 @@ const downBtn = document.getElementById("downBtn");
 const characterImage = document.getElementById("characterImage");
 const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
-const BTN_BACKGROUND_COLOR = "#fff";
 const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
@@ -105,16 +104,12 @@ const changeBattle = (currentMonsters) => {
   characterImage.src = currentMonsters.imagePath;
 
   const battleBtn = document.createElement("button");
+  battleBtn.classList.add("buttons");
   battleBtn.textContent = "戦う";
-  battleBtn.style.width = "150px";
-  battleBtn.style.height = "65px";
-  battleBtn.style.backgroundColor = BTN_BACKGROUND_COLOR;
 
   const escapeBtn = document.createElement("button");
+  escapeBtn.classList.add("buttons");
   escapeBtn.textContent = "逃げる";
-  escapeBtn.style.width = "150px";
-  escapeBtn.style.height = "65px";
-  escapeBtn.style.backgroundColor = BTN_BACKGROUND_COLOR;
 
   battleEscape.appendChild(battleBtn);
   battleEscape.appendChild(escapeBtn);
