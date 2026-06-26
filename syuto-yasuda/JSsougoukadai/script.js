@@ -219,9 +219,9 @@ const displayLog = () => {
 const renderDisplay = () => {
   characterImage.src = "syuzinnkou.jpeg";
   battleEscape.innerHTML = "";
-  const area = areaCheck(playerPosition);
-  gameImage.style.backgroundImage = `url(${areaImages[area]})`;
+  gameImage.style.backgroundImage = `url(${areaImages[areaCheck(playerPosition)]})`;
 };
+renderDisplay();
 
 // 初期画面の実行
 renderDisplay();
