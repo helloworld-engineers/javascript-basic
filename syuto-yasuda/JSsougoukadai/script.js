@@ -240,7 +240,6 @@ downBtn.addEventListener("click", () => {
 
 // 左ボタンを押した時の処理
 leftBtn.addEventListener("click", () => {
-  initialGame();
   const direction = "left";
   if (canMove(direction)) {
     return;
@@ -254,7 +253,6 @@ leftBtn.addEventListener("click", () => {
 
 // 右ボタンを押した時の処理
 rightBtn.addEventListener("click", () => {
-  initialGame();
   const direction = "right";
   if (canMove(direction)) {
     return;
