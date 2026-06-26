@@ -5,6 +5,7 @@ const downBtn = document.getElementById("downBtn");
 const characterImage = document.getElementById("characterImage");
 const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
+const logContainer = document.getElementById("logContainer");
 const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
@@ -21,6 +22,7 @@ let playerPosition = { x: 0, y: 0 };
 
 const masterMonsters = {
   slime: {
+    name: "スライム",
     HP: 20,
     attack: 10,
     exp: 10,
@@ -28,6 +30,7 @@ const masterMonsters = {
     imagePath: "slime.jpeg",
   },
   doragon: {
+    name: "ドラゴン",
     HP: 40,
     attack: 20,
     exp: 15,
@@ -35,6 +38,7 @@ const masterMonsters = {
     imagePath: "doragon.jpeg",
   },
   metalslime: {
+    name: "メタルスライム",
     HP: 20,
     attack: 10,
     exp: 30,
@@ -155,6 +159,32 @@ const areaCheck = (playerPosition) => {
     return "volcano";
   }
   return "grassland"; //どこにも当てはまらない時の保険
+};
+
+let logArray = [];
+// モンスターが出現した時ログ関数
+const logEncountHIstory = (currentMonsters) => {
+  logArray.unshift(`${currentMonsters.name}が現れました`);
+};
+
+// プレイヤーの移動時ログ関数
+const logMoveHIstory = (direction) => {
+  logArray.unshift(`${direction}に移動しました`);
+};
+
+// 戦闘時のログ関数
+const logBattleHistory = (character) => {
+  logArray.unshift(`${character}が${character.attack}攻撃した`);
+};
+
+// UIにログを描画する関数
+const displayLog = () => {
+  logContainer.innerHTML = "";
+  logArray.forEach((log) => {
+    const createLog = document.createElement("div");
+    createLog.textContent = log;
+    logContainer.appendChild(createLog);
+  });
 };
 
 // 上ボタンを押した時の処理
