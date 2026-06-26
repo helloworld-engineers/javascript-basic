@@ -12,9 +12,9 @@
       <div class="left-area">
         <!--status-->
         <div class="status">
-          <p><span id="player-hp">HP:100</span></p>
-          <p><span id="player-attack">攻撃力:10</span></p>
-          <p><span id="player-level">レベル:1</span></p>
+          <p class="statusText"><span id="player-level">レベル:1</span></p>
+          <p class="statusText"><span id="player-hp">HP:100</span></p>
+          <p class="statusText"><span id="player-attack">攻撃力:10</span></p>
         </div>
         <!--map-->
         <div id="map-screen" class="grass-map">
@@ -30,7 +30,7 @@
           </div>
         </div>
         <!--battle-->
-        <div id="battle-screen">
+        <div id="battle-screen" class="battle-background">
           <div id="battle-view" class="view">
             <img id="enemy-img" alt="enemy" class="enemy" />
           </div>
@@ -46,7 +46,6 @@
       <div class="right-area">
         <div class="log-area">
           <h3 class="logTitle">ログ</h3>
-          <br />
           <ul id="log-list"></ul>
         </div>
       </div>

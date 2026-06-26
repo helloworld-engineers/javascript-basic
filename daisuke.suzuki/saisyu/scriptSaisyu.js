@@ -152,7 +152,7 @@ function renderLogs(message, type = LOG_TYPE.INFO) {
     li.textContent = message;
     ul.appendChild(li);
   });
-  ul.scrollTop = ul.scrollHeight;
+  ul.scrollTop = 0;
 }
 
 //マップ機能：移動関数
@@ -228,7 +228,7 @@ function changeBackground(mapType) {
   const map = document.getElementById("map-screen");
   map.classList.remove(
     "grass-map",
-    "volucano-map",
+    "volcano-map",
     "village-map",
     "seashore-map",
   );
@@ -263,8 +263,14 @@ function renderMonster(enemy) {
 
 //プレイヤーステータス更新
 function renderPlayerStatus(playerStatus) {
-  console.log("STSRTB", playerStatus.hp);
-  document.getElementById("player-hp").textContent = "HP:" + playerStatus.hp; //この部分でundefinedが出ます
+  document.getElementById("player-hp").textContent =
+    `HP: ${playerStatus.hp} / ${playerStatus.maxHp}`;
+
+  document.getElementById("player-level").textContent =
+    `Lv: ${playerStatus.level}`;
+
+  document.getElementById("player-attack").textContent =
+    `ATK: ${playerStatus.attack}`;
 }
 
 //モンスター生成
@@ -325,6 +331,7 @@ function startBtl(playerStatus, enemyStatus) {
   return {
     playerHp: playerStatus.hp,
     enemyHp: enemyStatus.currentHp,
+    enemy: enemyStatus,
   };
 }
 
@@ -345,45 +352,74 @@ function isEscapeSuccess(escapeRate) {
 //戦闘時：勝利時経験値処理
 function applyExp(playerStatus, enemyStatus) {
   const gainExp = enemyStatus.exp;
+
   const levelResult = levelUp(
     playerStatus.exp,
     gainExp,
     playerStatus.level,
     LEVEL_TABLE,
   );
+
+  const prevLevel = playerStatus.level;
+
+  //経験値・レベル更新
   playerStatus.exp = levelResult.nextExp;
   playerStatus.level = levelResult.nextLevel;
+
+  //レベルアップ分
+  const levelDiff = playerStatus.level - prevLevel;
+  if (levelDiff > 0) {
+    for (let i = 0; i < levelDiff; i++) {
+      playerStatus.maxHp += 20;
+      playerStatus.attack += 20;
+    }
+
+    //全回復
+    playerStatus.hp = playerStatus.maxHp;
+  }
   return {
     gainExp,
     isLevelUp: levelResult.isLevelUp,
+    levelDiff,
   };
 }
 
 //戦闘時：プレイヤー攻撃時処理
 function inputAttack(state, playerAtk, enemyAtk) {
-  console.log(state.playerHp);
   //プレイヤー攻撃
   const damage = calcDamage(playerAtk);
   const playerResult = calcHp(state.enemyHp, damage);
   state.enemyHp = playerResult.nextHp;
+
+  console.log("playerStatus.hp:", playerStatus.hp);
+  console.log("state.playerHp:", state.playerHp);
+
   //log
-  addLog(`敵に${damage}ダメージ！ 残りHP: ${state.enemyHp}`, LOG_TYPE.BATTLE);
+  addLog(
+    `敵に${damage}ダメージ！ 敵の残りHP: ${state.enemyHp}`,
+    LOG_TYPE.BATTLE,
+  );
+
   //敵死亡判定
   if (playerResult.isDead) {
     //log
     addLog("敵は倒れた！", "system");
     return "win";
   }
+
   //敵の攻撃
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
-  renderPlayerStatus(state.playerHp);
+  playerStatus.hp = enemyResult.nextHp;
+  renderPlayerStatus(playerStatus);
+
   //log
   addLog(
-    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 自分の残りHP: ${state.playerHp}`,
     LOG_TYPE.BATTLE,
   );
+
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
     //log
@@ -470,7 +506,8 @@ function handleBattleEnd(result) {
     addLog(`${expResult.gainExp}Exp獲得!`, LOG_TYPE.SYSTEM);
 
     if (expResult.isLevelUp) {
-      addLog("レベルアップ！", LOG_TYPE.SYSTEM);
+      addLog(`レベルアップ！ LV.${playerStatus.level}`, LOG_TYPE.SYSTEM);
+      addLog(`HPと攻撃力が20上がった！`, LOG_TYPE.SYSTEM);
     }
   }
   if (result === "lose") {
@@ -480,6 +517,7 @@ function handleBattleEnd(result) {
     addLog("逃走に成功した！", LOG_TYPE.SYSTEM);
   }
   changeMode(MODE.MAP);
+  renderPlayerStatus(playerStatus);
 }
 
 //戦闘ボタン処理
