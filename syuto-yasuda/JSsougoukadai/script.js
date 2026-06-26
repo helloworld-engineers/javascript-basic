@@ -219,9 +219,9 @@ const displayLog = () => {
 const renderDisplay = () => {
   characterImage.src = "syuzinnkou.jpeg";
   battleEscape.innerHTML = "";
-  gameImage.style.backgroundImage = `url(${areaImages[areaCheck(playerPosition)]})`;
+  const area = areaCheck(playerPosition);
+  gameImage.style.backgroundImage = `url(${areaImages[area]})`;
 };
-renderDisplay();
 
 // 初期画面の実行
 renderDisplay();
@@ -234,7 +234,6 @@ upBtn.addEventListener("click", () => {
   }
   movePlayer(direction);
   logMoveHistory(direction);
-  const currentArea = areaCheck(playerPosition);
   renderDisplay();
 });
 
@@ -245,7 +244,6 @@ downBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
   renderDisplay();
 
   // Todo: 移動ログを出力する
@@ -258,7 +256,6 @@ leftBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
   renderDisplay();
 
   // Todo: 移動ログを出力する
@@ -271,7 +268,6 @@ rightBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
   renderDisplay();
 
   // Todo: 移動ログを出力する
