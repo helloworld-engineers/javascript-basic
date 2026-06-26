@@ -64,18 +64,18 @@ const movePlayer = (direction) => {
   if (isBattle) {
     return;
   }
-  if (direction === "up") {
+  if (direction === "上") {
     playerPosition.y += 1;
   }
-  if (direction === "down") {
+  if (direction === "した") {
     playerPosition.y -= 1;
   }
 
-  if (direction === "left") {
+  if (direction === "左") {
     playerPosition.x -= 1;
   }
 
-  if (direction === "right") {
+  if (direction === "右") {
     playerPosition.x += 1;
   }
   console.log(playerPosition);
@@ -84,10 +84,10 @@ const movePlayer = (direction) => {
 
 // マップの上限か判定をする関数
 const canMove = (direction) => {
-  if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
-  if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
-  if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "right" && playerPosition.x < MAX_POSITION) return false;
+  if (direction === "上" && playerPosition.y < MAX_POSITION) return false;
+  if (direction === "下" && playerPosition.y > MIN_POSITION) return false;
+  if (direction === "左" && playerPosition.x > MIN_POSITION) return false;
+  if (direction === "右" && playerPosition.x < MAX_POSITION) return false;
   return true;
 };
 
@@ -205,60 +205,63 @@ const displayLog = () => {
 };
 
 // 画面を表示する関数
-const initialGame = () => {
+const renderDisplay = () => {
   characterImage.src = "syuzinnkou.jpeg";
   battleEscape.innerHTML = "";
   const area = areaCheck(playerPosition);
   gameImage.style.backgroundImage = `url(${areaImages[area]})`;
 };
 
+// 初期画面の実行
+renderDisplay();
+
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
-  const direction = "up";
+  const direction = "上";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
+  logMoveHistory(direction);
   const currentArea = areaCheck(playerPosition);
-  initialGame();
-  // Todo: 移動ログ出力する
+  renderDisplay();
 });
 
 // 下ボタンを押した時の処理
 downBtn.addEventListener("click", () => {
-  const direction = "down";
+  const direction = "下";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
-  initialGame();
+  renderDisplay();
 
   // Todo: 移動ログを出力する
 });
 
 // 左ボタンを押した時の処理
 leftBtn.addEventListener("click", () => {
-  const direction = "left";
+  const direction = "左";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
-  initialGame();
+  renderDisplay();
 
   // Todo: 移動ログを出力する
 });
 
 // 右ボタンを押した時の処理
 rightBtn.addEventListener("click", () => {
-  const direction = "right";
+  const direction = "右";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
-  initialGame();
+  renderDisplay();
 
   // Todo: 移動ログを出力する
 });
