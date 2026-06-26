@@ -6,11 +6,21 @@ const characterImage = document.getElementById("characterImage");
 const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
 const logContainer = document.getElementById("logContainer");
+const hp = document.getElementById("hp");
+const gameImage = document.getElementById("gameImage");
 const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
 const DORADON_RATE = 0.35;
 const ENCOUNT_RATE = 0.4;
+
+const areaImages = {
+  grassland: "grassland.jpeg",
+  sky: "sky.jpeg",
+  sea: "sea.jpeg",
+  castle: "castle.jpeg",
+  volcano: "volcano.jpeg",
+};
 
 let player = {
   HP: 100,
@@ -124,6 +134,14 @@ const calculationHP = (target, attacker) => {
   target.HP -= attacker.attack;
 };
 
+// HPを描画する関数
+const displayHP = () => {
+  if (isDie(currentMonsters)) {
+    return;
+  }
+  hp.textContent = player.HP;
+};
+
 // 生死判定する関数
 const isDie = (character) => {
   return character.HP <= 0;
@@ -163,12 +181,12 @@ const areaCheck = (playerPosition) => {
 
 let logArray = [];
 // モンスターが出現した時ログ関数
-const logEncountHIstory = (currentMonsters) => {
+const logEncountHistory = (currentMonsters) => {
   logArray.unshift(`${currentMonsters.name}が現れました`);
 };
 
 // プレイヤーの移動時ログ関数
-const logMoveHIstory = (direction) => {
+const logMoveHistory = (direction) => {
   logArray.unshift(`${direction}に移動しました`);
 };
 
@@ -187,6 +205,14 @@ const displayLog = () => {
   });
 };
 
+// 画面を表示する関数
+const initialGame = () => {
+  characterImage.src = "syuzinnkou.jpeg";
+  battleEscape.innerHTML = "";
+  const area = areaCheck(playerPosition);
+  gameImage.style.backgroundImage = `url(${areaImages[area]})`;
+};
+
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
   const direction = "up";
@@ -195,6 +221,7 @@ upBtn.addEventListener("click", () => {
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
+  initialGame();
   // Todo: 移動ログ出力する
 });
 
@@ -206,27 +233,35 @@ downBtn.addEventListener("click", () => {
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
+  initialGame();
+
   // Todo: 移動ログを出力する
 });
 
 // 左ボタンを押した時の処理
 leftBtn.addEventListener("click", () => {
+  initialGame();
   const direction = "left";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
+  initialGame();
+
   // Todo: 移動ログを出力する
 });
 
 // 右ボタンを押した時の処理
 rightBtn.addEventListener("click", () => {
+  initialGame();
   const direction = "right";
   if (canMove(direction)) {
     return;
   }
   movePlayer(direction);
   const currentArea = areaCheck(playerPosition);
+  initialGame();
+
   // Todo: 移動ログを出力する
 });
