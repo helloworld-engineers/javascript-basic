@@ -84,10 +84,10 @@ const movePlayer = (direction) => {
 
 // マップの上限か判定をする関数
 const canMove = (direction) => {
-  if (direction === "上" && playerPosition.y < MAX_POSITION) return false;
-  if (direction === "下" && playerPosition.y > MIN_POSITION) return false;
-  if (direction === "左" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "右" && playerPosition.x < MAX_POSITION) return false;
+  if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
+  if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
+  if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
+  if (direction === "down" && playerPosition.x < MAX_POSITION) return false;
   return true;
 };
 
