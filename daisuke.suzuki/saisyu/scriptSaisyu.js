@@ -442,6 +442,7 @@ function inputEscape(state, enemyAtk, escapeRate) {
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
+  renderPlayerStatus(playerStatus);
   //log
   addLog(
     `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
