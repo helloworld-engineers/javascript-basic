@@ -173,20 +173,18 @@ const logMoveHIstory = (direction) => {
 };
 
 // 戦闘時のログ関数
-const logBattleHIstory = (character) => {
+const logBattleHistory = (character) => {
   logArray.unshift(`${character}が${character.attack}攻撃した`);
 };
 
-// 配列の中にある文字列を一つずつログに出力する関数
-logArray.forEach((log) => {
-  const createLog = document.createElement("div");
-  createLog.textContent = log;
-  logContainer.appendChild(createLog);
-});
-
-// 重複しないように一度中身を空にする関数
+// UIにログを描画する関数
 const displayLog = () => {
   logContainer.innerHTML = "";
+  logArray.forEach((log) => {
+    const createLog = document.createElement("div");
+    createLog.textContent = log;
+    logContainer.appendChild(createLog);
+  });
 };
 
 // 上ボタンを押した時の処理
