@@ -3,14 +3,23 @@ const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 const downBtn = document.getElementById("downBtn");
 const characterImage = document.getElementById("characterImage");
-const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
 const logContainer = document.getElementById("logContainer");
+const hp = document.getElementById("hp");
+const gameImage = document.getElementById("gameImage");
 const MAX_POSITION = 30;
 const MIN_POSITION = -30;
 const METALSLIME_RATE = 0.1;
 const DORADON_RATE = 0.35;
 const ENCOUNT_RATE = 0.4;
+
+const areaImages = {
+  grassland: "grassland.jpeg",
+  sky: "sky.jpeg",
+  sea: "sea.jpeg",
+  castle: "castle.jpeg",
+  volcano: "volcano.jpeg",
+};
 
 let player = {
   HP: 100,
@@ -78,7 +87,7 @@ const canMove = (direction) => {
   if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
   if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
   if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "right" && playerPosition.x < MAX_POSITION) return false;
+  if (direction === "down" && playerPosition.x < MAX_POSITION) return false;
   return true;
 };
 
@@ -124,6 +133,14 @@ const calculationHP = (target, attacker) => {
   target.HP -= attacker.attack;
 };
 
+// HPを描画する関数
+const displayHP = () => {
+  if (isDie(currentMonsters)) {
+    return;
+  }
+  hp.textContent = player.HP;
+};
+
 // 生死判定する関数
 const isDie = (character) => {
   return character.HP <= 0;
@@ -163,13 +180,24 @@ const areaCheck = (playerPosition) => {
 
 let logArray = [];
 // モンスターが出現した時ログ関数
-const logEncountHIstory = (currentMonsters) => {
+const logEncountHistory = (currentMonsters) => {
   logArray.unshift(`${currentMonsters.name}が現れました`);
 };
 
 // プレイヤーの移動時ログ関数
-const logMoveHIstory = (direction) => {
-  logArray.unshift(`${direction}に移動しました`);
+const logMoveHistory = (direction) => {
+  if (direction === "up") {
+    logArray.unshift("上に移動しました");
+  }
+  if (direction === "down") {
+    logArray.unshift("下に移動しました");
+  }
+  if (direction === "left") {
+    logArray.unshift("左に移動しました");
+  }
+  if (direction === "right") {
+    logArray.unshift("右に移動しました");
+  }
 };
 
 // 戦闘時のログ関数
@@ -187,6 +215,17 @@ const displayLog = () => {
   });
 };
 
+// 画面を表示する関数
+const renderDisplay = () => {
+  characterImage.src = "syuzinnkou.jpeg";
+  battleEscape.innerHTML = "";
+  const area = areaCheck(playerPosition);
+  gameImage.style.backgroundImage = `url(${areaImages[area]})`;
+};
+
+// 初期画面の実行
+renderDisplay();
+
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
   const direction = "up";
@@ -194,8 +233,8 @@ upBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
-  // Todo: 移動ログ出力する
+  logMoveHistory(direction);
+  renderDisplay();
 });
 
 // 下ボタンを押した時の処理
@@ -205,7 +244,8 @@ downBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
+  renderDisplay();
+
   // Todo: 移動ログを出力する
 });
 
@@ -216,7 +256,8 @@ leftBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
+  renderDisplay();
+
   // Todo: 移動ログを出力する
 });
 
@@ -227,6 +268,7 @@ rightBtn.addEventListener("click", () => {
     return;
   }
   movePlayer(direction);
-  const currentArea = areaCheck(playerPosition);
+  renderDisplay();
+
   // Todo: 移動ログを出力する
 });
