@@ -186,7 +186,18 @@ const logEncountHistory = (currentMonsters) => {
 
 // プレイヤーの移動時ログ関数
 const logMoveHistory = (direction) => {
-  logArray.unshift(`${direction}に移動しました`);
+  if (direction === "up") {
+    logArray.unshift("上に移動しました");
+  }
+  if (direction === "down") {
+    logArray.unshift("下に移動しました");
+  }
+  if (direction === "left") {
+    logArray.unshift("左に移動しました");
+  }
+  if (direction === "right") {
+    logArray.unshift("右に移動しました");
+  }
 };
 
 // 戦闘時のログ関数
