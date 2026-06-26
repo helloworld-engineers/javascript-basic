@@ -64,18 +64,18 @@ const movePlayer = (direction) => {
   if (isBattle) {
     return;
   }
-  if (direction === "上") {
+  if (direction === "up") {
     playerPosition.y += 1;
   }
-  if (direction === "した") {
+  if (direction === "down") {
     playerPosition.y -= 1;
   }
 
-  if (direction === "左") {
+  if (direction === "left") {
     playerPosition.x -= 1;
   }
 
-  if (direction === "右") {
+  if (direction === "right") {
     playerPosition.x += 1;
   }
   console.log(playerPosition);
@@ -217,7 +217,7 @@ renderDisplay();
 
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
-  const direction = "上";
+  const direction = "up";
   if (canMove(direction)) {
     return;
   }
@@ -229,7 +229,7 @@ upBtn.addEventListener("click", () => {
 
 // 下ボタンを押した時の処理
 downBtn.addEventListener("click", () => {
-  const direction = "下";
+  const direction = "down";
   if (canMove(direction)) {
     return;
   }
@@ -242,7 +242,7 @@ downBtn.addEventListener("click", () => {
 
 // 左ボタンを押した時の処理
 leftBtn.addEventListener("click", () => {
-  const direction = "左";
+  const direction = "left";
   if (canMove(direction)) {
     return;
   }
@@ -255,7 +255,7 @@ leftBtn.addEventListener("click", () => {
 
 // 右ボタンを押した時の処理
 rightBtn.addEventListener("click", () => {
-  const direction = "右";
+  const direction = "right";
   if (canMove(direction)) {
     return;
   }
