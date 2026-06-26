@@ -3,7 +3,6 @@ const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 const downBtn = document.getElementById("downBtn");
 const characterImage = document.getElementById("characterImage");
-const gameArea = document.getElementById("gameArea");
 const battleEscape = document.getElementById("battleEscape");
 const logContainer = document.getElementById("logContainer");
 const hp = document.getElementById("hp");
