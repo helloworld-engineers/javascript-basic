@@ -18,7 +18,7 @@ const MONSTERS = {
     attack: 10,
     exp: 10,
     encounterRate: 0.65,
-    image: "slime.png",
+    image: "image/slime.png",
   },
   dragon: {
     id: "dragon",
@@ -27,7 +27,7 @@ const MONSTERS = {
     attack: 20,
     exp: 15,
     encounterRate: 0.25,
-    image: "dragon.webp",
+    image: "image/dragon.webp",
   },
   metal_slime: {
     id: "metal_slime",
@@ -36,7 +36,7 @@ const MONSTERS = {
     attack: 10,
     exp: 30,
     encounterRate: 0.1,
-    image: "Metal_slime.webp",
+    image: "image/Metal_slime.webp",
   },
 };
 
@@ -58,6 +58,11 @@ const LEVEL_TABLE = {
   14: 30,
   15: 30,
 };
+
+//レベルアップごとの体力上昇値
+const HP_PER_LEV = 20;
+//レベルアップごとの攻撃力上昇値
+const ATK_PER_LEVEL = 20;
 
 //マップマスタデータ
 const MAPS = {
@@ -156,7 +161,7 @@ function renderLogs(message, type = LOG_TYPE.INFO) {
 }
 
 //マップ機能：移動関数
-function move(direction, playerStatus) {
+function move(playerStatus, direction) {
   const pos = playerStatus.position;
   if (direction === DIRECTION.UP) {
     pos.y -= 1;
@@ -173,7 +178,7 @@ function move(direction, playerStatus) {
 }
 
 //マップ機能：境界チェック
-function borderCheck(direction, playerStatus) {
+function borderCheck(playerStatus, direction) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
@@ -213,7 +218,6 @@ function mapCheck(playerStatus, MAPS) {
 //マップ機能：エリア遷移(座標変更前後のマップ情報比較)
 function changeAria(playerStatus, MAPS) {
   const nextMap = mapCheck(playerStatus, MAPS);
-  console.log(playerStatus.mapId);
   if (!nextMap) return false;
   if (nextMap.id !== playerStatus.mapId) {
     playerStatus.mapId = nextMap.id;
@@ -370,8 +374,8 @@ function applyExp(playerStatus, enemyStatus) {
   const levelDiff = playerStatus.level - prevLevel;
   if (levelDiff > 0) {
     for (let i = 0; i < levelDiff; i++) {
-      playerStatus.maxHp += 20;
-      playerStatus.attack += 20;
+      playerStatus.maxHp += HP_PER_LEV;
+      playerStatus.attack += ATK_PER_LEVEL;
     }
 
     //全回復
@@ -390,10 +394,6 @@ function inputAttack(state, playerAtk, enemyAtk) {
   const damage = calcDamage(playerAtk);
   const playerResult = calcHp(state.enemyHp, damage);
   state.enemyHp = playerResult.nextHp;
-
-  console.log("playerStatus.hp:", playerStatus.hp);
-  console.log("state.playerHp:", state.playerHp);
-
   //log
   addLog(
     `敵に${damage}ダメージ！ 敵の残りHP: ${state.enemyHp}`,
@@ -403,7 +403,7 @@ function inputAttack(state, playerAtk, enemyAtk) {
   //敵死亡判定
   if (playerResult.isDead) {
     //log
-    addLog("敵は倒れた！", "system");
+    addLog("敵は倒れた！", "SYSTEM");
     return "win";
   }
 
@@ -442,6 +442,7 @@ function inputEscape(state, enemyAtk, escapeRate) {
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
+  playerStatus.hp = enemyResult.nextHp;
   renderPlayerStatus(playerStatus);
   //log
   addLog(
@@ -462,14 +463,13 @@ function inputEscape(state, enemyAtk, escapeRate) {
 
 function handleMove(direction) {
   //境界チェック
-  if (!borderCheck(direction, playerStatus)) {
+  if (!borderCheck(playerStatus, direction)) {
     addLog("この方向には進めません");
     return;
   }
   //移動
-  move(direction, playerStatus);
+  move(playerStatus,direction);
   addLog(`${direction}方向に進みました`);
-  console.log(playerStatus.position);
   //エリア移動
   const prevMapId = playerStatus.mapId;
   if (changeAria(playerStatus, MAPS)) {

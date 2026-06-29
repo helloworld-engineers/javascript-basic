@@ -52,22 +52,22 @@ body {
 /*eachmap*/
 
 .grass-map {
-  background-image: url("grass.jpg");
+  background-image: url("image/grass.jpg");
   background-size: cover;
 }
 
 .volcano-map {
-  background-image: url("volcano.jpg");
+  background-image: url("image/volcano.jpg");
   background-size: cover;
 }
 
 .seashore-map {
-  background-image: url("seashore.jpg");
+  background-image: url("image/seashore.jpg");
   background-size: cover;
 }
 
 .village-map {
-  background-image: url("village.jpeg");
+  background-image: url("image/village.jpeg");
   background-size: cover;
 }
 
@@ -173,4 +173,26 @@ body {
   overflow-y: auto;
   margin: 0;
   padding-left: 20px;
+}
+
+.log.INFO {
+  color: #2894ff;
+}
+
+.log.SYSTEM {
+  color: #414141;
+  font-style: italic;
+}
+
+.log.BATTLE {
+  color: #ff4e4e;
+  font-weight: bold;
+}
+
+.log.BATTLE::before {
+  content: "⚔ ";
+}
+
+.log.SYSTEM::before {
+  content: "⚙ ";
 }
