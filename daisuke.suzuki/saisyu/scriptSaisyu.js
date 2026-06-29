@@ -432,8 +432,6 @@ function inputAttack(state, playerAtk, enemyAtk) {
 //戦闘時：プレイヤー逃走処理
 function inputEscape(state, enemyAtk, escapeRate) {
   if (isEscapeSuccess(escapeRate)) {
-    //log
-    addLog("逃走成功！", LOG_TYPE.SYSTEM);
     return "escape";
   }
   //log
