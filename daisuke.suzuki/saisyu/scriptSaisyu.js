@@ -118,12 +118,10 @@ let currentMode = MODE.MAP;
 //画面遷移：画面遷移
 function changeMode(nextMode) {
   currentMode = nextMode;
-
   if (currentMode === MODE.MAP) {
     document.getElementById("map-screen").style.display = "block";
     document.getElementById("battle-screen").style.display = "none";
   }
-
   if (currentMode === MODE.BATTLE) {
     document.getElementById("map-screen").style.display = "none";
     document.getElementById("battle-screen").style.display = "block";
@@ -269,10 +267,8 @@ function renderMonster(enemy) {
 function renderPlayerStatus(playerStatus) {
   document.getElementById("player-hp").textContent =
     `HP: ${playerStatus.hp} / ${playerStatus.maxHp}`;
-
   document.getElementById("player-level").textContent =
     `Lv: ${playerStatus.level}`;
-
   document.getElementById("player-attack").textContent =
     `ATK: ${playerStatus.attack}`;
 }
@@ -356,7 +352,6 @@ function isEscapeSuccess(escapeRate) {
 //戦闘時：勝利時経験値処理
 function applyExp(playerStatus, enemyStatus) {
   const gainExp = enemyStatus.exp;
-
   const levelResult = levelUp(
     playerStatus.exp,
     gainExp,
@@ -377,7 +372,6 @@ function applyExp(playerStatus, enemyStatus) {
       playerStatus.maxHp += HP_PER_LEV;
       playerStatus.attack += ATK_PER_LEVEL;
     }
-
     //全回復
     playerStatus.hp = playerStatus.maxHp;
   }
@@ -394,7 +388,6 @@ function inputAttack(state, playerAtk, enemyAtk) {
   const damage = calcDamage(playerAtk);
   const playerResult = calcHp(state.enemyHp, damage);
   state.enemyHp = playerResult.nextHp;
-  //log
   addLog(
     `敵に${damage}ダメージ！ 敵の残りHP: ${state.enemyHp}`,
     LOG_TYPE.BATTLE,
@@ -402,7 +395,6 @@ function inputAttack(state, playerAtk, enemyAtk) {
 
   //敵死亡判定
   if (playerResult.isDead) {
-    //log
     addLog("敵は倒れた！", "SYSTEM");
     return "win";
   }
@@ -413,16 +405,12 @@ function inputAttack(state, playerAtk, enemyAtk) {
   state.playerHp = enemyResult.nextHp;
   playerStatus.hp = enemyResult.nextHp;
   renderPlayerStatus(playerStatus);
-
-  //log
   addLog(
     `プレイヤーは${enemyDamage}ダメージをうけた！ 自分の残りHP: ${state.playerHp}`,
     LOG_TYPE.BATTLE,
   );
-
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
-    //log
     addLog("敗北...", LOG_TYPE.SYSTEM);
     return "lose";
   }
@@ -494,11 +482,9 @@ document.querySelectorAll(".c-button").forEach((btn) => {
 //戦闘処理
 function handleBattleEnd(result) {
   if (result === "continue") return;
-
   if (result === "win") {
     const expResult = applyExp(playerStatus, battleState.enemy);
     addLog(`${expResult.gainExp}Exp獲得!`, LOG_TYPE.SYSTEM);
-
     if (expResult.isLevelUp) {
       addLog(`レベルアップ！ LV.${playerStatus.level}`, LOG_TYPE.SYSTEM);
       addLog(`HPと攻撃力が20上がった！`, LOG_TYPE.SYSTEM);
@@ -526,7 +512,6 @@ document.getElementById("btn-attack").addEventListener("click", () => {
     playerStatus.attack,
     battleState.enemy.attack,
   );
-
   handleBattleEnd(result);
 });
 
