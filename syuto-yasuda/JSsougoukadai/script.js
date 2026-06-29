@@ -22,6 +22,7 @@ const areaImages = {
 };
 
 let player = {
+  name: "主人公",
   HP: 100,
   attack: 10,
   level: 1,
@@ -61,9 +62,6 @@ let isBattle = false;
 
 // 移動キーを押した時にプレイヤーの位置を移動する関数、isBttleがtrueの時移動できない
 const movePlayer = (direction) => {
-  if (isBattle) {
-    return;
-  }
   if (direction === "up") {
     playerPosition.y += 1;
   }
@@ -78,16 +76,18 @@ const movePlayer = (direction) => {
   if (direction === "right") {
     playerPosition.x += 1;
   }
-  console.log(playerPosition);
   return playerPosition;
 };
 
 // マップの上限か判定をする関数
 const canMove = (direction) => {
-  if (direction === "up" && playerPosition.y < MAX_POSITION) return false;
-  if (direction === "down" && playerPosition.y > MIN_POSITION) return false;
-  if (direction === "left" && playerPosition.x > MIN_POSITION) return false;
-  if (direction === "down" && playerPosition.x < MAX_POSITION) return false;
+  if (isBattle) {
+    return false;
+  }
+  if (direction === "up" && playerPosition.y >= MAX_POSITION) return false;
+  if (direction === "down" && playerPosition.y <= MIN_POSITION) return false;
+  if (direction === "left" && playerPosition.x <= MIN_POSITION) return false;
+  if (direction === "right" && playerPosition.x >= MAX_POSITION) return false;
   return true;
 };
 
@@ -98,18 +98,15 @@ const encounterCheck = () => {
 
 // 出現するモンスターを決める関数
 const randomMonsters = (masterMonsters) => {
-  let monster;
   const randomNum = Math.random();
   if (randomNum <= METALSLIME_RATE) {
-    monster = masterMonsters.metalslime;
+    return { ...masterMonsters.metalslime };
   } else if (randomNum <= DORADON_RATE) {
-    monster = masterMonsters.doragon;
+    return { ...masterMonsters.doragon };
   } else {
-    monster = masterMonsters.slime;
+    return { ...masterMonsters.slime };
   }
-  return monster;
 };
-const currentMonsters = randomMonsters(masterMonsters);
 
 // バトル画面に遷移する関数
 const changeBattle = (currentMonsters) => {
@@ -126,6 +123,7 @@ const changeBattle = (currentMonsters) => {
 
   battleEscape.appendChild(battleBtn);
   battleEscape.appendChild(escapeBtn);
+  return { battleBtn, escapeBtn };
 };
 
 // HP計算する関数
@@ -135,9 +133,6 @@ const calculationHP = (target, attacker) => {
 
 // HPを描画する関数
 const displayHP = () => {
-  if (isDie(currentMonsters)) {
-    return;
-  }
   hp.textContent = player.HP;
 };
 
@@ -158,6 +153,7 @@ const gameOver = () => {
   }
 };
 
+let logArray = [];
 // 現在のエリアを判定する関数
 const areaCheck = (playerPosition) => {
   if (playerPosition.x === 0 || playerPosition.y === 0) {
@@ -178,10 +174,10 @@ const areaCheck = (playerPosition) => {
   return "grassland"; //どこにも当てはまらない時の保険
 };
 
-let logArray = [];
 // モンスターが出現した時ログ関数
 const logEncountHistory = (currentMonsters) => {
   logArray.unshift(`${currentMonsters.name}が現れました`);
+  displayLog();
 };
 
 // プレイヤーの移動時ログ関数
@@ -198,11 +194,13 @@ const logMoveHistory = (direction) => {
   if (direction === "right") {
     logArray.unshift("右に移動しました");
   }
+  displayLog();
 };
 
 // 戦闘時のログ関数
 const logBattleHistory = (character) => {
-  logArray.unshift(`${character}が${character.attack}攻撃した`);
+  logArray.unshift(`${character.name}が${character.attack}攻撃した`);
+  displayLog();
 };
 
 // UIにログを描画する関数
@@ -229,46 +227,182 @@ renderDisplay();
 // 上ボタンを押した時の処理
 upBtn.addEventListener("click", () => {
   const direction = "up";
-  if (canMove(direction)) {
+  if (!canMove(direction)) {
     return;
   }
   movePlayer(direction);
   logMoveHistory(direction);
   renderDisplay();
+  if (encounterCheck()) {
+    isBattle = true;
+    let currentMonsters = randomMonsters(masterMonsters);
+    logEncountHistory(currentMonsters);
+    const { battleBtn, escapeBtn } = changeBattle(currentMonsters);
+    battleBtn.addEventListener("click", () => {
+      logBattleHistory(player);
+      calculationHP(currentMonsters, player);
+      if (isDie(currentMonsters)) {
+        isBattle = false;
+        renderDisplay();
+        return;
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+      }
+    });
+    escapeBtn.addEventListener("click", () => {
+      if (judgeEscape()) {
+        isBattle = false;
+        renderDisplay();
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+        return;
+      }
+    });
+  }
 });
 
 // 下ボタンを押した時の処理
 downBtn.addEventListener("click", () => {
   const direction = "down";
-  if (canMove(direction)) {
+  if (!canMove(direction)) {
     return;
   }
   movePlayer(direction);
   renderDisplay();
-
-  // Todo: 移動ログを出力する
+  logMoveHistory(direction);
+  renderDisplay();
+  if (encounterCheck()) {
+    isBattle = true;
+    let currentMonsters = randomMonsters(masterMonsters);
+    logEncountHistory(currentMonsters);
+    const { battleBtn, escapeBtn } = changeBattle(currentMonsters);
+    battleBtn.addEventListener("click", () => {
+      logBattleHistory(player);
+      calculationHP(currentMonsters, player);
+      if (isDie(currentMonsters)) {
+        isBattle = false;
+        renderDisplay();
+        return;
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+      }
+    });
+    escapeBtn.addEventListener("click", () => {
+      if (judgeEscape()) {
+        isBattle = false;
+        renderDisplay();
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+        return;
+      }
+    });
+  }
 });
 
 // 左ボタンを押した時の処理
 leftBtn.addEventListener("click", () => {
   const direction = "left";
-  if (canMove(direction)) {
+  if (!canMove(direction)) {
     return;
   }
   movePlayer(direction);
   renderDisplay();
-
-  // Todo: 移動ログを出力する
+  logMoveHistory(direction);
+  renderDisplay();
+  if (encounterCheck()) {
+    isBattle = true;
+    let currentMonsters = randomMonsters(masterMonsters);
+    logEncountHistory(currentMonsters);
+    const { battleBtn, escapeBtn } = changeBattle(currentMonsters);
+    battleBtn.addEventListener("click", () => {
+      logBattleHistory(player);
+      calculationHP(currentMonsters, player);
+      if (isDie(currentMonsters)) {
+        isBattle = false;
+        renderDisplay();
+        return;
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+      }
+    });
+    escapeBtn.addEventListener("click", () => {
+      if (judgeEscape()) {
+        isBattle = false;
+        renderDisplay();
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+        return;
+      }
+    });
+  }
 });
 
 // 右ボタンを押した時の処理
 rightBtn.addEventListener("click", () => {
   const direction = "right";
-  if (canMove(direction)) {
+  if (!canMove(direction)) {
     return;
   }
   movePlayer(direction);
   renderDisplay();
-
-  // Todo: 移動ログを出力する
+  logMoveHistory(direction);
+  renderDisplay();
+  if (encounterCheck()) {
+    isBattle = true;
+    let currentMonsters = randomMonsters(masterMonsters);
+    logEncountHistory(currentMonsters);
+    const { battleBtn, escapeBtn } = changeBattle(currentMonsters);
+    battleBtn.addEventListener("click", () => {
+      logBattleHistory(player);
+      calculationHP(currentMonsters, player);
+      if (isDie(currentMonsters)) {
+        isBattle = false;
+        renderDisplay();
+        return;
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+      }
+    });
+    escapeBtn.addEventListener("click", () => {
+      if (judgeEscape()) {
+        isBattle = false;
+        renderDisplay();
+      } else {
+        logBattleHistory(currentMonsters);
+        calculationHP(player, currentMonsters);
+        displayHP();
+        gameOver();
+        isBattle = false;
+        return;
+      }
+    });
+  }
 });
