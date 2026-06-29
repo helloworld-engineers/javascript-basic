@@ -81,7 +81,7 @@ const movePlayer = (direction) => {
 
 let logArray = [];
 // 現在のエリアを判定する関数
-const areaCheck = (playerPosition) => {
+const areaCheck = () => {
   if (playerPosition.x === 0 || playerPosition.y === 0) {
     return "grassland";
   }
@@ -152,11 +152,11 @@ const calculationHP = (target, attacker) => {
   target.HP -= attacker.attack;
 };
 
-// HPを描画する関数
+// プレイヤーHPを描画する関数
 const displayHP = () => {
-  if (player.HP <= 0) {
-    hp.textContent = 0;
-  }
+  // if (player.HP <= 0) {
+  //   hp.textContent = "0";
+  // }
   hp.textContent = player.HP;
 };
 
@@ -230,7 +230,7 @@ const displayLog = () => {
 const renderDisplay = () => {
   characterImage.src = "syuzinnkou.jpeg";
   battleEscape.innerHTML = "";
-  const area = areaCheck(playerPosition);
+  const area = areaCheck();
   gameImage.style.backgroundImage = `url(${areaImages[area]})`;
 };
 
