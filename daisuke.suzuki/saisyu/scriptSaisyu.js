@@ -18,6 +18,7 @@ const MONSTERS = {
     attack: 10,
     exp: 10,
     encounterRate: 0.65,
+    image: "image/slime.png",
   },
   dragon: {
     id: "dragon",
@@ -26,6 +27,7 @@ const MONSTERS = {
     attack: 20,
     exp: 15,
     encounterRate: 0.25,
+    image: "image/dragon.webp",
   },
   metal_slime: {
     id: "metal_slime",
@@ -34,6 +36,7 @@ const MONSTERS = {
     attack: 10,
     exp: 30,
     encounterRate: 0.1,
+    image: "image/Metal_slime.webp",
   },
 };
 
@@ -56,12 +59,17 @@ const LEVEL_TABLE = {
   15: 30,
 };
 
+//レベルアップごとの体力上昇値
+const HP_PER_LEV = 20;
+//レベルアップごとの攻撃力上昇値
+const ATK_PER_LEVEL = 20;
+
 //マップマスタデータ
 const MAPS = {
   grass: {
     name: "草原",
     area: { minX: -30, maxX: 0, minY: -30, maxY: 0 },
-    encounterRate: 0.4,
+    encounterRate: 0.1,
   },
   volcano: {
     name: "火山",
@@ -104,7 +112,9 @@ let MODE = {
   MAP: "MAP",
   BATTLE: "BATTLE",
 };
+
 let currentMode = MODE.MAP;
+
 //画面遷移：画面遷移
 function changeMode(nextMode) {
   currentMode = nextMode;
@@ -120,9 +130,6 @@ function changeMode(nextMode) {
   }
 }
 
-changeMode(currentMode);
-console.log(currentMode);
-
 //ログ表示：ログ配列
 let logList = [];
 const LOG_TYPE = {
@@ -133,7 +140,7 @@ const LOG_TYPE = {
 
 //ログ表示：ログ追加
 function addLog(message, type = LOG_TYPE.INFO) {
-  logList.push({
+  logList.unshift({
     message,
     type,
   });
@@ -150,11 +157,11 @@ function renderLogs(message, type = LOG_TYPE.INFO) {
     li.textContent = message;
     ul.appendChild(li);
   });
-  ul.scrollTop = ul.scrollHeight;
+  ul.scrollTop = 0;
 }
 
 //マップ機能：移動関数
-function move(direction, playerStatus) {
+function move(playerStatus, direction) {
   const pos = playerStatus.position;
   if (direction === DIRECTION.UP) {
     pos.y -= 1;
@@ -171,7 +178,7 @@ function move(direction, playerStatus) {
 }
 
 //マップ機能：境界チェック
-function borderCheck(direction, playerStatus) {
+function borderCheck(playerStatus, direction) {
   const { x, y } = playerStatus.position;
   let nextX = x;
   let nextY = y;
@@ -214,9 +221,22 @@ function changeAria(playerStatus, MAPS) {
   if (!nextMap) return false;
   if (nextMap.id !== playerStatus.mapId) {
     playerStatus.mapId = nextMap.id;
+    changeBackground(playerStatus.mapId + "-map");
     return true;
   }
   return false;
+}
+
+//マップ機能：エリア移動に伴う背景変更
+function changeBackground(mapType) {
+  const map = document.getElementById("map-screen");
+  map.classList.remove(
+    "grass-map",
+    "volcano-map",
+    "village-map",
+    "seashore-map",
+  );
+  map.classList.add(mapType);
 }
 
 //エンカウント機能：エンカウント判定
@@ -238,6 +258,25 @@ function appearMonsterCheck(MONSTERS) {
   }
 }
 
+//モンスター画像表示
+function renderMonster(enemy) {
+  const img = document.getElementById("enemy-img");
+  img.src = enemy.image;
+  img.alt = enemy.name;
+}
+
+//プレイヤーステータス更新
+function renderPlayerStatus(playerStatus) {
+  document.getElementById("player-hp").textContent =
+    `HP: ${playerStatus.hp} / ${playerStatus.maxHp}`;
+
+  document.getElementById("player-level").textContent =
+    `Lv: ${playerStatus.level}`;
+
+  document.getElementById("player-attack").textContent =
+    `ATK: ${playerStatus.attack}`;
+}
+
 //モンスター生成
 function createMonster(MONSTERS, monsterId) {
   const base = MONSTERS[monsterId];
@@ -248,6 +287,7 @@ function createMonster(MONSTERS, monsterId) {
     currentHp: base.hp,
     attack: base.attack,
     exp: base.exp,
+    image: base.image,
   };
 }
 
@@ -290,11 +330,15 @@ function levelUp(currentExp, gainedExp, currentLevel, LEVEL_TABLE) {
 
 //戦闘時：戦闘開始
 function startBtl(playerStatus, enemyStatus) {
+  renderMonster(enemyStatus);
+  renderPlayerStatus(playerStatus);
   return {
     playerHp: playerStatus.hp,
     enemyHp: enemyStatus.currentHp,
+    enemy: enemyStatus,
   };
 }
+
 //戦闘時：両者ステータス生成
 let battleState = startBtl(playerStatus, monsterStatus);
 
@@ -312,17 +356,35 @@ function isEscapeSuccess(escapeRate) {
 //戦闘時：勝利時経験値処理
 function applyExp(playerStatus, enemyStatus) {
   const gainExp = enemyStatus.exp;
+
   const levelResult = levelUp(
     playerStatus.exp,
     gainExp,
     playerStatus.level,
     LEVEL_TABLE,
   );
+
+  const prevLevel = playerStatus.level;
+
+  //経験値・レベル更新
   playerStatus.exp = levelResult.nextExp;
   playerStatus.level = levelResult.nextLevel;
+
+  //レベルアップ分
+  const levelDiff = playerStatus.level - prevLevel;
+  if (levelDiff > 0) {
+    for (let i = 0; i < levelDiff; i++) {
+      playerStatus.maxHp += HP_PER_LEV;
+      playerStatus.attack += ATK_PER_LEVEL;
+    }
+
+    //全回復
+    playerStatus.hp = playerStatus.maxHp;
+  }
   return {
     gainExp,
     isLevelUp: levelResult.isLevelUp,
+    levelDiff,
   };
 }
 
@@ -333,22 +395,31 @@ function inputAttack(state, playerAtk, enemyAtk) {
   const playerResult = calcHp(state.enemyHp, damage);
   state.enemyHp = playerResult.nextHp;
   //log
-  addLog(`敵に${damage}ダメージ！ 残りHP: ${state.enemyHp}`, LOG_TYPE.BATTLE);
+  addLog(
+    `敵に${damage}ダメージ！ 敵の残りHP: ${state.enemyHp}`,
+    LOG_TYPE.BATTLE,
+  );
+
   //敵死亡判定
   if (playerResult.isDead) {
     //log
-    addLog("敵は倒れた！", "system");
+    addLog("敵は倒れた！", "SYSTEM");
     return "win";
   }
+
   //敵の攻撃
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
+  playerStatus.hp = enemyResult.nextHp;
+  renderPlayerStatus(playerStatus);
+
   //log
   addLog(
-    `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
+    `プレイヤーは${enemyDamage}ダメージをうけた！ 自分の残りHP: ${state.playerHp}`,
     LOG_TYPE.BATTLE,
   );
+
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
     //log
@@ -361,8 +432,6 @@ function inputAttack(state, playerAtk, enemyAtk) {
 //戦闘時：プレイヤー逃走処理
 function inputEscape(state, enemyAtk, escapeRate) {
   if (isEscapeSuccess(escapeRate)) {
-    //log
-    addLog("逃走成功！", LOG_TYPE.SYSTEM);
     return "escape";
   }
   //log
@@ -371,6 +440,8 @@ function inputEscape(state, enemyAtk, escapeRate) {
   const enemyDamage = calcDamage(enemyAtk);
   const enemyResult = calcHp(state.playerHp, enemyDamage);
   state.playerHp = enemyResult.nextHp;
+  playerStatus.hp = enemyResult.nextHp;
+  renderPlayerStatus(playerStatus);
   //log
   addLog(
     `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
@@ -384,3 +455,83 @@ function inputEscape(state, enemyAtk, escapeRate) {
   }
   return "continue";
 }
+
+//一連の処理
+//移動処理
+
+function handleMove(direction) {
+  //境界チェック
+  if (!borderCheck(playerStatus, direction)) {
+    addLog("この方向には進めません");
+    return;
+  }
+  //移動
+  move(playerStatus,direction);
+  addLog(`${direction}方向に進みました`);
+  //エリア移動
+  const prevMapId = playerStatus.mapId;
+  if (changeAria(playerStatus, MAPS)) {
+    addLog(`エリア移動:${prevMapId}>${playerStatus.mapId}`, LOG_TYPE.SYSTEM);
+  }
+  //エンカウント判定
+  if (!encountCheck(playerStatus, MAPS)) return;
+  //モンスター判定
+  const monsterId = appearMonsterCheck(MONSTERS);
+  //モンスター生成
+  const enemy = createMonster(MONSTERS, monsterId);
+  //戦闘開始
+  battleState = startBtl(playerStatus, enemy);
+  battleState.enemy = enemy;
+  //モード変更
+  changeMode(MODE.BATTLE);
+  ///ログ
+  addLog(`${enemy.name}が現れた！`, LOG_TYPE.BATTLE);
+}
+
+//ボタンと接続、イベント追加
+document.querySelectorAll(".c-button").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const dir = e.target.id;
+    handleMove(dir);
+  });
+});
+
+//戦闘処理
+function handleBattleEnd(result) {
+  if (result === "continue") return;
+
+  if (result === "win") {
+    const expResult = applyExp(playerStatus, battleState.enemy);
+    addLog(`${expResult.gainExp}Exp獲得!`, LOG_TYPE.SYSTEM);
+
+    if (expResult.isLevelUp) {
+      addLog(`レベルアップ！ LV.${playerStatus.level}`, LOG_TYPE.SYSTEM);
+      addLog(`HPと攻撃力が20上がった！`, LOG_TYPE.SYSTEM);
+    }
+  }
+  if (result === "lose") {
+    addLog("ゲームオーバー...", LOG_TYPE.SYSTEM);
+  }
+  if (result === "escape") {
+    addLog("逃走に成功した！", LOG_TYPE.SYSTEM);
+  }
+  changeMode(MODE.MAP);
+  renderPlayerStatus(playerStatus);
+}
+
+//戦闘ボタン処理
+document.getElementById("btn-attack").addEventListener("click", () => {
+  const result = inputAttack(
+    battleState,
+    playerStatus.attack,
+    battleState.enemy.attack,
+  );
+
+  handleBattleEnd(result);
+});
+
+//逃走ボタン処理
+document.getElementById("btn-escape").addEventListener("click", () => {
+  const result = inputEscape(battleState, battleState.enemy.attack, escapeRate);
+  handleBattleEnd(result);
+});
