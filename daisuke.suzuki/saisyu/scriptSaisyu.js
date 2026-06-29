@@ -15,7 +15,7 @@ const MONSTERS = {
     id: "slime",
     name: "スライム",
     hp: 20,
-    attack: 100,
+    attack: 10,
     exp: 10,
     encounterRate: 0.65,
     image: "image/slime.png",
