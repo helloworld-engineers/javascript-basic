@@ -434,7 +434,6 @@ function inputEscape(state, enemyAtk, escapeRate) {
   if (isEscapeSuccess(escapeRate)) {
     return "escape";
   }
-  //log
   addLog("逃走失敗...", LOG_TYPE.SYSTEM);
   //失敗したら敵攻撃
   const enemyDamage = calcDamage(enemyAtk);
@@ -442,7 +441,6 @@ function inputEscape(state, enemyAtk, escapeRate) {
   state.playerHp = enemyResult.nextHp;
   playerStatus.hp = enemyResult.nextHp;
   renderPlayerStatus(playerStatus);
-  //log
   addLog(
     `プレイヤーは${enemyDamage}ダメージをうけた！ 残りHP: ${state.playerHp}`,
     LOG_TYPE.BATTLE,
@@ -456,7 +454,6 @@ function inputEscape(state, enemyAtk, escapeRate) {
 
 //一連の処理
 //移動処理
-
 function handleMove(direction) {
   //境界チェック
   if (!borderCheck(playerStatus, direction)) {
