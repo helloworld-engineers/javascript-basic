@@ -15,7 +15,7 @@ const MONSTERS = {
     id: "slime",
     name: "スライム",
     hp: 20,
-    attack: 10,
+    attack: 100,
     exp: 10,
     encounterRate: 0.65,
     image: "image/slime.png",
@@ -449,8 +449,6 @@ function inputEscape(state, enemyAtk, escapeRate) {
   );
   //プレイヤー死亡判定
   if (enemyResult.isDead) {
-    //log
-    addLog("敗北...", LOG_TYPE.SYSTEM);
     return "lose";
   }
   return "continue";
@@ -511,6 +509,11 @@ function handleBattleEnd(result) {
   }
   if (result === "lose") {
     addLog("ゲームオーバー...", LOG_TYPE.SYSTEM);
+    const controllerEl = document.getElementById("controller");
+    controllerEl.style.pointerEvents = "none";
+    controllerEl.style.opacity = "0.5";
+    const playerEl = document.getElementById("player");
+    playerEl.style.opacity = "0.5";
   }
   if (result === "escape") {
     addLog("逃走に成功した！", LOG_TYPE.SYSTEM);
