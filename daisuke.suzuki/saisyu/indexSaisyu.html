@@ -12,27 +12,27 @@
       <div class="left-area">
         <!--status-->
         <div class="status">
-          <p><span id="player-hp">HP:100</span></p>
-          <p><span id="player-attack">攻撃力:10</span></p>
-          <p><span id="player-level">レベル:1</span></p>
+          <p class="statusText"><span id="player-level">レベル:1</span></p>
+          <p class="statusText"><span id="player-hp">HP:100</span></p>
+          <p class="statusText"><span id="player-attack">攻撃力:10</span></p>
         </div>
         <!--map-->
-        <div id="map-screen">
+        <div id="map-screen" class="grass-map">
           <div id="map-view" class="view">
-            <img src="player.png" alt="player" class="character" />
+            <img src="image/player.png" alt="player" class="character" />
           </div>
           <!--controller-->
           <div id="controller" class="controller">
-            <button data-dir="up" class="c-button">⇧</button>
-            <button data-dir="right" class="c-button">⇨</button>
-            <button data-dir="down" class="c-button">⇩</button>
-            <button data-dir="left" class="c-button">⇦</button>
+            <button id="UP" class="c-button">⇧</button>
+            <button id="RIGHT" class="c-button">⇨</button>
+            <button id="DOWN" class="c-button">⇩</button>
+            <button id="LEFT" class="c-button">⇦</button>
           </div>
         </div>
         <!--battle-->
-        <div id="battle-screen">
+        <div id="battle-screen" class="battle-background">
           <div id="battle-view" class="view">
-            <img src="slime.png" alt="enemy" class="enemy" />
+            <img id="enemy-img" alt="enemy" class="enemy" />
           </div>
           <!--actionbutton-->
           <div class="battle-actions">
@@ -46,7 +46,6 @@
       <div class="right-area">
         <div class="log-area">
           <h3 class="logTitle">ログ</h3>
-          <br />
           <ul id="log-list"></ul>
         </div>
       </div>
