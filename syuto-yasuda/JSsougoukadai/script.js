@@ -154,6 +154,9 @@ const calculationHP = (target, attacker) => {
 
 // HPを描画する関数
 const displayHP = () => {
+  if (player.HP <= 0) {
+    hp.textContent = 0;
+  }
   hp.textContent = player.HP;
 };
 
@@ -173,12 +176,14 @@ const gameOver = () => {
     alert("ゲームオーバー");
     playerPosition = { x: 0, y: 0 };
     player = {
+      name: "主人公",
       HP: 100,
       attack: 10,
       level: 1,
     };
     displayHP();
     renderDisplay();
+    isBattle = false;
   }
 };
 
@@ -258,7 +263,6 @@ const arrowBtn = (arrow) => {
         calculationHP(player, currentMonsters);
         displayHP();
         gameOver();
-        isBattle = false;
       }
     });
     escapeBtn.addEventListener("click", () => {
@@ -270,7 +274,6 @@ const arrowBtn = (arrow) => {
         calculationHP(player, currentMonsters);
         displayHP();
         gameOver();
-        isBattle = false;
         return;
       }
     });
