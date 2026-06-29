@@ -154,10 +154,12 @@ const calculationHP = (target, attacker) => {
 
 // プレイヤーHPを描画する関数
 const displayHP = () => {
-  // if (player.HP <= 0) {
-  //   hp.textContent = "0";
-  // }
-  hp.textContent = player.HP;
+  if (player.HP <= 0) {
+    hp.textContent = 0;
+    battleEscape.innerHTML = "";
+  } else {
+    hp.textContent = player.HP;
+  }
 };
 
 // 生死判定する関数
@@ -262,7 +264,7 @@ const arrowBtn = (arrow) => {
         logBattleHistory(currentMonsters);
         calculationHP(player, currentMonsters);
         displayHP();
-        gameOver();
+        setTimeout(gameOver, 1000);
       }
     });
     escapeBtn.addEventListener("click", () => {
@@ -273,7 +275,7 @@ const arrowBtn = (arrow) => {
         logBattleHistory(currentMonsters);
         calculationHP(player, currentMonsters);
         displayHP();
-        gameOver();
+        setTimeout(gameOver, 1000);
         return;
       }
     });
