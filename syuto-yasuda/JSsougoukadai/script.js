@@ -237,7 +237,7 @@ upBtn.addEventListener("click", () => {
     isBattle = true;
     let currentMonsters = randomMonsters(masterMonsters);
     logEncountHistory(currentMonsters);
-    const { battleBtn, escapeBtn } = changeBattle(currentMonsters);
+    const selectBtn = changeBattle(currentMonsters);
     battleBtn.addEventListener("click", () => {
       logBattleHistory(player);
       calculationHP(currentMonsters, player);
