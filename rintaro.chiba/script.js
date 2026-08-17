@@ -14,7 +14,7 @@ let player2Count = 0;
 
 //勝負ボタンをクリックした場合の処理
 btn.addEventListener("click", () => {
-  if (roundCount >= 5) {
+  if (roundCount >= 3) {
     return;
   }
   if (roundCount < 3) {
@@ -37,7 +37,6 @@ btn.addEventListener("click", () => {
   }
   if (roundCount === 3) {
     btn.setAttribute("disabled", true);
-    btn.style.color = "white";
     round.textContent = `ラウンド数：${roundCount}ラウンド`;
     if (player1Count > player2Count) {
       shohai.textContent = "プレイヤー1の勝利";
