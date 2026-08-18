@@ -10,7 +10,8 @@
 .balls{
   display: flex;
   justify-content: center;
-  width: 60%;
+  box-sizing: border-box;
+  width: 70%;
   height: 100px;
   gap: 20px;
 }
@@ -37,9 +38,10 @@
 .boxes{
   display: flex;
   justify-content: center;
-  width: 60%;
+  box-sizing: border-box;
+  width: 70%;
   height: 200px;
-  gap: 30px;
+  gap: 40px;
 }
 
 .box1,.box2,.box3,.box4{
@@ -48,12 +50,12 @@
 }
 
 .texts{
-  width: 60%;
+  width: 70%;
 }
 
 .btns{
   display: flex;
   justify-content: left;
-  width: 60%;
+  width: 70%;
   gap: 40px;
 }
