@@ -11,6 +11,7 @@ const p2Point = document.getElementById("p2Point");
 let roundCount = 0;
 let player1Count = 0;
 let player2Count = 0;
+const randomNum = 6;
 
 //勝負ボタンをクリックした場合の処理
 btn.addEventListener("click", () => {
@@ -22,8 +23,8 @@ btn.addEventListener("click", () => {
     roundCount++;
     round.textContent = `ラウンド数：${roundCount}ラウンド`;
 
-    const deme1Random = Math.floor(Math.random() * 6) + 1;
-    const deme2Random = Math.floor(Math.random() * 6) + 1;
+    const deme1Random = Math.floor(Math.random() * randomNum) + 1;
+    const deme2Random = Math.floor(Math.random() * randomNum) + 1;
     deme1.src = `./images/${deme1Random}.png`;
     deme2.src = `./images/${deme2Random}.png`;
     if (deme1Random > deme2Random) {
@@ -36,7 +37,7 @@ btn.addEventListener("click", () => {
     }
   }
   if (roundCount === 3) {
-    btn.setAttribute("disabled", true);
+    btn.disabled = true;
     round.textContent = `ラウンド数：${roundCount}ラウンド`;
     if (player1Count > player2Count) {
       shohai.textContent = "プレイヤー1の勝利";
