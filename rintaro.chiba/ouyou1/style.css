@@ -1,0 +1,71 @@
+.bigContainer{
+    display: flex;
+}
+
+.main{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.player1{
+    width: 60%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.p1Container{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.p1Container img{
+    width: 100px;
+    height: auto;
+}
+
+.p2Container{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.p2Container img{
+    width: 100px;
+    height: auto;
+}
+
+.player2{
+    width: 60%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.buttons{
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2%;
+}
+
+.info{
+    width: 20%;
+    font-size: 12px;
+}
+
+.shobu{
+    align-items: center;
+    height: 40px;
+}
+
+.shohai{
+    height: 40px;
+    align-items: center;
+}
