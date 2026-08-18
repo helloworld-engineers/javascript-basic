@@ -11,7 +11,7 @@ const p2Point = document.getElementById("p2Point");
 let roundCount = 0;
 let player1Count = 0;
 let player2Count = 0;
-const randomNum = 6;
+const RANDOM_NUM = 6;
 
 //勝負ボタンをクリックした場合の処理
 btn.addEventListener("click", () => {
