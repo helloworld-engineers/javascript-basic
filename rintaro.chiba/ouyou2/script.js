@@ -32,7 +32,7 @@ const shuffle = (array) => {
 //箱配列のシャッフル関数(中身を空にしてからシャッフルし格納する)
 const boxShuffle = () => {
   boxArray.length = 0;
-  const shuffledArr = shuffle(ballArray);
+  const shuffledArr = shuffle(changeArr);
   for (let i = 0; i <= shuffledArr.length - 1; i++) {
     boxArray.push(shuffledArr[i]);
   }
@@ -40,16 +40,12 @@ const boxShuffle = () => {
 
 //エラー検知関数を定義(同じ番号が一つでもあればfalseを返し、全部違う番号であればtrueを返す)
 const errorCheck = (array1, array2) => {
-  let resultArray = [];
   for (let i = 0; i < array1.length; i++) {
     if (array1[i] === array2[i]) {
-      resultArray.push(false);
-    } else {
-      resultArray.push(true);
+      return false;
     }
   }
-  var result = resultArray.every((index) => index);
-  return result;
+  return true;
 };
 
 //エラー検知関数がfalseを返す限りシャッフルし続ける関数(すべて被っていないパターンの配列を返す)
@@ -80,19 +76,16 @@ const colors = ["red", "blue", "green", "yellow"];
 //配列の番号に応じてリスト化されたHTML要素のスタイルを変更
 const colorChange = (array) => {
   for (let i = 0; i < array.length; i++) {
-    if (array[i] === 0) {
-      balls[i].style.backgroundColor = colors[0];
-    }
-    if (array[i] === 1) {
-      balls[i].style.backgroundColor = colors[1];
-    }
-    if (array[i] === 2) {
-      balls[i].style.backgroundColor = colors[2];
-    }
-    if (array[i] === 3) {
-      balls[i].style.backgroundColor = colors[3];
-    }
+    balls[i].style.backgroundColor = colors[array[i]];
   }
+};
+
+//正解数を判定する関数
+const AnswerText = () => {
+  const checkedArray = answerCheck(changeArr, boxArray);
+  const filteredArray = checkedArray.filter((index) => index === false);
+  const answer = filteredArray.length;
+  answertext.textContent = `${answer}個正解しています。`;
 };
 
 //左矢印を押したとき左隣と入れ替える(左端は早期リターン),
@@ -107,10 +100,7 @@ left.forEach((button, index) => {
       changeArr[index - 1],
     ];
     colorChange(changeArr);
-    const checkedArray = answerCheck(changeArr, boxArray);
-    const filteredArray = checkedArray.filter((index) => index === false);
-    const answer = filteredArray.length;
-    answertext.textContent = `${answer}個正解しています。`;
+    AnswerText()
   });
 });
 
@@ -126,10 +116,7 @@ right.forEach((button, index) => {
       changeArr[index],
     ];
     colorChange(changeArr);
-    const checkedArray = answerCheck(changeArr, boxArray);
-    const filteredArray = checkedArray.filter((index) => index === false);
-    const answer = filteredArray.length;
-    answertext.textContent = `${answer}個正解しています。`;
+    AnswerText()
   });
 });
 
@@ -141,10 +128,7 @@ resetBtn.addEventListener("click", () => {
   colorChange(ballArray);
   boxShuffle();
   reShuffle(ballArray, boxArray);
-  const checkedArray = answerCheck(changeArr, boxArray);
-  const filteredArray = checkedArray.filter((index) => index === false);
-  const answer = filteredArray.length;
-  answertext.textContent = `${answer}個正解しています。`;
+  AnswerText()
 });
 
 //初期実行
