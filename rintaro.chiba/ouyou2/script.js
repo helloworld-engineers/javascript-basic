@@ -1,6 +1,6 @@
 //矢印ボタン要素の取得
-const left = document.querySelectorAll(".left");
-const right = document.querySelectorAll(".right");
+const leftButtons = document.querySelectorAll(".left");
+const rightButtons = document.querySelectorAll(".right");
 //正答数の文字列要素取得
 const answertext = document.getElementById("answer");
 //リセットボタン要素の取得
@@ -11,10 +11,10 @@ const balls = [...document.querySelectorAll(".ball")];
 const boxes = document.querySelectorAll(".box");
 
 //ボールの初期配列
-let ballArray = [0, 1, 2, 3];
+let initialBallArray = [0, 1, 2, 3];
 
 //ボール配列のディープコピー(矢印ボタンで入れ替える用)
-let changeArr = [...ballArray];
+let changeArr = [...initialBallArray];
 
 //箱の初期配列
 let boxArray = [];
@@ -39,7 +39,7 @@ const boxShuffle = () => {
 };
 
 //エラー検知関数を定義(同じ番号が一つでもあればfalseを返し、全部違う番号であればtrueを返す)
-const errorCheck = (array1, array2) => {
+const isError = (array1, array2) => {
   for (let i = 0; i < array1.length; i++) {
     if (array1[i] === array2[i]) {
       return false;
@@ -50,8 +50,8 @@ const errorCheck = (array1, array2) => {
 
 //エラー検知関数がfalseを返す限りシャッフルし続ける関数(すべて被っていないパターンの配列を返す)
 const reShuffle = (array1, array2) => {
-  var result = errorCheck(array1, array2);
-  while (result === false) {
+  var result = isError(array1, array2);
+  while (!result) {
     boxShuffle();
     result = errorCheck(array1, array2);
   }
@@ -81,7 +81,7 @@ const colorChange = (array) => {
 };
 
 //正解数を判定する関数
-const AnswerText = () => {
+const answerText = () => {
   const checkedArray = answerCheck(changeArr, boxArray);
   const filteredArray = checkedArray.filter((index) => index === false);
   const answer = filteredArray.length;
@@ -90,7 +90,7 @@ const AnswerText = () => {
 
 //左矢印を押したとき左隣と入れ替える(左端は早期リターン),
 //合致した場合falseのみを配列化してlengthを正解数として表示する
-left.forEach((button, index) => {
+leftButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
     if (index === 0) {
       return;
@@ -100,13 +100,13 @@ left.forEach((button, index) => {
       changeArr[index - 1],
     ];
     colorChange(changeArr);
-    AnswerText()
+    answerText()
   });
 });
 
 //右矢印を押したとき右隣と入れ替える(右端は早期リターン),
 //合致した場合falseのみを配列化してlengthを正解数として表示する
-right.forEach((button, index) => {
+rightButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
     if (index === changeArr.length - 1) {
       return;
@@ -116,7 +116,7 @@ right.forEach((button, index) => {
       changeArr[index],
     ];
     colorChange(changeArr);
-    AnswerText()
+    answerText()
   });
 });
 
@@ -132,6 +132,8 @@ resetBtn.addEventListener("click", () => {
 });
 
 //初期実行
-colorChange(changeArr);
-boxShuffle();
-reShuffle(ballArray, boxArray);
+window.onload = () => {
+  colorChange(changeArr);
+  boxShuffle();
+  reShuffle(ballArray, boxArray);
+}
