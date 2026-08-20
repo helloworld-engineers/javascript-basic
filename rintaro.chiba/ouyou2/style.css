@@ -1,4 +1,4 @@
-.main{
+.main {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -7,35 +7,37 @@
   gap: 40px;
 }
 
-.balls{
+.balls {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
   width: 70%;
   height: 100px;
-  gap: 20px;
+  gap: 40px;
 }
 
-.ball1area,.ball2area,.ball3area,.ball4area{
+.ballarea {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: auto;
   gap: 20px;
 }
 
-.ball1,.ball2,.ball3,.ball4{
-  width: 50px;
-  height: 50px;
+.ball {
+  width: 30%;
+  aspect-ratio: 1;
+  min-width: 30px;
   border: 1px solid black;
   border-radius: 50%;
 }
 
-.balls .button{
+.balls .button {
   width: 60%;
 }
 
-.boxes{
+.boxes {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -44,18 +46,25 @@
   gap: 40px;
 }
 
-.box1,.box2,.box3,.box4{
+.box {
   width: 100%;
   border: 1px solid black;
 }
 
-.texts{
+.texts {
   width: 70%;
 }
 
-.btns{
+.btns {
   display: flex;
   justify-content: left;
   width: 70%;
   gap: 40px;
+}
+
+.reset {
+  width: 10%;
+  height: 50px;
+  font-weight: bold;
+  border-radius: 10%;
 }
