@@ -50,10 +50,9 @@ const isError = (array1, array2) => {
 
 //エラー検知関数がfalseを返す限りシャッフルし続ける関数(すべて被っていないパターンの配列を返す)
 const reShuffle = (array1, array2) => {
-  var result = isError(array1, array2);
-  while (!result) {
+  while (!isError(array1, array2)) {
     boxShuffle();
-    result = errorCheck(array1, array2);
+    isError(array1, array2);
   }
   return boxArray;
 };
@@ -125,15 +124,15 @@ rightButtons.forEach((button, index) => {
 resetBtn.addEventListener("click", () => {
   changeArr = [0, 1, 2, 3];
   boxArray.length = 0;
-  colorChange(ballArray);
+  colorChange(initialBallArray);
   boxShuffle();
-  reShuffle(ballArray, boxArray);
-  AnswerText()
+  reShuffle(initialBallArray, boxArray);
+  answerText()
 });
 
 //初期実行
 window.onload = () => {
   colorChange(changeArr);
   boxShuffle();
-  reShuffle(ballArray, boxArray);
+  reShuffle(initialBallArray, boxArray);
 }
