@@ -34,7 +34,7 @@ async function getDog() {
 }
 
 //画像取得をクリックした際にgetDog()を実行
-getBtn.addEventListener("click", () => getDog());
+getBtn.addEventListener("click", getDog);
 
 //初期実行
 getDog();
