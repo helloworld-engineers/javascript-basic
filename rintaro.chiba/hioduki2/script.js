@@ -138,7 +138,7 @@ const createButtons = async (currentPage) => {
 };
 
 //ページ数をクラス名にしたボタンを1つ作成する関数
-const createButton = async (i) => {
+const createButton = (i) => {
   const pageBtn = document.createElement("button");
   pageBtn.type = "button";
   pageBtn.classList.add(`page${i}`);
@@ -236,7 +236,7 @@ const createCard = (area, array) => {
   //情報の追加(5要素分)
   for (let j = 1; j <= array.length - 1; j++) {
     const detailText = document.createElement("p");
-    detailText.textContent = `${array[j]}`;
+    detailText.textContent = array[j];
     InfoCard.appendChild(detailText);
   }
 };
