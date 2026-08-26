@@ -1,6 +1,5 @@
 //ポケモン詳細ブロック要素の取得
 const pokemonDetail = document.getElementById("pokemonDetail");
-const Info = document.getElementById("Info");
 // ページボタンの要素取得
 const pageNum = document.getElementById("pageNum");
 const beforeButton = document.getElementById("beforeBtn");
@@ -25,59 +24,6 @@ const LIMIT = 20;
 let currentPage = 1;
 //開始位置(初期値offset=0)
 let offset = 0;
-
-//検索テキストBOXに入力されていないとき非活性(初期値=true)
-searchBtn.disabled = true;
-searchId.addEventListener("input", () => {
-  searchBtn.disabled = searchId.value.trim() === "";
-});
-//検索ボタンをクリックしたときにapi取得をして履歴欄にカードを追加
-searchBtn.addEventListener("click", async () => {
-  errorMessage.textContent = "";
-  searchLoading.classList.remove("hide");
-  const id = searchId.value.trim();
-
-  if (!id) {
-    searchLoading.classList.add("hide");
-    errorMessage.textContent = "idを入力してください";
-    errorMessage.style.color = "red";
-    return;
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/${id}`);
-    if (!response.ok) {
-      throw new Error("id not found");
-    }
-    const data = await response.json();
-    createCard(searchLog, createDetailList(data));
-  } catch (error) {
-    errorMessage.textContent = "そのidは存在しません";
-    errorMessage.style.color = "red";
-  } finally {
-    searchId.value = "";
-    searchLoading.classList.add("hide");
-    searchBtn.disabled = true;
-  }
-});
-
-//前へボタンのイベント処理
-beforeButton.addEventListener("click", () => {
-  if (currentPage !== 1) {
-    currentPage = currentPage - 1;
-    offset = (currentPage - 1) * LIMIT;
-    createCardList();
-  }
-});
-
-//次へボタンのイベント処理
-nextButton.addEventListener("click", () => {
-  if (currentPage !== 68) {
-    currentPage = currentPage + 1;
-    offset = (currentPage - 1) * LIMIT;
-    createCardList();
-  }
-});
 
 //総数1351÷20=68ページを算出
 const getPageCount = async (offset) => {
@@ -109,8 +55,8 @@ const createButtons = async (currentPage) => {
       reloadCardList(i);
     }
     createEllipsis();
-    createButton(68);
-    reloadCardList(68);
+    createButton(pageCount);
+    reloadCardList(pageCount);
     return;
   }
   if (8 <= currentPage && currentPage <= pageCount - 6) {
@@ -122,8 +68,8 @@ const createButtons = async (currentPage) => {
       reloadCardList(i);
     }
     createEllipsis();
-    createButton(68);
-    reloadCardList(68);
+    createButton(pageCount);
+    reloadCardList(pageCount);
     return;
   }
   if (pageCount - 6 <= currentPage) {
@@ -216,11 +162,16 @@ const createDetailList = (pokemondetail) => {
 };
 
 //1匹のカードを作成する関数
-const createCard = (area, array) => {
+const createCard = (area, array, isSearched) => {
   //Detailカードの大枠
   const cardBox = document.createElement("div");
   cardBox.classList.add("cardBox");
-  area.appendChild(cardBox);
+  if (isSearched) {
+    area.prepend(cardBox);
+  }
+  if (!isSearched) {
+    area.appendChild(cardBox);
+  }
   //画像枠の追加(大枠直下)
   const imageCard = document.createElement("div");
   imageCard.classList.add("imageCard");
@@ -246,9 +197,62 @@ const createCardList = async () => {
   pokemonDetail.innerHTML = "";
   const pokemonList = await getPokemonList();
   for (let i = 0; i <= pokemonList.length - 1; i++) {
-    createCard(pokemonDetail, createDetailList(pokemonList[i]));
+    createCard(pokemonDetail, createDetailList(pokemonList[i]), false);
   }
 };
+
+//検索テキストBOXに入力されていないとき非活性(初期値=true)
+searchBtn.disabled = true;
+searchId.addEventListener("input", () => {
+  searchBtn.disabled = searchId.value.trim() === "";
+});
+//検索ボタンをクリックしたときにapi取得をして履歴欄にカードを追加
+searchBtn.addEventListener("click", async () => {
+  errorMessage.textContent = "";
+  searchLoading.classList.remove("hide");
+  const id = searchId.value.trim();
+
+  if (!id) {
+    searchLoading.classList.add("hide");
+    errorMessage.textContent = "idを入力してください";
+    errorMessage.style.color = "red";
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    if (!response.ok) {
+      throw new Error("id not found");
+    }
+    const data = await response.json();
+    createCard(searchLog, createDetailList(data), true);
+  } catch (error) {
+    errorMessage.textContent = "そのidは存在しません";
+    errorMessage.style.color = "red";
+  } finally {
+    searchId.value = "";
+    searchLoading.classList.add("hide");
+    searchBtn.disabled = true;
+  }
+});
+
+//前へボタンのイベント処理
+beforeButton.addEventListener("click", () => {
+  if (currentPage !== 1) {
+    currentPage = currentPage - 1;
+    offset = (currentPage - 1) * LIMIT;
+    createCardList();
+  }
+});
+
+//次へボタンのイベント処理
+nextButton.addEventListener("click", () => {
+  if (currentPage !== 68) {
+    currentPage = currentPage + 1;
+    offset = (currentPage - 1) * LIMIT;
+    createCardList();
+  }
+});
 
 //初期実行
 window.onload = async () => {
