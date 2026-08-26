@@ -1,0 +1,99 @@
+body {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.main {
+  width: 65%;
+  font-size: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.rightBlock {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.title h2 {
+  margin: 0 auto;
+}
+
+.pageBtns {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.btn button {
+  height: 30px;
+}
+
+.pokemonDetail {
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pokemonDetail img {
+  width: 100%;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.cardBox {
+  width: 80%;
+  max-height: 200px;
+  border: 1px solid black;
+  display: flex;
+}
+
+.imageCard {
+  width: 80%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 3%;
+}
+
+.imageCard img {
+  width: 100%;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.infoCard {
+  width: 100%;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.infoCard p {
+  margin: 0;
+}
+
+.searchLog {
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0;
+  gap: 20px;
+  overflow: scroll;
+}
+
+.hide {
+  display: none;
+}
