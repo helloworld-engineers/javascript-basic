@@ -11,31 +11,51 @@
     <div class="body">
       <main class="main">
         <div class="status" id="status">
-          <p>HP:100</p>
-          <p>攻撃力:10</p>
-          <p>レベル:1</p>
+          <p id="HP"></p>
+          <p id="Attack"></p>
+          <p id="Level"></p>
         </div>
-        <div class="mainCharactor" id="mainCharactor">
-          <img src="./Images/MainCharactor.png" alt="主人公画像" />
+        <div class="mainImage">
+          <img
+            id="currentImage"
+            src="./images/MainCharactor.png"
+            alt="主人公画像"
+          />
         </div>
-        <div class="arrowsArea">
+        <div class="buttonsArea">
           <div class="arrowsBox">
             <div></div>
-            <img class="up" src="./Images/UpArrow.png" alt="上矢印" />
+            <button class="moveArrow" id="upArrow" type="button">
+              <img src="./images/UpArrow.png" alt="上矢印" />
+            </button>
             <div></div>
-            <img class="left" src="./Images/LeftArrow.png" alt="左矢印" />
+            <button class="moveArrow" id="leftArrow" type="button">
+              <img src="./images/LeftArrow.png" alt="左矢印" />
+            </button>
             <div></div>
-            <img class="right" src="./Images/RightArrow.png" alt="右矢印" />
+            <button class="moveArrow" id="rightArrow" type="button">
+              <img src="./images/RightArrow.png" alt="右矢印" />
+            </button>
             <div></div>
-            <img class="down" src="./Images/DownArrow.png" alt="下矢印" />
+            <button class="moveArrow" id="downArrow" type="button">
+              <img src="./images/DownArrow.png" alt="下矢印" />
+            </button>
             <div></div>
+          </div>
+          <div class="battle">
+            <button class="hide" id="battleButton">戦う</button>
+          </div>
+          <div class="escape">
+            <button class="hide" id="escapeButton">逃げる</button>
           </div>
         </div>
       </main>
 
-      <div class="log">
-        <p>ログ</p>
+      <div class="log" id="log">
+        <h4>ログ</h2>
+        <p></p>
       </div>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
