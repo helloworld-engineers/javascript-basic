@@ -95,19 +95,19 @@ const checkMap = (playerStatus) => {
   )
     return false;
   if (x >= 0 && y >= 0) {
-    backContainer.style.backgroundImage = 'url("./Images/Heigen.jpeg")';
+    backContainer.style.backgroundImage = 'url("./images/Heigen.jpeg")';
     return true;
   }
   if (x >= 0 && y < 0) {
-    backContainer.style.backgroundImage = 'url("./Images/Kazan.jpg")';
+    backContainer.style.backgroundImage = 'url("./images/Kazan.jpg")';
     return true;
   }
   if (x < 0 && y >= 0) {
-    backContainer.style.backgroundImage = 'url("./Images/Yukiyama.jpg")';
+    backContainer.style.backgroundImage = 'url("./images/Yukiyama.jpg")';
     return true;
   }
   if (x < 0 && y < 0) {
-    backContainer.style.backgroundImage = 'url("./Images/sea.jpg")';
+    backContainer.style.backgroundImage = 'url("./images/sea.jpg")';
     return true;
   }
 };
@@ -124,9 +124,7 @@ const updateArrow = (currentStatus) => {
 //座標移動時40%の確率で敵とエンカウント
 const isEncount = () => {
   const randomNumber = Math.floor(Math.random() * PERCENT) + 1;
-  if (randomNumber <= ENCOUNT_PERCENT) {
-    return true;
-  }
+  return randomNumber <= ENCOUNT_PERCENT;
 };
 
 //3種類のモンスターから1匹を選出
@@ -166,7 +164,7 @@ const battleStart = (enemyObject) => {
 };
 
 //「戦う」ボタンをクリックした時
-const playrAttack = () => {
+const playerAttack = () => {
   addLog("プレイヤーの攻撃");
   currentEnemy.HP = currentEnemy.HP - playerStatus.Attack;
   if (currentEnemy.HP > 0) {
@@ -267,7 +265,7 @@ const moveCoodinate = (playerStatus) => {
   });
 };
 
-battleButton.addEventListener("click", playrAttack);
+battleButton.addEventListener("click", playerAttack);
 escapeButton.addEventListener("click", playerEscape);
 
 window.onload = () => {
