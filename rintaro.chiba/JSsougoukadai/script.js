@@ -1,7 +1,7 @@
 const backContainer = document.querySelector(".main"); // mainコンテナ
 
 const currentImage = document.getElementById("currentImage"); // 中心表示する画像<img>
-const currentHP = document.getElementById("HP"); // HPを表示する<p>
+const currentHp = document.getElementById("HP"); // HPを表示する<p>
 const currentAttack = document.getElementById("Attack"); // 攻撃力を表示する<p>
 const currentLevel = document.getElementById("Level"); // レベルを表示する<p>
 
@@ -22,9 +22,10 @@ const PERCENT = 100;
 const ENCOUNT_PERCENT = 40;
 //プレイヤーステータスのマスターデータ
 let playerStatus = {
-  HP: 100,
-  Attack: 10,
-  Level: 1,
+  hp: 100,
+  attack: 10,
+  level: 1,
+  exp: 0,
   x: 0,
   y: 0,
 };
@@ -33,28 +34,28 @@ const enemyStatus = [
   {
     name: "slime",
     id: 1,
-    HP: 20,
-    Attack: 10,
+    hp: 20,
+    attack: 10,
     exp: 10,
-    image: "./images/Slime.webp",
+    image: "./images/slime.gif",
     encountPercent: 65,
   },
   {
     name: "doragon",
     id: 2,
-    HP: 40,
-    Attack: 20,
+    hp: 40,
+    attack: 20,
     exp: 15,
-    image: "./images/Doragon.png",
+    image: "./images/dragon.gif",
     encountPercent: 25,
   },
   {
     name: "metalslime",
     id: 3,
-    HP: 20,
-    Attack: 10,
+    hp: 20,
+    attack: 10,
     exp: 30,
-    image: "./images/MetalSlime.webp",
+    image: "./images/metalslime.gif",
     encountPercent: 10,
   },
 ];
@@ -67,20 +68,21 @@ const mapLimit = { x: 20, y: 20 };
 //初期化
 const initGame = () => {
   playerStatus = {
-    HP: 100,
-    Attack: 10,
-    Level: 1,
+    hp: 100,
+    attack: 10,
+    level: 1,
+    exp: 0,
     x: 0,
     y: 0,
   };
   currentStatus(playerStatus);
 };
 
-//現在のステータスを表示する
+//ステータス情報を今の画面に表示する
 const currentStatus = (playerStatus) => {
-  currentHP.textContent = `HP：${playerStatus.HP}`;
-  currentAttack.textContent = `攻撃力：${playerStatus.Attack}`;
-  currentLevel.textContent = `レベル：${playerStatus.Level}`;
+  currentHp.textContent = `HP：${playerStatus.hp}`;
+  currentAttack.textContent = `攻撃力：${playerStatus.attack}`;
+  currentLevel.textContent = `レベル：${playerStatus.level}`;
 };
 
 //マップ判定 x,y-20~20と画像の差し替え(マップ内の場合tureマップ外の場合にfalseを返す)
@@ -147,27 +149,21 @@ const battleStart = (enemyObject) => {
   currentImage.src = currentEnemy.image;
   currentImage.alt = "敵の画像";
   if (enemyObject.name === "slime") {
-    //slime画像の表示調整
-    currentImage.style.maxWidth = "180px";
-    currentImage.style.maxHeight = "200px";
+    currentImage.style.maxHeight = "100%";
   }
   if (enemyObject.name === "doragon") {
-    //doragon画像の表示調整
-    currentImage.style.maxWidth = "450px";
-    currentImage.style.maxHeight = "450px";
+    currentImage.style.maxHeight = "100%";
   }
   if (enemyObject.name === "metalslime") {
-    //metalslime画像の表示調整
-    currentImage.style.maxWidth = "170px";
-    currentImage.style.maxHeight = "190px";
+    currentImage.style.maxHeight = "100%";
   }
 };
 
 //「戦う」ボタンをクリックした時
 const playerAttack = () => {
   addLog("プレイヤーの攻撃");
-  currentEnemy.HP = currentEnemy.HP - playerStatus.Attack;
-  if (currentEnemy.HP > 0) {
+  currentEnemy.hp = currentEnemy.hp - playerStatus.attack;
+  if (currentEnemy.hp > 0) {
     enemyAttack(currentEnemy);
   }
   judgeBattle(playerStatus, currentEnemy);
@@ -176,25 +172,47 @@ const playerAttack = () => {
 //敵の攻撃
 const enemyAttack = (currentEnemy) => {
   addLog(`${currentEnemy.name}の攻撃`);
-  if (playerStatus.HP <= currentEnemy.Attack) {
-    playerStatus.HP = 0;
+  if (playerStatus.hp <= currentEnemy.Attack) {
+    playerStatus.hp = 0;
     currentStatus(playerStatus);
     return;
   }
-  playerStatus.HP = playerStatus.HP - currentEnemy.Attack;
+  playerStatus.hp = playerStatus.hp - currentEnemy.attack;
   currentStatus(playerStatus);
 };
 
 //勝敗チェック
 const judgeBattle = (playerStatus, currentEnemy) => {
-  if (playerStatus.HP <= 0 && currentEnemy.HP > 0) {
+  if (playerStatus.hp <= 0 && currentEnemy.hp > 0) {
     addLog("ゲームオーバー");
     battleButton.classList.add("hide");
     escapeButton.classList.add("hide");
   }
-  if (currentEnemy.HP <= 0) {
+  if (currentEnemy.hp <= 0) {
     addLog("プレイヤーの勝利！");
+    levelCheck();
     endBattle();
+  }
+};
+
+//レベルアップ周りの数値
+const expConfig = {
+  nextExp: 30,
+  plusAttack: 20,
+  initHp: 100,
+  plusHp: 20,
+};
+
+//敵を倒したときのレベル処理
+const levelCheck = () => {
+  playerStatus.exp += currentEnemy.exp;
+  if (playerStatus.exp / expConfig.nextExp >= 1) {
+    playerStatus.level += Math.floor(playerStatus.exp / expConfig.nextExp);
+    addLog(`レベル${playerStatus.level}にアップしました！`);
+    playerStatus.attack += expConfig.plusAttack;
+    playerStatus.hp =
+      expConfig.initHp + expConfig.plusHp * (playerStatus.level - 1);
+    playerStatus.exp %= expConfig.nextExp;
   }
 };
 
@@ -216,11 +234,13 @@ const playerEscape = () => {
 const endBattle = () => {
   currentEnemy = null;
   currentImage.src = "./images/MainCharactor.png";
+  currentImage.alt = "主人公の画像";
   battleButton.classList.add("hide");
   escapeButton.classList.add("hide");
   currentImage.style.maxWidth = "180px";
   currentImage.style.maxHeight = "200px";
   updateArrow(playerStatus);
+  currentStatus(playerStatus);
 };
 
 //ログの追加
