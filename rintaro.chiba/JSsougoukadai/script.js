@@ -18,10 +18,10 @@ const logs = document.getElementById("log"); // ログを表示するエリア<d
 
 const arrowArray = [...moveArrow]; // 矢印ボタンのNodeListを配列に変換
 
-const PERCENT = 100;
+const MAX_PERCENT = 100;
 const ENCOUNT_PERCENT = 40;
 //プレイヤーステータスのマスターデータ
-let playerStatus = {
+const playerStatus = {
   hp: 100,
   attack: 10,
   level: 1,
@@ -125,13 +125,13 @@ const updateArrow = (currentStatus) => {
 
 //座標移動時40%の確率で敵とエンカウント
 const isEncount = () => {
-  const randomNumber = Math.floor(Math.random() * PERCENT) + 1;
+  const randomNumber = Math.floor(Math.random() * MAX_PERCENT) + 1;
   return randomNumber <= ENCOUNT_PERCENT;
 };
 
 //3種類のモンスターから1匹を選出
 const randomEnemy = (array) => {
-  let randomNumber = Math.floor(Math.random() * PERCENT) + 1;
+  let randomNumber = Math.floor(Math.random() * MAX_PERCENT) + 1;
   for (const currentEnemy of array) {
     if (randomNumber <= currentEnemy.encountPercent) {
       return currentEnemy; //１週目スライムの範囲内65%ならスライムオブジェクトを返す
@@ -148,15 +148,6 @@ const battleStart = (enemyObject) => {
   currentEnemy = { ...enemyObject };
   currentImage.src = currentEnemy.image;
   currentImage.alt = "敵の画像";
-  if (enemyObject.name === "slime") {
-    currentImage.style.maxHeight = "100%";
-  }
-  if (enemyObject.name === "doragon") {
-    currentImage.style.maxHeight = "100%";
-  }
-  if (enemyObject.name === "metalslime") {
-    currentImage.style.maxHeight = "100%";
-  }
 };
 
 //「戦う」ボタンをクリックした時
