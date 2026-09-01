@@ -67,14 +67,12 @@ const mapLimit = { x: 20, y: 20 };
 
 //初期化
 const initGame = () => {
-  playerStatus = {
-    hp: 100,
-    attack: 10,
-    level: 1,
-    exp: 0,
-    x: 0,
-    y: 0,
-  };
+  playerStatus.hp = 100;
+  playerStatus.attack = 10;
+  playerStatus.level = 1;
+  playerStatus.exp = 0;
+  playerStatus.x = 0;
+  playerStatus.y = 0;
   currentStatus(playerStatus);
 };
 
