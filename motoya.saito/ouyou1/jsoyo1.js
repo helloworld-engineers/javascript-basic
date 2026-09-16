@@ -1,41 +1,44 @@
+const RANDOM_SAIKORO_NUMBER = 6;
+const NUMBER_OF_ROUNDS = 3;
 const saikoroImage1 = document.getElementById("saikoroimage1");
 const saikoroImage2 = document.getElementById("saikoroimage2");
-const p1score = document.getElementById("p1score");
-const p2score = document.getElementById("p2score");
-const roundcount = document.getElementById("roundcount");
+const p1Score = document.getElementById("p1score");
+const p2Score = document.getElementById("p2score");
+const roundCount = document.getElementById("roundcount");
 const battleBtn = document.getElementById("battlebtn");
 const resultBtn = document.getElementById("resultbtn");
+
 
 let round = 0;
 let p1 = 0;
 let p2 = 0;
 battleBtn.addEventListener("click", () => {
-  let saikoroRandom1 = Math.floor(Math.random() * 6) + 1;
-  let saikoroRandom2 = Math.floor(Math.random() * 6) + 1;
+  let saikoroRandom1 = Math.floor(Math.random() * RANDOM_SAIKORO_NUMBER) + 1;
+  let saikoroRandom2 = Math.floor(Math.random() * RANDOM_SAIKORO_NUMBER) + 1;
   saikoroImage1.src = "./images/saikoro" + saikoroRandom1 + ".jpg";
   saikoroImage2.src = "./images/saikoro" + saikoroRandom2 + ".jpg";
   round++;
-    if (round >= 3) {
+    if (round >= NUMBER_OF_ROUNDS) {
   resultBtn.disabled = false;
   };
-  roundcount.textContent = round;
-  if (round >= 3) {
+  roundCount.textContent = round;
+  if (round >= NUMBER_OF_ROUNDS) {
     battleBtn.disabled = true;
   };
   if (saikoroRandom1 > saikoroRandom2) {
     p1++;
-    p1score.textContent = p1;
+    p1Score.textContent = p1;
   };
   if (saikoroRandom1 < saikoroRandom2) {
     p2++;
-    p2score.textContent = p2;
+    p2Score.textContent = p2;
   };
   if (saikoroRandom1 === saikoroRandom2) {
     return;
   };
 });
 
-if (round < 3) {
+if (round < NUMBER_OF_ROUNDS) {
   resultBtn.disabled = true;
 }
 resultBtn.addEventListener("click", () => {
