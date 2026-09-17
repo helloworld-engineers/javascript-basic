@@ -31,9 +31,6 @@ battleBtn.addEventListener("click", () => {
     p2++;
     p2Score.textContent = p2;
   };
-  if (saikoroRandom1 === saikoroRandom2) {
-    return;
-  };
   if (p1 > p2) {
     resultText.textContent = "プレイヤー1の勝ち";
   };
