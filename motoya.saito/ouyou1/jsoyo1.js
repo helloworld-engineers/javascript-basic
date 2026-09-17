@@ -6,7 +6,7 @@ const p1Score = document.getElementById("p1score");
 const p2Score = document.getElementById("p2score");
 const roundCount = document.getElementById("roundcount");
 const battleBtn = document.getElementById("battlebtn");
-const resultBtn = document.getElementById("resultbtn");
+const resultText = document.getElementById("resultText");
 
 
 let round = 0;
@@ -18,9 +18,7 @@ battleBtn.addEventListener("click", () => {
   saikoroImage1.src = "./images/saikoro" + saikoroRandom1 + ".jpg";
   saikoroImage2.src = "./images/saikoro" + saikoroRandom2 + ".jpg";
   round++;
-    if (round >= NUMBER_OF_ROUNDS) {
-  resultBtn.disabled = false;
-  };
+
   roundCount.textContent = round;
   if (round >= NUMBER_OF_ROUNDS) {
     battleBtn.disabled = true;
@@ -36,19 +34,19 @@ battleBtn.addEventListener("click", () => {
   if (saikoroRandom1 === saikoroRandom2) {
     return;
   };
-});
-
-if (round < NUMBER_OF_ROUNDS) {
-  resultBtn.disabled = true;
-}
-resultBtn.addEventListener("click", () => {
   if (p1 > p2) {
-    alert("プレイヤー1の勝ち");
+    resultText.textContent = "プレイヤー1の勝ち";
   };
   if (p1 < p2) {
-    alert("プレイヤー2の勝ち");
+    resultText.textContent = "プレイヤー2の勝ち";
   };
   if (p1 === p2) {
-    alert("引き分け");
+    resultText.textContent = "引き分け";
+  };
+  if (round < NUMBER_OF_ROUNDS) {
+    resultText.textContent = "試合中";
   };
 });
+
+
+
