@@ -15,7 +15,6 @@ const circle = document.querySelectorAll(".circle");
 const circleArray = ["red","blue","yellow","pink"];
 const answer = ["yellow","red","pink","blue"];
 const circleArrayCopy = [...circleArray];
-
 //左やじるしクリックで色を変える
 for (let i = 0; i < btnLeft.length; i++) {
   btnLeft[i].addEventListener("click", () => {
@@ -58,6 +57,7 @@ for (let i = 0; i < btnRight.length; i++) {
     };
   });
 };
+//リセットで配置を戻す
 resetBtn.addEventListener("click", () => {
   let score = 0;
   for (let i = 0; i < circleArray.length; i++) {
