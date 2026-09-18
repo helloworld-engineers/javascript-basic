@@ -8,7 +8,6 @@ const roundCount = document.getElementById("roundcount");
 const battleBtn = document.getElementById("battlebtn");
 const resultText = document.getElementById("resultText");
 
-
 let round = 0;
 let p1 = 0;
 let p2 = 0;
@@ -44,6 +43,3 @@ battleBtn.addEventListener("click", () => {
     resultText.textContent = "試合中";
   };
 });
-
-
-
