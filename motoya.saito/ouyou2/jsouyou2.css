@@ -1,0 +1,87 @@
+.background {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 7% 10% 0;
+  margin: 0 auto;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.circle-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.red-container {
+  display: flex;
+  gap: 10px;
+}
+.red{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  background-color: red;
+}
+.blue-container {
+  display: flex;
+  gap: 10px;
+}
+.blue {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  background-color: blue;
+}
+.yellow-container {
+  display: flex;
+  gap: 10px;
+}
+.yellow {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  background-color: yellow;
+}
+.pink-container {
+  display: flex;
+  gap: 10px;
+}
+.pink {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  background-color: pink;
+}
+.square-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.square-red {
+  border: 1px solid black;
+  width: 130px;
+  height: 300px;
+}
+.square-blue {
+  border: 1px solid black;
+  width: 130px;
+  height: 300px;
+}
+.square-yellow {
+  border: 1px solid black;
+  width: 130px;
+  height: 300px;
+}
+.square-pink {
+  border: 1px solid black;
+  width: 130px;
+  height: 300px;
+}
