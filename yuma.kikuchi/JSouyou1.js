@@ -18,7 +18,6 @@ rollBtn.addEventListener("click", () => {
   //ダイス2をランダムに画像を表示する
   const roll2Dice = Math.floor(Math.random() * 6) + 1;
   diceImg2.src = `images/saikoro-illust${roll2Dice}.png`;
-  //出目表示
   console.log("上：", roll1Dice);
   console.log("下：", roll2Dice);
   //勝負
@@ -35,13 +34,12 @@ rollBtn.addEventListener("click", () => {
   const roundScore = document.getElementById("roundscore");
   //ラウンド数の数が上がる
   roundscore++;
-  console.log(roundscore);
   if (roundscore <= 3) {
     roundScore.textContent = roundscore;
   }
   //ゲーム終了（3ラウンド後）
-  //3まで実行
-  if (roundscore === 3) {
+  const maxRound = 3;
+  if (roundscore === maxRound) {
     //勝敗
     if (point1 > point2) {
       resultText.textContent = "プレイヤー1の勝利";
