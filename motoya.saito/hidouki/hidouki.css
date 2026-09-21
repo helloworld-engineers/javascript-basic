@@ -1,0 +1,24 @@
+.background {
+  background-color: #3924be;
+  width: 100%;
+  height: auto;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 5% 10%;
+  padding: 5%;
+  align-items: center;
+  background-color: white;
+}
+.title {
+  text-align: center;
+}
+.imgBtn {
+  background-color: #483d8b;
+  width: 30%;
+  height: 30px;
+  color: white;
+  border-radius: 5px;
+}
