@@ -27,6 +27,8 @@ let offset = 0;
 //総ページ数(getPageCountで取得後に更新される)
 let totalPageCount = 0;
 
+//常に表示する先頭ページ番号
+const FIRST_PAGE = 1;
 //先頭付近とみなす境界のページ数
 const EDGE_PAGE_THRESHOLD = 7;
 //現在ページの前後に表示するページ数
@@ -37,6 +39,11 @@ const HEIGHT_ROUND_FACTOR = 10;
 const HEIGHT_UNIT_DIVISOR = 100;
 //重さの単位をhgからkgに変換する係数
 const WEIGHT_UNIT_DIVISOR = 10;
+
+//エラーメッセージの文字色
+const ERROR_COLOR = "#f11414";
+//現在のページボタンの背景色
+const CURRENT_PAGE_COLOR = "#ABE1FA";
 
 //総数1351÷20=68ページを算出
 const getPageCount = async (offset) => {
@@ -62,9 +69,9 @@ const createButtons = async (currentPage) => {
   totalPageCount = pageCount;
   pageNum.innerHTML = "";
   if (currentPage <= EDGE_PAGE_THRESHOLD) {
-    createButton(1);
-    reloadCardList(1);
-    for (let i = 2; i <= currentPage + PAGE_DISPLAY_RANGE; i++) {
+    createButton(FIRST_PAGE);
+    reloadCardList(FIRST_PAGE);
+    for (let i = FIRST_PAGE + 1; i <= currentPage + PAGE_DISPLAY_RANGE; i++) {
       createButton(i);
       reloadCardList(i);
     }
@@ -77,8 +84,8 @@ const createButtons = async (currentPage) => {
     EDGE_PAGE_THRESHOLD + 1 <= currentPage &&
     currentPage <= pageCount - PAGE_DISPLAY_RANGE - 1
   ) {
-    createButton(1);
-    reloadCardList(1);
+    createButton(FIRST_PAGE);
+    reloadCardList(FIRST_PAGE);
     createEllipsis();
     for (
       let i = currentPage - PAGE_DISPLAY_RANGE;
@@ -94,8 +101,8 @@ const createButtons = async (currentPage) => {
     return;
   }
   if (pageCount - PAGE_DISPLAY_RANGE - 1 <= currentPage) {
-    createButton(1);
-    reloadCardList(1);
+    createButton(FIRST_PAGE);
+    reloadCardList(FIRST_PAGE);
     createEllipsis();
     for (let i = currentPage - PAGE_DISPLAY_RANGE; i <= pageCount; i++) {
       createButton(i);
@@ -112,7 +119,7 @@ const createButton = (i) => {
   pageBtn.textContent = i;
   pageNum.appendChild(pageBtn);
   if (i === currentPage) {
-    pageBtn.style.backgroundColor = "#ABE1FA";
+    pageBtn.style.backgroundColor = CURRENT_PAGE_COLOR;
   }
 };
 
@@ -236,7 +243,7 @@ searchBtn.addEventListener("click", async () => {
   if (!id) {
     searchLoading.classList.add("hide");
     errorMessage.textContent = "idを入力してください";
-    errorMessage.style.color = "red";
+    errorMessage.style.color = ERROR_COLOR;
     return;
   }
 
@@ -249,7 +256,7 @@ searchBtn.addEventListener("click", async () => {
     createCard(searchLog, createDetailList(data), true);
   } catch (error) {
     errorMessage.textContent = "そのidは存在しません";
-    errorMessage.style.color = "red";
+    errorMessage.style.color = ERROR_COLOR;
   } finally {
     searchId.value = "";
     searchLoading.classList.add("hide");
@@ -263,6 +270,7 @@ beforeButton.addEventListener("click", () => {
     currentPage = currentPage - 1;
     offset = (currentPage - 1) * LIMIT;
     createCardList();
+    createButtons(currentPage);
   }
 });
 
@@ -272,6 +280,7 @@ nextButton.addEventListener("click", () => {
     currentPage = currentPage + 1;
     offset = (currentPage - 1) * LIMIT;
     createCardList();
+    createButtons(currentPage);
   }
 });
 
