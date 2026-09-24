@@ -24,6 +24,19 @@ const LIMIT = 20;
 let currentPage = 1;
 //開始位置(初期値offset=0)
 let offset = 0;
+//総ページ数(getPageCountで取得後に更新される)
+let totalPageCount = 0;
+
+//先頭付近とみなす境界のページ数
+const EDGE_PAGE_THRESHOLD = 7;
+//現在ページの前後に表示するページ数
+const PAGE_DISPLAY_RANGE = 5;
+//高さ(dm)をm表記に変換する際、小数第1位まで保持するための係数
+const HEIGHT_ROUND_FACTOR = 10;
+//高さの単位をdmからmに変換する係数
+const HEIGHT_UNIT_DIVISOR = 100;
+//重さの単位をhgからkgに変換する係数
+const WEIGHT_UNIT_DIVISOR = 10;
 
 //総数1351÷20=68ページを算出
 const getPageCount = async (offset) => {
@@ -46,11 +59,12 @@ const createEllipsis = () => {
 //ページングの表示条件をチェックする関数
 const createButtons = async (currentPage) => {
   const pageCount = await getPageCount(offset);
+  totalPageCount = pageCount;
   pageNum.innerHTML = "";
-  if (currentPage <= 7) {
+  if (currentPage <= EDGE_PAGE_THRESHOLD) {
     createButton(1);
     reloadCardList(1);
-    for (let i = 2; i <= currentPage + 5; i++) {
+    for (let i = 2; i <= currentPage + PAGE_DISPLAY_RANGE; i++) {
       createButton(i);
       reloadCardList(i);
     }
@@ -59,11 +73,18 @@ const createButtons = async (currentPage) => {
     reloadCardList(pageCount);
     return;
   }
-  if (8 <= currentPage && currentPage <= pageCount - 6) {
+  if (
+    EDGE_PAGE_THRESHOLD + 1 <= currentPage &&
+    currentPage <= pageCount - PAGE_DISPLAY_RANGE - 1
+  ) {
     createButton(1);
     reloadCardList(1);
     createEllipsis();
-    for (let i = currentPage - 5; i <= currentPage + 5; i++) {
+    for (
+      let i = currentPage - PAGE_DISPLAY_RANGE;
+      i <= currentPage + PAGE_DISPLAY_RANGE;
+      i++
+    ) {
       createButton(i);
       reloadCardList(i);
     }
@@ -72,11 +93,11 @@ const createButtons = async (currentPage) => {
     reloadCardList(pageCount);
     return;
   }
-  if (pageCount - 6 <= currentPage) {
+  if (pageCount - PAGE_DISPLAY_RANGE - 1 <= currentPage) {
     createButton(1);
     reloadCardList(1);
     createEllipsis();
-    for (let i = currentPage - 5; i <= pageCount; i++) {
+    for (let i = currentPage - PAGE_DISPLAY_RANGE; i <= pageCount; i++) {
       createButton(i);
       reloadCardList(i);
     }
@@ -155,8 +176,8 @@ const createDetailList = (pokemondetail) => {
     `${pokemonName}`,
     `id：${pokemonId}`,
     `タイプ：${pokemonType}`,
-    `高さ：${Math.floor(pokemonHeight * 10) / 100}m`,
-    `重さ：${pokemonWeight / 10}kg`,
+    `高さ：${Math.floor(pokemonHeight * HEIGHT_ROUND_FACTOR) / HEIGHT_UNIT_DIVISOR}m`,
+    `重さ：${pokemonWeight / WEIGHT_UNIT_DIVISOR}kg`,
   ];
   return infoList;
 };
@@ -247,7 +268,7 @@ beforeButton.addEventListener("click", () => {
 
 //次へボタンのイベント処理
 nextButton.addEventListener("click", () => {
-  if (currentPage !== 68) {
+  if (currentPage !== totalPageCount) {
     currentPage = currentPage + 1;
     offset = (currentPage - 1) * LIMIT;
     createCardList();
