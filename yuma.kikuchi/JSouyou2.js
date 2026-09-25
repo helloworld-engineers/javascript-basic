@@ -58,13 +58,14 @@ resetBtn.addEventListener("click", () => {
       if (color === shuffleColrs[index]) {
         return color;
       }
-      colorBoxes.forEach((colorBox, i) => {
-        colorBox.style.backgroundColor = shuffleColrs[i];
-      });
     });
   }
+  colorBoxes.forEach((colorBox, i) => {
+    colorBox.style.backgroundColor = shuffleColrs[i];
+  });
   resultText.textContent = "0";
 });
+
 resetBtn.addEventListener("click", () => {
   while (answerMatch.length > 0) {
     shuffleColrs = shuffleArray(colorSet);
