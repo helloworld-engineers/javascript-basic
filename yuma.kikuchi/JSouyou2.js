@@ -30,7 +30,7 @@ let shuffleColrs = shuffleArray(colorSet);
 colorShuffle.forEach((colorBall, i) => {
   colorBall.style.backgroundColor = shuffleColrs[i];
 });
-// 配列をアンサーと重複チェック{
+// 配列をアンサーと重複チェック
 let answerMatch = answerColors.filter((color, index) => {
   if (color === shuffleColrs[index]) {
     return color;
@@ -87,7 +87,7 @@ for (let j = 0; j < rightBtn.length; j++) {
     scoreText(answerMatch);
   });
 }
-// 各左矢印をクリック;
+// 各左矢印をクリック
 for (let i = 0; i < leftBtn.length; i++) {
   leftBtn[i].addEventListener("click", () => {
     // 配列0番目の時に0と1を代入する
