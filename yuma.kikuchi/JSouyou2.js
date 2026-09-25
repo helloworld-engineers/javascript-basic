@@ -20,7 +20,7 @@ const scoreText = (answerMatch) => {
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+    [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 };
@@ -34,7 +34,7 @@ colorShuffle.forEach((colorBall, i) => {
 let answerMatch = answerColors.filter((color, index) => {
   if (color === shuffleColrs[index]) {
     return color;
-  };
+  }
 });
 // 2回目以降再度ループ処理をする
 while (answerMatch.length > 0) {
@@ -42,9 +42,9 @@ while (answerMatch.length > 0) {
   answerMatch = answerColors.filter((color, index) => {
     if (color === shuffleColrs[index]) {
       return color;
-    }:
+    }
   });
-};
+}
 // リセットボタン「0個正解してます」状態にする
 resetBtn.addEventListener("click", () => {
   while (answerMatch.length > 0) {
