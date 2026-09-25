@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS応用課題1</title>
+    <link rel="stylesheet" href="JSouyou1.css" />
+  </head>
+  <body>
+    <div class="score">
+      <div class="round">
+        ラウンド数：<span id="roundscore">1</span>ラウンド
+      </div>
+      <div class="point1">
+        プレイヤー1:<span id="player1Point">0</span>ポイント
+      </div>
+      <div class="point2">
+        プレイヤー2:<span id="player2Point">0</span>ポイント
+      </div>
+    </div>
+    <div class="main">
+      <div class="player1">
+        <div class="player-name1">プレイヤー1</div>
+      </div>
+      <div class="dice">
+        <img
+          id="dice1-Img"
+          class="dice1"
+          src="images/saikoro-illust1.png"
+          alt="dice"
+        />
+      </div>
+      <div id="dice" class="dice">
+        <img
+          id="dice2-Img"
+          class="dice2"
+          src="images/saikoro-illust1.png"
+          alt="dice"
+        />
+      </div>
+      <div id="player2" class="player2">
+        <div class="player-name2">プレイヤー2</div>
+      </div>
+      <div class="buttonlabel">
+        <div class="Showdown">
+          <button id="syoubuButton" class="buttonbox">勝負</button>
+        </div>
+        <div id="syouhaiText" class="buttontext">勝敗</div>
+      </div>
+    </div>
+    <script src="JSouyou1.js"></script>
+  </body>
+</html>

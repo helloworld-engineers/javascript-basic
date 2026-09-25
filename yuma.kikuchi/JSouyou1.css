@@ -1,0 +1,66 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px 30%;
+  gap: 30px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 60px;
+  align-items: flex-end;
+}
+
+.player1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  border: 1px black solid;
+}
+
+.dice1 {
+  width: 70px;
+}
+
+.dice2 {
+  width: 70px;
+}
+
+.player2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  border: 1px black solid;
+}
+
+.buttonlabel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.buttonbox {
+  display: inline-block;
+  width: 150px;
+  height: 60px;
+  background-color: white;
+  border: 1px solid #333;
+}
+
+.buttontext{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  border: 1px black solid;
+}
