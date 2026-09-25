@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="JSouyou2.css" />
+    <title>JS応用課題/色当てゲーム</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="gamemain">
+        <div class="game1">
+          <div class="number1color">
+            <button class="inactivebtn" id="number1left" disabled>⇦</button>
+            <div class="numbercircle" id="number1circle"></div>
+            <button class="numberright" id="number1right">⇨</button>
+          </div>
+          <div class="number2color">
+            <button class="numberleft" id="number2left">⇦</button>
+            <div class="numbercircle" id="number2circle"></div>
+            <button class="numberright" id="number2right">⇨</button>
+          </div>
+          <div class="number3color">
+            <button class="numberleft" id="number3left">⇦</button>
+            <div class="numbercircle" id="number3circle"></div>
+            <button class="numberright" id="number3right">⇨</button>
+          </div>
+          <div class="number4color">
+            <button class="numberleft" id="number4left">⇦</button>
+            <div class="numbercircle" id="number4circle"></div>
+            <button class="inactivebtn" id="number4right" disabled>⇨</button>
+          </div>
+        </div>
+        <div class="result">
+          <div class="number1box" id="number1box"></div>
+          <div class="number2box" id="number2box"></div>
+          <div class="number3box" id="number3box"></div>
+          <div class="number4box" id="number4box"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="date"><span id="answer">x</span>個正解しています。</div>
+        <div class="button2">
+          <button class="start" id="start">スタート</button>
+          <button class="reset" id="reset">リセット</button>
+        </div>
+      </div>
+    </div>
+    <script src="JSouyou2.js" defer></script>
+  </body>
+</html>
