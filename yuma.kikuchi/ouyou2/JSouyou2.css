@@ -1,0 +1,145 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  flex-direction: column;
+}
+
+.game1 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.number1color {
+  display: flex;
+  flex-direction: row;
+}
+
+.number1circle {
+  background-color: #f08080;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.numberleft {
+  border: none;
+  background-color: white;
+  font-size: 20px;
+}
+
+.numberright {
+  border: none;
+  background-color: white;
+  font-size: 20px;
+}
+
+.inactivebtn {
+  border: none;
+  background-color: white;
+  font-size: 20px;
+}
+.number2color {
+  display: flex;
+  flex-direction: row;
+}
+
+.numbercircle {
+  background-color: #6495ed;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.number3color {
+  display: flex;
+  flex-direction: row;
+}
+
+.number3circle {
+  background-color: #fff8dc;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.number4color {
+  display: flex;
+  flex-direction: row;
+}
+
+.number4circle {
+  background-color: #dda0dd;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.result {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.number1box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 200px;
+  border: solid 1px black;
+}
+
+.number2box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 200px;
+  border: solid 1px black;
+}
+
+.number3box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 200px;
+  border: solid 1px black;
+}
+
+.number4box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 200px;
+  border: solid 1px black;
+}
+
+.footer {
+  margin-right: 300px;
+  gap: 20px;
+  font-size: 15px;
+}
+
+.start {
+  background-color: white;
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+}
+
+.reset {
+  background-color: white;
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+}
