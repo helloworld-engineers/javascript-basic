@@ -36,6 +36,9 @@ for (let i = 0; i < btnLeft.length; i++) {
 //右やじるしクリックで色を変える
 for (let i = 0; i < btnRight.length; i++) {
   btnRight[i].addEventListener("click", () => {
+    if (i === btnRight.length - 1) {
+      return;
+    }
     [circleArrayCopy[i], circleArrayCopy[i + 1]] = [
       circleArrayCopy[i + 1],
       circleArrayCopy[i],
