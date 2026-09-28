@@ -24,13 +24,8 @@ const shuffleArray = (array) => {
   }
   return array;
 };
-//初期画面でカラーボールをランダムで表示する
-const colorShuffle = document.querySelectorAll(".numbercircle");
-let shuffleColrs = shuffleArray(colorSet);
-colorShuffle.forEach((colorBall, i) => {
-  colorBall.style.backgroundColor = shuffleColrs[i];
-});
 // 配列をアンサーと重複チェック
+let shuffleColrs = shuffleArray(colorSet);
 let answerMatch = answerColors.filter((color, index) => {
   if (color === shuffleColrs[index]) {
     return color;
@@ -45,6 +40,10 @@ while (answerMatch.length > 0) {
     }
   });
 }
+//初期画面でカラーボールをランダムで表示する
+colorBoxes.forEach((colorBall, i) => {
+  colorBall.style.backgroundColor = shuffleColrs[i];
+});
 // リセットボタン「0個正解してます」状態にする
 resetBtn.addEventListener("click", () => {
   while (answerMatch.length > 0) {
@@ -64,11 +63,6 @@ resetBtn.addEventListener("click", () => {
 // 各右矢印をクリック
 for (let j = 0; j < rightBtn.length; j++) {
   rightBtn[j].addEventListener("click", () => {
-    // 配列3番目（一番端）の時に配列2と3を代入する
-    if (j === 3) {
-      [shuffleColrs[2], shuffleColrs[3]] = [shuffleColrs[3], shuffleColrs[2]];
-      return;
-    }
     [shuffleColrs[j], shuffleColrs[j + 1]] = [
       shuffleColrs[j + 1],
       shuffleColrs[j],
@@ -90,15 +84,10 @@ for (let j = 0; j < rightBtn.length; j++) {
 // 各左矢印をクリック
 for (let i = 0; i < leftBtn.length; i++) {
   leftBtn[i].addEventListener("click", () => {
-    // 配列0番目の時に0と1を代入する
-    if (i === 0) {
-      [shuffleColrs[0], shuffleColrs[1]] = [shuffleColrs[1], shuffleColrs[0]];
-    } else {
-      [shuffleColrs[i + 1], shuffleColrs[i]] = [
-        shuffleColrs[i],
-        shuffleColrs[i + 1],
-      ];
-    }
+    [shuffleColrs[i + 1], shuffleColrs[i]] = [
+      shuffleColrs[i],
+      shuffleColrs[i + 1],
+    ];
     // 重複チェック
     answerMatch = answerColors.filter((color, index) => {
       if (color === shuffleColrs[index]) {
@@ -109,6 +98,7 @@ for (let i = 0; i < leftBtn.length; i++) {
     colorBoxes.forEach((colorBoxleft, j) => {
       colorBoxleft.style.backgroundColor = shuffleColrs[j];
     });
+    console.log(shuffleColrs);
     // 正解数のカウント
     scoreText(answerMatch);
   });
