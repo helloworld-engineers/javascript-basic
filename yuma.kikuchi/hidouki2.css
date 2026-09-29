@@ -48,6 +48,7 @@
   display: flex;
   justify-content: center;
 }
+
 .btn {
   display: inline-block;
   padding: 10px 20px;
