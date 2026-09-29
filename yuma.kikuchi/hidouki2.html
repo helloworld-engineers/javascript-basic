@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ポケモンAPI</title>
+    <link rel="stylesheet" href="hidouki2.css" />
+  </head>
+  <body>
+    <div id="loading" style="display: none">ローディング中...</div>
+    <div class="main" id="main">
+      <h2 class="title">ポケモン一覧</h2>
+      <div class="pagination">
+        <!-- 前へボタン-->
+        <button type="button" id="prev-btn" class="page-btn" disabled>
+          &laquo; 前へ
+        </button>
+        <div id="page-numbers" class="page-numbers"></div>
+        <!-- 次へボタン -->
+        <button type="button" id="next-btn" class="page-btn">
+          次へ &raquo;
+        </button>
+      </div>
+      <!-- ポケモン詳細カード -->
+      <div class="pokemon-card" id="pokemon-card">
+        <!-- 名前 -->
+        <div id="card-header">
+          <a href="detal.html" id="pokemon-name" class="pokemon-name">name</a>
+        </div>
+      </div>
+      <div class="button">
+        <a href="search.html" class="btn">ポケモン検索</a>
+      </div>
+    </div>
+    <script src="hidouki2.js"></script>
+  </body>
+</html>
