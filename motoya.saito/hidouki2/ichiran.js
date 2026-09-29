@@ -14,9 +14,9 @@ const getAPI = () => {
       return res.json();
     })
     .then((data) => {
+      loading.textContent = "";
       const pokemonList = document.getElementById("pokemonList");
       pokemonList.innerHTML = "";
-      loading.textContent = "Loading...";
       data.results.forEach((pokemon) => {
         const li = document.createElement("li");
         const pokeUrl = document.createElement("a");
@@ -26,7 +26,6 @@ const getAPI = () => {
         pokeUrl.href = `detail.html?ID=${pokeID}`;
         li.appendChild(pokeUrl);
         pokemonList.appendChild(li);
-        loading.textContent = "";
       });
       renderingPN();
     });
@@ -50,7 +49,6 @@ const renderingPN = () => {
       });
       paginationContainer.appendChild(button);
     } else if (!isEllipsisRendered) {
-      isEllipsisRendered = false;
       const syouryaku = document.createElement("span");
       syouryaku.textContent = "...";
       paginationContainer.appendChild(syouryaku);

@@ -1,7 +1,6 @@
 const textBox = document.getElementById("textBox");
 const searchBtn = document.getElementById("searchBtn");
 const resault = document.getElementById("resault");
-const errorMessage = document.getElementById("errorMessage");
 const notHistory = document.querySelector(".notHistory");
 
 //テキストボックスの非活性化
