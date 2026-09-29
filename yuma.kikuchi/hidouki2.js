@@ -87,8 +87,8 @@ function renderPageButtons(currentPage, totalPages) {
     btn.className = `page-num-btn ${page === currentPage ? "active" : ""}`;
     // 数字ボタンを押した時のイベント
     btn.addEventListener("click", () => {
-      currentPage = page;
-      getData(currentPage);
+      nowPage = page;
+      getData(nowPage);
     });
     container.appendChild(btn);
     prev = page;
