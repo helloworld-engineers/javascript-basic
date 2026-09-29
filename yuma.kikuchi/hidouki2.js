@@ -2,7 +2,7 @@
 const loading = document.getElementById("loading");
 const mainContent = document.getElementById("main");
 const LIMIT = 20;
-let currentPage = 1;
+let nowPage = 1;
 function getApiUrl(page) {
   const offset = (page - 1) * LIMIT;
   return `https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${offset}`;
@@ -18,7 +18,6 @@ async function getData(page = 1) {
       throw new Error(`HTTPエラー`);
     }
     const data = await response.json();
-    console.log("取得したデータ:", data);
     // ポケモン一覧を表示
     displayData(data.results);
     updatePagination(data.count, page);
@@ -48,13 +47,18 @@ function displayData(pokemonList) {
   container.appendChild(listElement);
 }
 // 表示すべきページ番号
+const surroundingPages = 2;
 function getPageNumbers(currentPage, totalPages) {
   // 重複のない値を格納するからのset objectを作成
   const pages = new Set();
   pages.add(1);
   pages.add(totalPages);
   // 現在ページの前後2ページを追加
-  for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+  for (
+    let i = currentPage - surroundingPages;
+    i <= currentPage + surroundingPages;
+    i++
+  ) {
     if (i > 1 && i < totalPages) {
       pages.add(i);
     }
@@ -90,25 +94,28 @@ function renderPageButtons(currentPage, totalPages) {
     prev = page;
   });
 }
+// ボタン変数宣言
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
 // ページネーション
 function updatePagination(totalCount, page) {
   const totalPages = Math.ceil(totalCount / LIMIT);
   // 数字ボタンの更新
   renderPageButtons(page, totalPages);
   // 前へ・次へボタンの無効
-  document.getElementById("prev-btn").disabled = page === 1;
-  document.getElementById("next-btn").disabled = page === totalPages;
+  prevBtn.disabled = page === 1;
+  nextBtn.disabled = page === totalPages;
 }
 // 「前へ」ボタンクリック
-document.getElementById("prev-btn").addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
-    getData(currentPage);
+prevBtn.addEventListener("click", () => {
+  if (nowPage > 1) {
+    nowPage--;
+    getData(nowPage);
   }
 });
 // 「次へ」ボタンクリック
-document.getElementById("next-btn").addEventListener("click", () => {
-  currentPage++;
-  getData(currentPage);
+nextBtn.addEventListener("click", () => {
+  nowPage++;
+  getData(nowPage);
 });
-getData(currentPage);
+getData(nowPage);

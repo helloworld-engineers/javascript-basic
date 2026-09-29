@@ -1,24 +1,39 @@
-// // 全体の件数を取得するエンドポイント
-// const API_URL = `https://pokeapi.co/api/v2/pokemon`;
-
-// // 画像の取得
-// const IMAGE_URL =
-//   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/{pokemonId}.png";
-
-// //非同期処理
-// async function getData() {
-//   try {
-//     const response = await fetch(API_URL);
-//     if (!response.ok) {
-//       // 失敗時、ここでエラーを投げる
-//       throw new Error(`HTTPエラー`);
-//     }
-//     // await: JSONの解析が完了するまで一時停止
-//     const data = await response.json();
-//     return data; // 結果を返す (この結果は外側のPromiseの resolve になる)
-//     // catch: 投げられたエラーを捕捉する
-//   } catch (error) {
-//     console.error(`非同期エラー:`, error.message);
-//     // return null; などのエラー後の処理
-//   }
-// }
+const IMAGE_URL =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/{pokemonId}.png";
+const loading = document.getElementById("loading");
+const mainContent = document.querySelectorAll(".contents");
+const LIMIT = 1;
+function getApiUrl(page) {
+  const offset = (page - 1) * LIMIT;
+  return `https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${offset}`;
+}
+// 非同期処理（async/await)
+async function getData(page) {
+  // loading.style.display = "block";
+  // mainContent.style.display = "none";
+  // try...catch（外側のcatchで一元的に捕捉）
+  try {
+    const response = await fetch(getApiUrl(page));
+    if (!response.ok) {
+      throw new Error(`HTTPエラー`);
+    }
+    const data = await response.json();
+    // ポケモン一覧を表示
+    displayData(data.results);
+    updatePagination(data.count, page);
+  } catch (error) {
+    console.error(`非同期エラー:`, error.message);
+  } finally {
+    // loading.style.display = "none";
+    // mainContent.style.display = "block";
+  }
+}
+// APIを表示する
+function displayPokemonData(data) {
+  // name
+  document.getElementById("pokemon-name").textContent = data.name;
+  // ID
+  document.getElementById("pokemon-id").textContent = `ID: ${data.id}`;
+  // 画像
+  document.getElementById("pokemon-image").src = data.sprites.front_default;
+}
