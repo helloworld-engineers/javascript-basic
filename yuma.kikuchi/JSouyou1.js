@@ -2,7 +2,8 @@
 const rollBtn = document.getElementById("syoubuButton");
 const diceImg1 = document.getElementById("dice1-Img");
 const diceImg2 = document.getElementById("dice2-Img");
-const saikoro = 6;
+const SAIKORO_MAX_NUMBER = 6;
+const LOUND_MAX = 3;
 let roundscore = 0;
 let point1 = 0;
 let point2 = 0;
@@ -13,13 +14,11 @@ const resultText = document.getElementById("syouhaiText");
 //サイコロを振る
 rollBtn.addEventListener("click", () => {
   //ダイス1をランダムに画像を表示する
-  const roll1Dice = Math.floor(Math.random() * 6) + 1;
+  const roll1Dice = Math.floor(Math.random() * SAIKORO_MAX_NUMBER) + 1;
   diceImg1.src = `images/saikoro-illust${roll1Dice}.png`;
   //ダイス2をランダムに画像を表示する
-  const roll2Dice = Math.floor(Math.random() * 6) + 1;
+  const roll2Dice = Math.floor(Math.random() * SAIKORO_MAX_NUMBER) + 1;
   diceImg2.src = `images/saikoro-illust${roll2Dice}.png`;
-  console.log("上：", roll1Dice);
-  console.log("下：", roll2Dice);
   //勝負
   //ダイス1がダイス2に勝つ（trueの場合プレイヤー1にポイントが上がる)
   if (roll1Dice > roll2Dice) {
@@ -34,12 +33,11 @@ rollBtn.addEventListener("click", () => {
   const roundScore = document.getElementById("roundscore");
   //ラウンド数の数が上がる
   roundscore++;
-  if (roundscore <= 3) {
+  if (roundscore <= LOUND_MAX) {
     roundScore.textContent = roundscore;
   }
   //ゲーム終了（3ラウンド後）
-  const maxRound = 3;
-  if (roundscore === maxRound) {
+  if (roundscore === LOUND_MAX) {
     //勝敗
     if (point1 > point2) {
       resultText.textContent = "プレイヤー1の勝利";
