@@ -28,18 +28,14 @@ async function getData(pokemonId) {
     message.textContent = error.message;
   }
 }
-searchBtn.addEventListener("click", () => {
-  async function gedID() {
-    // ローディング表示
-    message.style.color = "black";
-    message.textContent = "ローディング中...";
-    const pokemonData = await getData(search.value);
-    if (pokemonData) {
-      message.textContent = "";
-      addHistory(pokemonData.id, pokemonData.name);
-    }
+searchBtn.addEventListener("click", async () => {
+  // ローディング表示
+  message.textContent = "ローディング中...";
+  const pokemonData = await getData(search.value);
+  if (pokemonData) {
+    message.textContent = "";
+    addHistory(pokemonData.id, pokemonData.name);
   }
-  gedID();
 });
 // 履歴画面
 function addHistory(id, name) {
