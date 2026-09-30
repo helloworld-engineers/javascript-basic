@@ -5,3 +5,14 @@
   width: 100%;
   height: 300px;
 }
+
+.history-containe {
+  height: 200px;
+  overflow: scroll;
+}
+
+.history-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}

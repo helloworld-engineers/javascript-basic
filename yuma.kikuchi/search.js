@@ -3,11 +3,11 @@ const search = document.getElementById("search");
 const searchBtn = document.getElementById("search-btn");
 const searchForm = document.getElementById("search-form");
 const message = document.getElementById("message");
-const noHistoryElement = document.getElementById("no-history");
+const noHistory = document.getElementById("no-history");
 const historyElement = document.getElementById("history-list");
-// 空の場合はボタンを非活性
-search.addEventListener("input", function () {
-  if (search.length === "") {
+// 初期画面は検索ボタンが非活性。文字がある時は活性
+search.addEventListener("input", () => {
+  if (search.value.trim() === "") {
     searchBtn.disabled = true;
   } else {
     searchBtn.disabled = false;
@@ -17,21 +17,36 @@ search.addEventListener("input", function () {
 async function getData(pokemonId) {
   try {
     const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`,
+      `https://pokeapi.co/api/v2/pokemon/${pokemonId}`,
     );
     if (!response.ok) {
       throw new Error(`ID ${pokemonId} というポケモンは存在しません`);
     }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
-    console.error("非同期エラー:", error.message);
-    message.style.color = "red";
     message.textContent = error.message;
-    return null;
   }
 }
-// // ローディング表示
-//   message.style.color = "black";
-//   message.textContent = "ローディング中...";
+searchBtn.addEventListener("click", () => {
+  async function gedID() {
+    // ローディング表示
+    message.style.color = "black";
+    message.textContent = "ローディング中...";
+    const pokemonData = await getData(search.value);
+    if (pokemonData) {
+      message.textContent = "";
+      addHistory(pokemonData.id, pokemonData.name);
+    }
+  }
+  gedID();
+});
+// 履歴画面
+function addHistory(id, name) {
+  if (noHistory) {
+    noHistory.style.display = "none";
+  }
+  const li = document.createElement("li");
+  li.textContent = `ID: ${id} ${name}`;
+  historyElement.prepend(li);
+}

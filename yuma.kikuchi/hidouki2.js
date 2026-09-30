@@ -1,6 +1,7 @@
 // 宣言一覧
 const loading = document.getElementById("loading");
 const mainContent = document.getElementById("main");
+const message = document.getElementById("message");
 const LIMIT = 20;
 let nowPage = 1;
 function getApiUrl(page) {
@@ -20,10 +21,9 @@ async function getData(page = 1) {
     const data = await response.json();
     // ポケモン一覧を表示
     displayData(data.results);
-    // console.log(data);
     updatePagination(data.count, page);
   } catch (error) {
-    console.error(`非同期エラー:`, error.message);
+    message.textContent = error.message;
   } finally {
     loading.style.display = "none";
     mainContent.style.display = "block";

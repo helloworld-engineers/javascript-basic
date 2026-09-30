@@ -6,23 +6,22 @@
     <title>ポケモン検索</title>
   </head>
   <body>
-    <a href="index.html">一覧に戻る</a>
+    <a href="hidouki2.html">一覧に戻る</a>
     <div class="main">
-      <!-- 左側：検索エリア -->
       <div class="search-section">
         <form id="search-form">
           <label for="search">ポケモン検索 (IDを入力)</label>
-          <input type="text" id="search" name="q" placeholder="例: 25" />
+          <input type="text" id="search" name="q" placeholder="例: 10" />
           <!-- 初期状態ではボタンを非活性 -->
-          <button type="submit" id="search-btn" disabled>検索</button>
+          <button type="button" id="search-btn" disabled>検索</button>
         </form>
-        <!-- エラーやローディング -->
+        <!-- エラーとローディング -->
         <div id="message" class="message"></div>
       </div>
-      <!-- 右側：検索履歴エリア -->
       <div class="history-section">
         <h3>検索履歴</h3>
         <div id="history-container" class="history-container">
+          <p id="no-history">履歴なし</p>
           <ul id="history-list" class="history-list"></ul>
         </div>
       </div>

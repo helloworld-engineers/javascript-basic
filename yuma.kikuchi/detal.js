@@ -7,6 +7,7 @@ const idPoke = urlParams.get("id");
 const API_URL = `https://pokeapi.co/api/v2/pokemon/${idPoke}/`;
 const JP_HEIGHT = 10;
 const JP_WEIGHT = 10;
+const message = document.getElementById("message");
 // HTMLに導入するための変数
 const pokeName = document.getElementById("pokemon-name");
 const pokeId = document.getElementById("pokemon-id");
@@ -24,13 +25,12 @@ async function getPokemonDetail() {
       throw new Error(`HTTPエラー`);
     }
     const data = await response.json();
-    console.log(data);
     // 各ポケモンデータを関数で
     displayPokemonDetail(data);
     loadingElement.style.display = "none";
     contentsElement.style.display = "block";
   } catch (error) {
-    console.error("非同期エラー:", error.message);
+    message.textContent = error.message;
   }
 }
 function displayPokemonDetail(data) {
