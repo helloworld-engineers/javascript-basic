@@ -1,6 +1,6 @@
 const textBox = document.getElementById("textBox");
 const searchBtn = document.getElementById("searchBtn");
-const resault = document.getElementById("resault");
+const result = document.getElementById("result");
 const notHistory = document.querySelector(".notHistory");
 const loadingText = document.querySelector(".loading-text");
 
@@ -31,7 +31,7 @@ const allGetAPI = async () => {
     const pokename = `ID:${data.id}  ${data.name}`;
     const pokeID = document.createElement("li");
     pokeID.textContent = pokename;
-    resault.prepend(pokeID);
+    result.prepend(pokeID);
   } catch {
     loadingText.textContent = "";
     alert(`ID${pokeNum}というポケモンは存在しません`);

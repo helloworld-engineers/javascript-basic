@@ -1,6 +1,5 @@
 const loading = document.querySelector(".loading");
 const LIMIT = 20;
-// const totalPokemon = 1351;
 const paginationContainer = document.getElementById("pagination");
 let currentPage = 1;
 const delta = 2;
@@ -11,22 +10,13 @@ const renderPokemonList = (pokeData) => {
     const li = document.createElement("li");
     const pokeUrl = document.createElement("a");
     const urlSpirit = data.url.split(`/`);
-    const pokeID = urlSpirit[urlSpirit.length - 2];
+    const pokeID = urlSpirit[urlSpirit.length - delta];
     pokeUrl.textContent = `ID.${pokeID}${data.name}`;
     pokeUrl.href = `detail.html?ID=${pokeID}`;
     li.appendChild(pokeUrl);
     pokemonList.appendChild(li);
   });
 };
-//   const li = document.createElement("li");
-//   const pokeUrl = document.createElement("a");
-//   const urlSpirit = pokeData.url.split(`/`);
-//   const pokeID = urlSpirit[urlSpirit.length - 2];
-//   pokeUrl.textContent = `ID.${pokeID}${pokeData.name}`;
-//   pokeUrl.href = `detail.html?ID=${pokeID}`;
-//   li.appendChild(pokeUrl);
-//   pokemonList.appendChild(li);
-// };
 //POKEAPIから情報取得、一覧表示
 const getAPI = () => {
   loading.textContent = "Loading...";
@@ -42,11 +32,7 @@ const getAPI = () => {
       const pageCount = Math.ceil(totalpokemon / LIMIT);
       loading.textContent = "";
       pokemonList.innerHTML = "";
-      console.log();
       renderPokemonList(pokemonTable);
-      // data.results.forEach((pokemon) => {
-      //   renderPokemonList(pokemon);
-      // });
       renderingPN(pageCount);
     });
 };
