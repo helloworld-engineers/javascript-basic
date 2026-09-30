@@ -1,43 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="detal.css">
-  <title>ポケモン詳細画面</title>
-</head>
-<body>
-  <div id="loading" style="display: none">ローディング中...</div>
-  <div class="contents">
-    <div class="card-header">
-          <h2 id="pokemon-name" class="pokemon-name">name</h2>
-          <span id="pokemon-id" class="pokemon-id">ID:--</span>
-    </div>
-    <!-- 画像表示 -->
-    <div class="card-image-container">
-    <img
-      id="pokemon-image"
-      src=""
-      alt="ポケモンの画像"
-      class="pokemon-image"
-    />
-    </div>
-    <!-- 詳細情報リスト -->
-    <div class="card-body">
-      <dl class="info-list">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="detal.css" />
+    <title>ポケモン詳細画面</title>
+  </head>
+  <body>
+    <div id="loading" style="display: none">ローディング中...</div>
+    <div class="contents">
+      <div class="card-header">
+        <h2 id="pokemon-name" class="pokemon-name">name</h2>
+        <span id="pokemon-id" class="pokemon-id">ID:--</span>
+      </div>
+      <!-- 画像表示 -->
+      <div class="card-image-container">
+        <img
+          id="pokemon-image"
+          src=""
+          alt="ポケモンの画像"
+          class="pokemon-image"
+        />
+      </div>
+      <!-- 詳細情報リスト -->
+      <div class="card-body">
         <div class="info-item">
-          <dt>タイプ</dt>
-          <dd id="pokemon-types" class="pokemon-types">--</dd>
+          <span>タイプ</span>
+          <ul id="pokemon-types" class="pokemon-types"></ul>
         </div>
         <div class="info-item">
-          <dt>高さ</dt>
-          <dd id="pokemon-height">--</dd>
+          <span>高さ</span>
+          <p id="pokemon-height">--</p>
         </div>
         <div class="info-item">
-          <dt>重さ</dt>
-          <dd id="pokemon-weight">--</dd>
-      </dl>
+          <span>重さ</span>
+          <p id="pokemon-weight">--</p>
+        </div>
+      </div>
     </div>
-  </div>
-  <script src="detal.js"></script>
-</body>
+    <script src="detal.js"></script>
+  </body>
 </html>

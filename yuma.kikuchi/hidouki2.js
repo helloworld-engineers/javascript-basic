@@ -20,6 +20,7 @@ async function getData(page = 1) {
     const data = await response.json();
     // ポケモン一覧を表示
     displayData(data.results);
+    // console.log(data);
     updatePagination(data.count, page);
   } catch (error) {
     console.error(`非同期エラー:`, error.message);
@@ -39,7 +40,10 @@ function displayData(pokemonList) {
   pokemonList.forEach((pokemon) => {
     const listItem = document.createElement("li");
     const link = document.createElement("a");
-    link.href = `detal.html?name=${pokemon.name}`;
+    const urlId = pokemon.url;
+    const IdNumber = urlId.split("/").filter((item) => item !== "");
+    const listId = IdNumber[IdNumber.length - 1];
+    link.href = `detal.html?id=${listId}`;
     link.textContent = pokemon.name;
     listItem.appendChild(link);
     listElement.appendChild(listItem);
