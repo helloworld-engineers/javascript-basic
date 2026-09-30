@@ -11,7 +11,6 @@ const getDetail = () => {
       return res.json();
     })
     .then((data) => {
-      console.log(data);
       loading.textContent = "";
       const pokeImg = document.getElementById("pokeImg");
       const pokename = document.getElementById("pokename");
