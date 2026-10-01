@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="sougou.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="filed-container">
+        <p class="status" id="playerStatus"></p>
+        <img class="hero-img" id="heroImg" src="./images/hero.png" />
+        <img class="slime-img" id="slimeImg" src="./images/slime.webp" />
+        <img class="dragon-img" id="dragonImg" src="./images/dragon.png" />
+        <img
+          class="metalslime-img"
+          id="metalSlimeImg"
+          src="./images/metalslime.jpg"
+        />
+        <div class="btn-container">
+          <div class="movebtn-container">
+            <button type="button" class="upbtn" id="upBtn">⇧</button>
+            <button type="button" class="rightbtn" id="rightBtn">⇨</button>
+            <button type="button" class="downbtn" id="downBtn">⇩</button>
+            <button type="button" class="leftbtn" id="leftBtn">⇦</button>
+          </div>
+          <div class="actionbtn-container">
+            <button type="button" class="batllebtn" id="batlleBtn">戦う</button>
+            <button type="button" class="escapebtn" id="escapeBtn">
+              逃げる
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="logcontainer">
+        ログ
+      </ul>
+    </div>
+    <script src="sougou.js"></script>
+  </body>
+</html>
