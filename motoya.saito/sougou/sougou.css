@@ -71,7 +71,7 @@
   height: 40px;
   line-height: 40px;
   display: grid;
-  grid-column: 3/3;
+  grid-column: 3/4;
   grid-row: 3/2;
 }
 .downbtn {
@@ -80,7 +80,7 @@
   line-height: 40px;
   display: grid;
   grid-column: 3/2;
-  grid-row: 3/3;
+  grid-row: 3/4;
 }
 .leftbtn {
   width: 40px;
@@ -108,4 +108,8 @@
   text-align: center;
   margin: 0;
   padding: 10px 0 0;
+}
+.log-title {
+  list-style-position: inside;
+  list-style: none;
 }
