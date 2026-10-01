@@ -1,0 +1,71 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.page-btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+/* 非活性状態のスタイル */
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.page-info {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

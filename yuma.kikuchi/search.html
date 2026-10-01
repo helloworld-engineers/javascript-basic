@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="search.css" />
+    <title>ポケモン検索</title>
+  </head>
+  <body>
+    <a href="hidouki2.html">一覧に戻る</a>
+    <div class="main">
+      <div class="search-section">
+        <form id="search-form">
+          <label for="search">ポケモン検索 (IDを入力)</label>
+          <input type="text" id="search" name="q" placeholder="例: 10" />
+          <!-- 初期状態ではボタンを非活性 -->
+          <button type="button" id="search-btn" disabled>検索</button>
+        </form>
+        <!-- エラーとローディング -->
+        <div id="message" class="message"></div>
+      </div>
+      <div class="history-section">
+        <h3>検索履歴</h3>
+        <div id="history-container" class="history-container">
+          <p id="no-history">履歴なし</p>
+          <ul id="history-list" class="history-list"></ul>
+        </div>
+      </div>
+    </div>
+    <script src="search.js"></script>
+  </body>
+</html>

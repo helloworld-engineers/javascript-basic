@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="detal.css" />
+    <title>ポケモン詳細画面</title>
+  </head>
+  <body>
+    <div id="loading" style="display: none">ローディング中...</div>
+    <div class="contents">
+      <div class="card-header">
+        <h2 id="pokemon-name" class="pokemon-name">name</h2>
+        <span id="pokemon-id" class="pokemon-id">ID:--</span>
+      </div>
+      <!-- エラーメッセージ -->
+      <div id="message" class="message"></div>
+      <!-- 画像表示 -->
+      <div class="card-image-container">
+        <img
+          id="pokemon-image"
+          src=""
+          alt="ポケモンの画像"
+          class="pokemon-image"
+        />
+      </div>
+      <!-- 詳細情報リスト -->
+      <div class="card-body">
+        <div class="info-item">
+          <span>タイプ</span>
+          <ul id="pokemon-types" class="pokemon-types"></ul>
+        </div>
+        <div class="info-item">
+          <span>高さ</span>
+          <p id="pokemon-height">--</p>
+        </div>
+        <div class="info-item">
+          <span>重さ</span>
+          <p id="pokemon-weight">--</p>
+        </div>
+      </div>
+    </div>
+    <script src="detal.js"></script>
+  </body>
+</html>
