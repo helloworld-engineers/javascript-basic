@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="sougou.css" />
+    <title>ドラクエ</title>
+  </head>
+  <body>
+    <div class="main">
+      <!--ステータス画面-->
+      <div class="container">
+        <div class="hit-point">HP:</div>
+        <div class="attack">攻撃力：</div>
+        <div class="level">レベル：</div>
+      </div>
+      <!--画像-->
+      <div class="hero">
+        <img
+          src="img/dq3.png.webp"
+          alt="主人公の画像"
+          class="playerImage"
+          id="playerImage"
+        />
+      </div>
+      <!--上下左右ボタン-->
+      <div class="btn">
+        <div class="crossbtn">
+          <div class="crossbtn-top">
+            <button class="movebtn">↑</button>
+          </div>
+          <div class="crossbtn-middle">
+            <button class="movebtn">←</button>
+            <button class="movebtn">→</button>
+          </div>
+          <div class="crossbtn-bottom">
+            <button class="movebtn">↓</button>
+          </div>
+        </div>
+        <!--戦う、逃げるボタン（初期画面は非表示でJSで管理）-->
+        <div class="actionbtn-container"></div>
+      </div>
+    </div>
+    <!--ログ画面-->
+    <div class="log">
+      <p class="text-box">ログ</p>
+      <div id="message" class="message"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

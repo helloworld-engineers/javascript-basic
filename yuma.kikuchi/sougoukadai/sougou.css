@@ -1,0 +1,110 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  height: 550px;
+  border: solid 1px #000;
+  margin: 20px;
+  gap: 10px;
+}
+
+.container {
+  width: 200px;
+  font-size: 16px;
+  margin: 30px;
+}
+
+.hero {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero img {
+  width: 50%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.crossbtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.crossbtn-top {
+  display: flex;
+  justify-content: center;
+}
+
+.crossbtn-middle {
+  display: flex;
+  flex-direction: row;
+  gap: 49px;
+}
+
+.crossbtn-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.movebtn {
+  width: 45px;
+  height: 45px;
+  background-color: #a0d8ef;
+  color: #000;
+  border: 2px solid #333;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movebtn:hover {
+  background-color: #8acbe5;
+}
+
+.actionbtn-container {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+  height: 100%;
+}
+
+.action-btn {
+  width: 50%;
+}
+
+.log {
+  width: 320px;
+  height: 550px;
+  border: solid 1px #000;
+  overflow: scroll;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
