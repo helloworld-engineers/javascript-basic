@@ -97,7 +97,7 @@ body {
   width: 320px;
   height: 550px;
   border: solid 1px #000;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .text-box {
