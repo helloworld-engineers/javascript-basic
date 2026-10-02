@@ -93,6 +93,13 @@ body {
   width: 50%;
 }
 
+.battle-btn {
+  background-color: #a0d8ef;
+  border-radius: 6px;
+  font-size: 18px;
+  width: 150px;
+}
+
 .log {
   width: 320px;
   height: 550px;
