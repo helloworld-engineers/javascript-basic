@@ -26,7 +26,7 @@ const enemies = [
     id: 1,
     attack: 10,
     exp: 10,
-    encounterRate: 65,
+    ENCOUNTER_RATE: 65,
     imgPath: "./images/slime.webp",
   },
   {
@@ -35,7 +35,7 @@ const enemies = [
     id: 2,
     attack: 20,
     exp: 15,
-    encounterRate: 25,
+    ENCOUNTER_RATE: 25,
     imgPath: "./images/dragon.png",
   },
   {
@@ -44,19 +44,19 @@ const enemies = [
     id: 3,
     attack: 10,
     exp: 30,
-    encounterRate: 10,
+    ENCOUNTER_RATE: 10,
     imgPath: "./images/metalslime.png",
   },
 ];
 let currentenemy = null;
-const ramMAX = 100;
-const escapeRate = 50;
+const RAM_MAX = 100;
+const EACAPE_RATE = 50;
 let startPosition = {
   x: 0,
   y: 0,
 };
-const mapLimitPlus = 20;
-const mapLimitMinus = -20;
+const MAP_LIMIT_PLUS = 20;
+const MAP_LIMIT_MINUS = -20;
 const map = [
   {
     mapid: 1,
@@ -88,7 +88,7 @@ const map = [
 actionBtnContainer.style.display = "none";
 //GAMEOVERを非表示
 gameoverImg.style.display = "none";
-const encounterRate = 0.4;
+const ENCOUNTER_RATE = 0.4;
 //プレイヤーのHPを変動させる変数
 const playerFluctuationHp = () => {
   playerStatus.innerHTML = `HP:${player.hp}<br>攻撃力：${player.attack}<br>Level:${player.level}`;
@@ -96,19 +96,19 @@ const playerFluctuationHp = () => {
 playerFluctuationHp();
 //モンスターと遭遇する確率の処理
 const enncountMonster = () => {
-  if (Math.random() < encounterRate) {
+  if (Math.random() < ENCOUNTER_RATE) {
     battleStart();
     logNotation(`${currentenemy.name}が現れた`);
   }
 };
 //敵３体のうち１体を決める処理
 const randomMonster = () => {
-  const randomNumber = Math.floor(Math.random() * ramMAX);
-  if (randomNumber < enemies[0].encounterRate) {
+  const randomNumber = Math.floor(Math.random() * RAM_MAX);
+  if (randomNumber < enemies[0].ENCOUNTER_RATE) {
     return { ...enemies[0] };
   } else if (
     randomNumber <
-    enemies[1].encounterRate + enemies[0].encounterRate
+    enemies[1].ENCOUNTER_RATE + enemies[0].ENCOUNTER_RATE
   ) {
     return { ...enemies[1] };
   } else {
@@ -154,7 +154,7 @@ const hpConfirmation = (character) => {
 };
 //逃げる時の処理
 escapeBtn.addEventListener("click", () => {
-  if (Math.floor(Math.random() * 100) < escapeRate) {
+  if (Math.floor(Math.random() * RAM_MAX) < EACAPE_RATE) {
     moveBtnContainer.style.display = "grid";
     actionBtnContainer.style.display = "none";
     heroImg.style.display = "block";
@@ -186,32 +186,19 @@ const imgChange = (img) => {
 //map移動時の背景処理
 const mapChange = () => {
   if (
-    startPosition.x >= 0 &&
-    startPosition.x <= mapLimitPlus &&
-    startPosition.y > 0 &&
-    startPosition.y <= mapLimitPlus
-  ) {
+    startPosition.x >= MAP_LIMIT_PLUS ||
+    startPosition.y >= MAP_LIMIT_PLUS ||
+    startPosition.x <= MAP_LIMIT_MINUS ||
+    startPosition.y <= MAP_LIMIT_MINUS
+  )
+    return;
+  else if (startPosition.x >= 0 && startPosition.y > 0) {
     imgChange(`${map[0].mapimg}`);
-  } else if (
-    startPosition.x > 0 &&
-    startPosition.x <= mapLimitPlus &&
-    startPosition.y <= 0 &&
-    startPosition.y >= mapLimitMinus
-  ) {
+  } else if (startPosition.x > 0 && startPosition.y <= 0) {
     imgChange(`${map[1].mapimg}`);
-  } else if (
-    startPosition.x < 0 &&
-    startPosition.x >= mapLimitMinus &&
-    startPosition.y >= 0 &&
-    startPosition.y <= mapLimitPlus
-  ) {
+  } else if (startPosition.x < 0 && startPosition.y >= 0) {
     imgChange(`${map[2].mapimg}`);
-  } else if (
-    startPosition.x <= 0 &&
-    startPosition.x >= mapLimitMinus &&
-    startPosition.y < 0 &&
-    startPosition.y >= mapLimitMinus
-  ) {
+  } else if (startPosition.x <= 0 && startPosition.y < 0) {
     imgChange(`${map[3].mapimg}`);
   } else {
     imgChange(`${map[4].mapimg}`);
@@ -219,12 +206,12 @@ const mapChange = () => {
 };
 //移動ボタンの非活性化処理
 const buttonStop = (plusBtn, minusBtn, start) => {
-  if (startPosition[start] >= mapLimitPlus) {
+  if (startPosition[start] >= MAP_LIMIT_PLUS) {
     plusBtn.disabled = true;
   } else {
     plusBtn.disabled = false;
   }
-  if (startPosition[start] <= mapLimitMinus) {
+  if (startPosition[start] <= MAP_LIMIT_MINUS) {
     minusBtn.disabled = true;
   } else {
     minusBtn.disabled = false;
@@ -244,8 +231,8 @@ const moveProcess = (button, start, limit, num, plusBtn, minusBtn, move) => {
     }
     buttonStop(plusBtn, minusBtn, start);
     mapChange();
-    enncountMonster();
     logNotation(`${move}方向に進みました`);
+    enncountMonster();
   });
 };
 //ログ表記する処理
@@ -257,10 +244,10 @@ const logNotation = (log) => {
   logcontainer.appendChild(logList);
 };
 //右へ移動
-moveProcess(rightBtn, "x", mapLimitPlus, 1, rightBtn, leftBtn, "右");
+moveProcess(rightBtn, "x", MAP_LIMIT_PLUS, 1, rightBtn, leftBtn, "右");
 //左へ移動
-moveProcess(leftBtn, "x", mapLimitMinus, -1, rightBtn, leftBtn, "左");
+moveProcess(leftBtn, "x", MAP_LIMIT_MINUS, -1, rightBtn, leftBtn, "左");
 //上へ移動
-moveProcess(upBtn, "y", mapLimitPlus, 1, upBtn, downBtn, "上");
+moveProcess(upBtn, "y", MAP_LIMIT_PLUS, 1, upBtn, downBtn, "上");
 //下へ移動
-moveProcess(downBtn, "y", mapLimitMinus, -1, upBtn, downBtn, "下");
+moveProcess(downBtn, "y", MAP_LIMIT_MINUS, -1, upBtn, downBtn, "下");
