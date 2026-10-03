@@ -2,6 +2,8 @@ const SLIME_APPEAR_RATE = 0.65; // 65%未満はスライム
 const DRAGON_APPEAR_RATE = 0.9; // 65%以上90%未満（25%）はドラゴン
 const MONSTERENCOUNT = 0.4;
 const ESCAPE = 0.5;
+const MAX_MOVE = 20;
+const MIN_MOVE = -20;
 const hitPointText = document.querySelector(".hit-point");
 const attackText = document.querySelector(".attack");
 const levelText = document.querySelector(".level");
@@ -80,7 +82,12 @@ const backUI = () => {
 };
 // is Move関数（移動が可か不可かマップの範囲内の判定するための関数）
 const isMove = (actionX, actionY) => {
-  if (actionX > 20 || actionX < -20 || actionY > 20 || actionY < -20) {
+  if (
+    actionX > MAX_MOVE ||
+    actionX < MIN_MOVE ||
+    actionY > MAX_MOVE ||
+    actionY < MIN_MOVE
+  ) {
     return false; // 移動不可
   }
   return true; // 移動可能
@@ -89,10 +96,10 @@ const isMove = (actionX, actionY) => {
 const move = (direction) => {
   let actionX = currentInfo.x;
   let actionY = currentInfo.y;
-  if (direction === "up") actionX += 1;
-  if (direction === "down") actionX -= 1;
-  if (direction === "right") actionY += 1;
-  if (direction === "left") actionY -= 1;
+  if (direction === "up") actionY += 1;
+  if (direction === "down") actionY -= 1;
+  if (direction === "right") actionX += 1;
+  if (direction === "left") actionX -= 1;
   if (!isMove(actionX, actionY)) {
     addLog("これ以上進めない！");
     return false;
@@ -156,7 +163,7 @@ const isEscape = () => {
 const btnAction = (action) => {
   const moveBtn = document.querySelectorAll(".movebtn");
   moveBtn.forEach(function (btn) {
-    if (action === true) {
+    if (action) {
       btn.disabled = false;
     } else {
       btn.disabled = true;
@@ -166,20 +173,20 @@ const btnAction = (action) => {
 // isBattleActive関数（戦闘時の戦うと逃げるボタンの活性/非活性)
 const isBattleActive = (isBattle) => {
   if (actionBtnArea) {
-    if (isBattle === true) {
+    if (isBattle) {
       actionBtnArea.style.display = "block";
     } else {
       actionBtnArea.style.display = "none";
     }
   }
   if (heroArea) {
-    if (isBattle === true) {
+    if (isBattle) {
       heroArea.style.backgroundImage = "none";
     }
   }
   const battleBtns = document.querySelectorAll(".battle-btn");
   battleBtns.forEach(function (btn) {
-    if (isBattle === true) {
+    if (isBattle) {
       btn.disabled = false;
     } else {
       btn.disabled = true;
@@ -197,7 +204,7 @@ const monsterActive = () => {
   }
   return false; // 戦闘継続
 };
-// ゲームおーば（ボタン非活性）
+// ゲームオーバー（ボタン非活性）
 const gameOver = () => {
   currentInfo.HP === 0;
   backUI();
@@ -221,7 +228,14 @@ const endBattle = () => {
 const arrowBtn = (direction) => {
   const isMoved = move(direction);
   if (isMoved) {
-    addLog(`${direction} へ移動した`);
+    const mapMove = {
+      up: "上",
+      down: "下",
+      left: "左",
+      right: "右",
+    };
+    let logDisplay = mapMove[direction];
+    addLog(`${logDisplay} へ移動した`);
     // 移動後のエンカウント
     if (encountMonster()) {
       // モンスターエンカウント
@@ -248,7 +262,7 @@ if (attackBtn) {
       `主人公の攻撃！${currentMonster.name}に${currentInfo.attack}のダメージ`,
     );
     //モンスターのHPが0なら戦闘終了
-    if (monsterActive() === true) {
+    if (monsterActive()) {
       endBattle();
       addLog("勝負に勝った！");
       return;
@@ -261,7 +275,7 @@ if (attackBtn) {
     addLog(`モンスターの攻撃！主人公に${currentMonster.attack}のダメージ`);
     backUI();
     //主人公のHPが0なら戦闘終了
-    if (isHeroDie() === true) {
+    if (isHeroDie()) {
       gameOver();
     }
   });
@@ -287,7 +301,7 @@ if (escapeBtn) {
         `${currentMonster.name}の攻撃！ 主人公は${currentMonster.attack}のダメージを受けた！`,
       );
       backUI();
-      if (isHeroDie() === true) {
+      if (isHeroDie()) {
         gameOver();
       }
     }
