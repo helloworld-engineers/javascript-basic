@@ -1,0 +1,107 @@
+.main-container {
+  width: 100%;
+  height: 900px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  /* background-image: url(./images/machi.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+.filed-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-image: url(./images/machi.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.gameover {
+  width: 100%;
+}
+.status {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+}
+.hero-img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+.currentenemy {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: none;
+}
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  height: 150px;
+  align-items: center;
+  padding: 0 30px;
+}
+.movebtn-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  text-align: center;
+}
+.upbtn {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: grid;
+  grid-column: 2/3;
+}
+.rightbtn {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: grid;
+  grid-column: 3/4;
+  grid-row: 3/2;
+}
+.downbtn {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: grid;
+  grid-column: 3/2;
+  grid-row: 3/4;
+}
+.leftbtn {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: grid;
+  grid-column: 1/2;
+}
+.actionbtn-container {
+  display: flex;
+  gap: 20px;
+  height: 50px;
+  line-height: 50px;
+}
+.batllebtn {
+  width: 100px;
+}
+.escapebtn {
+  width: 100px;
+}
+.logcontainer {
+  width: 400px;
+  height: 800px;
+  border: 1px solid black;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0 0;
+}
+.log-title {
+  list-style-position: inside;
+  list-style: none;
+}
