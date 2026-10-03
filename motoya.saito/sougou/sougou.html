@@ -7,25 +7,21 @@
     <link rel="stylesheet" href="sougou.css" />
   </head>
   <body>
-    <div class="main-container">
-      <div class="filed-container">
+    <div class="main-container" id="mainContainer">
+      <img class="gameover" id="gameoverImg" src="./images/gameover.webp" />
+      <div class="filed-container" id="filedImg">
         <p class="status" id="playerStatus"></p>
         <img class="hero-img" id="heroImg" src="./images/hero.png" />
-        <img class="slime-img" id="slimeImg" src="./images/slime.webp" />
-        <img class="dragon-img" id="dragonImg" src="./images/dragon.png" />
-        <img
-          class="metalslime-img"
-          id="metalSlimeImg"
-          src="./images/metalslime.jpg"
-        />
+        <img class="currentenemy" id="currentenemyImg" />
+
         <div class="btn-container">
-          <div class="movebtn-container">
+          <div class="movebtn-container" id="moveBtnContainer">
             <button type="button" class="upbtn" id="upBtn">⇧</button>
             <button type="button" class="rightbtn" id="rightBtn">⇨</button>
             <button type="button" class="downbtn" id="downBtn">⇩</button>
             <button type="button" class="leftbtn" id="leftBtn">⇦</button>
           </div>
-          <div class="actionbtn-container">
+          <div class="actionbtn-container" id="actionBtnContainer">
             <button type="button" class="batllebtn" id="batlleBtn">戦う</button>
             <button type="button" class="escapebtn" id="escapeBtn">
               逃げる
@@ -33,7 +29,7 @@
           </div>
         </div>
       </div>
-      <ul class="logcontainer">
+      <ul class="logcontainer" id="logcontainer">
         <li class="log-title">ログ</li>
       </ul>
     </div>
