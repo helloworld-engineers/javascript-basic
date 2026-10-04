@@ -70,12 +70,12 @@ const backUI = () => {
   if (attackText) attackText.textContent = "攻撃力：" + currentInfo.attack;
   if (levelText) levelText.textContent = "レベル：" + currentInfo.level;
   if (currentMonster || currentInfo.HP <= 0) {
-    if (heroArea) heroArea.style.backgroundImage = "none";
+    heroArea.style.backgroundImage = "none";
   } else {
     const backPath = currentLocation();
-    if (heroArea && backPath) {
+    if (backPath) {
       heroArea.style.backgroundImage = `url('img/${backPath}')`;
-    } else if (heroArea) {
+    } else {
       heroArea.style.backgroundImage = "none";
     }
   }
@@ -151,11 +151,6 @@ const randomMonster = () => {
 const isHeroDie = () => {
   return currentInfo.HP <= 0;
 };
-//モンスターのHPが0か判定する
-const isMonsterDie = (monsterInfo) => {
-  return monsterInfo.HP <= 0;
-};
-// is escape関数(逃げれたかどうか）
 const isEscape = () => {
   return Math.random() < ESCAPE;
 };
@@ -179,10 +174,8 @@ const isBattleActive = (isBattle) => {
       actionBtnArea.style.display = "none";
     }
   }
-  if (heroArea) {
-    if (isBattle) {
-      heroArea.style.backgroundImage = "none";
-    }
+  if (isBattle) {
+    heroArea.style.backgroundImage = "none";
   }
   const battleBtns = document.querySelectorAll(".battle-btn");
   battleBtns.forEach(function (btn) {
@@ -284,7 +277,7 @@ if (attackBtn) {
 if (escapeBtn) {
   escapeBtn.addEventListener("click", () => {
     // 戦うモンスターがいないとき返す
-    if (currentMonster === null) {
+    if (!currentMonster) {
       return;
     }
     if (isEscape()) {
