@@ -26,7 +26,7 @@ const enemies = [
     id: 1,
     attack: 10,
     exp: 10,
-    ENCOUNTER_RATE: 65,
+    enemyEncounterRate: 65,
     imgPath: "./images/slime.webp",
   },
   {
@@ -35,7 +35,7 @@ const enemies = [
     id: 2,
     attack: 20,
     exp: 15,
-    ENCOUNTER_RATE: 25,
+    enemyEncounterRate: 25,
     imgPath: "./images/dragon.png",
   },
   {
@@ -44,7 +44,7 @@ const enemies = [
     id: 3,
     attack: 10,
     exp: 30,
-    ENCOUNTER_RATE: 10,
+    enemyEncounterRate: 10,
     imgPath: "./images/metalslime.png",
   },
 ];
@@ -104,11 +104,11 @@ const enncountMonster = () => {
 //敵３体のうち１体を決める処理
 const randomMonster = () => {
   const randomNumber = Math.floor(Math.random() * RAM_MAX);
-  if (randomNumber < enemies[0].ENCOUNTER_RATE) {
+  if (randomNumber < enemies[0].enemyEncounterRate) {
     return { ...enemies[0] };
   } else if (
     randomNumber <
-    enemies[1].ENCOUNTER_RATE + enemies[0].ENCOUNTER_RATE
+    enemies[1].enemyEncounterRate + enemies[0].enemyEncounterRate
   ) {
     return { ...enemies[1] };
   } else {
