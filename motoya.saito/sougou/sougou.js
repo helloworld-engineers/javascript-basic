@@ -193,15 +193,15 @@ const mapChange = () => {
   )
     return;
   else if (startPosition.x >= 0 && startPosition.y > 0) {
-    imgChange(`${map[0].mapimg}`);
+    imgChange(map[0].mapimg);
   } else if (startPosition.x > 0 && startPosition.y <= 0) {
-    imgChange(`${map[1].mapimg}`);
+    imgChange(map[1].mapimg);
   } else if (startPosition.x < 0 && startPosition.y >= 0) {
-    imgChange(`${map[2].mapimg}`);
+    imgChange(map[2].mapimg);
   } else if (startPosition.x <= 0 && startPosition.y < 0) {
-    imgChange(`${map[3].mapimg}`);
+    imgChange(map[3].mapimg);
   } else {
-    imgChange(`${map[4].mapimg}`);
+    imgChange(map[4].mapimg);
   }
 };
 //移動ボタンの非活性化処理
