@@ -24,11 +24,7 @@ function rollDice() {
 
 // ラウンド数・ポイントを画面に反映(右上の部分)
 function renderInfo() {
-  if (round === 0) {
-    roundEl.textContent = 1;
-  } else {
-    roundEl.textContent = round;
-  }
+  roundEl.textContent = round;
   point1El.textContent = point1;
   point2El.textContent = point2;
 }
@@ -50,22 +46,22 @@ battleBtn.addEventListener("click", () => {
   round++;
 
   // サイコロを振って、出目の画像に切り替える
-  // ゲーム自体の中身↓
-  const dicenum1 = rollDice();
-  const dicenum2 = rollDice();
-  // 下記2行がサイコロの画像を切り替える(見た目)
-  dice1El.src = `images/dice${dicenum1}.png`;
-  dice2El.src = `images/dice${dicenum2}.png`;
-  // ラウンドごとに勝った方のプレイヤーの色が切り替わるのをリセットする
+  // ゲーム自体の中身
+  const diceNum1 = rollDice();
+  const diceNum2 = rollDice();
+  // サイコロの目に応じて画像を切り替え
+  dice1El.src = `images/dice${diceNum1}.png`;
+  dice2El.src = `images/dice${diceNum2}.png`;
+  // ラウンドごとに勝った方のプレイヤーの色が切り替わるのをリセットする( remove )
   player1El.classList.remove("win");
   player2El.classList.remove("win");
 
   // 出目が高い方に1ポイント（同じ目はポイントなし）
   // 上から順に実行。当てはまった箇所で処理
-  if (dicenum1 > dicenum2) {
+  if (diceNum1 > diceNum2) {
     point1++;
-    player1El.classList.add("win");
-  } else if (dicenum2 > dicenum1) {
+    player1El.classList.add("win");  /* classList.add ← jsからクラスを追加*/
+  } else if (diceNum2 > diceNum1) {
     point2++;
     player2El.classList.add("win");
   }
