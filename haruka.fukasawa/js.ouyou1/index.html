@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+      <title>Javascript応用課題1</title>
+    </head>
+    <body>
+      <div class="container">
+        <!-- 右上　ラウンド数とポイント -->
+        <div class="info">
+          <p>ラウンド数: <span id="round">1</span>ラウンド</p>
+          <p>プレイヤー1: <span id="point1">0</span>ポイント</p>
+          <p>プレイヤー2: <span id="point2">0</span>ポイント</p>
+        </div>
+        <!-- 中央　プレイヤーとサイコロ -->
+        <div class="main">
+          <div class="player" id="player1">プレイヤー1</div>
+
+          <div class="dice">
+            <img id="dice1" src="images/dice1.png" alt="サイコロ1の目">
+          </div>
+
+          <div class="dice">
+            <img id="dice2" src="images/dice1.png" alt="サイコロ1の目">
+          </div>
+
+          <div class="player" id="player2">プレイヤー2</div>
+
+          <div class="btn">
+            <button class="box" id="battleBtn">勝負</button>
+            <button class="box" id="resultBtn" disabled>勝敗</button>
+          </div>
+        </div>
+      </div>
+      <script src="script.js"></script>
+    </body>
+  </html>
