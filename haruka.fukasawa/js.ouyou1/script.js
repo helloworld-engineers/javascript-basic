@@ -18,8 +18,9 @@ let point1 = 0;
 let point2 = 0;
 
 // 1〜6のランダムな数を返す(return ←呼び出し元に返すという意味)
-function diceNum() {
-  return Math.floor(Math.randomNum() * 6) + 1;
+function rollDice() {
+  const diceside = 6; // サイコロの面の数
+  return Math.floor(Math.random() * diceside) + 1;
 }
 
 // ラウンド数・ポイントを画面に反映(右上の部分)
@@ -47,8 +48,8 @@ battleBtn.addEventListener("click", () => {
 
   // サイコロを振って、出目の画像に切り替える
   // ゲーム自体の中身
-  const diceNum1 = diceNum();
-  const diceNum2 = diceNum();
+  const diceNum1 = rollDice();
+  const diceNum2 = rollDice();
   // サイコロの目に応じて画像を切り替え
   dice1El.src = `images/dice${diceNum1}.png`;
   dice2El.src = `images/dice${diceNum2}.png`;
