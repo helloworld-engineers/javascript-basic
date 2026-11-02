@@ -1,0 +1,72 @@
+.ichiran-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search-page {
+  font-size: 30px;
+}
+.pokemonList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  font-size: 20px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pokeDetail {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 7%;
+  align-items: center;
+}
+.Detailedinformation {
+  text-align: center;
+}
+.pokeImg {
+  width: 100%;
+}
+.pokename {
+  font-size: x-large;
+  text-align: center;
+}
+.pokeID {
+  font-size: x-large;
+  text-align: center;
+}
+.pokeTypes-container {
+  display: flex;
+  gap: 15px;
+  font-size: x-large;
+}
+.pokestatus {
+  font-size: x-large;
+  text-align: center;
+}
+.search-title {
+  text-align: center;
+}
+.loading-text {
+  text-align: center;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.result {
+  height: 150px;
+  overflow-y: auto;
+}
