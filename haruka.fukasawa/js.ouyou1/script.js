@@ -19,8 +19,8 @@ let point2 = 0;
 
 // 1〜6のランダムな数を返す(return ←呼び出し元に返すという意味)
 function rollDice() {
-  const diceside = 6; // サイコロの面の数
-  return Math.floor(Math.random() * diceside) + 1;
+  const DICE_SIDE = 6; // サイコロの面の数
+  return Math.floor(Math.random() * DICE_SIDE) + 1;
 }
 
 // ラウンド数・ポイントを画面に反映(右上の部分)
