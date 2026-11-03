@@ -29,7 +29,7 @@ function showCount(n) {
 function shuffle(array) {
   const result = array.slice(); // 元の配列をコピー
 
-  // シャッフル関数
+  // シャッフル関数: フィッシャーイェーツ関数を採用(sortを使うと元の配列が壊れるから)
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
@@ -50,11 +50,11 @@ function hasSamePosition(a, b) {
 
 // 正解の色をランダムに決める（初期配置と1つも一致しないようにする）
 function createAnswer(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
+  let result;
+  do {
+    result = shuffle(arr);
+  } while (hasSamePosition(arr, result));
+  return result;
 }
 
 // 正解数を数える
