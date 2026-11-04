@@ -21,9 +21,7 @@ function render() {
 }
 
 // 正解数を表示する関数
-function showCount(n) {
-  countEl.textContent = n;
-}
+const showCount = n => countEl.textContent = n;
 
 // 配列をランダムに並び替える関数
 function shuffle(array) {
