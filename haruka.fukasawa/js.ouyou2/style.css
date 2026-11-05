@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== ボール ===== */
+.ball {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+/* ボール＋矢印（箱と同じ幅） */
+.slot {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.ballImg {
+  width: 80px;
+  height: 80px;
+  padding: 20px;
+}
+
+/* ボールの色（JSでクラスを付ける） */
+.red    { filter: hue-rotate(160deg); }
+.blue   { filter: none; }
+.yellow { filter: hue-rotate(200deg); }
+.purple { filter: hue-rotate(70deg); }
+
+/* ===== 矢印ボタン ===== */
+.arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.arrow img {
+  width: 30px;
+  height: 50px;
+}
+
+/* HTMLで定義した左端と右端の矢印 */
+.arrow:disabled {
+  opacity: 0.2;  /* 透明度を下げる */
+  cursor: default;
+}
+
+/* ===== 箱 ===== */
+.boxContainer {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+.box {
+  box-sizing: border-box; /* 枠線込みで120pxにする */
+  width: 120px;
+  height: 300px;
+  border: 3px solid black;
+  margin-top: 30px;
+}
+
+/* ===== 正解数 ===== */
+.correctAnswer {
+  margin: 30px 0 0 30px;
+  font-size: 20px;
+}
+
+/* ===== ボタン ===== */
+.btn {
+  margin: 30px 0 0 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.btn button {
+  padding: 3px 10px;
+  font-size: 30px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.btn button:hover {
+  background: black;
+  color: white;
+}

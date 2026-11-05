@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  <html lang="ja">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+      <title>Javascript応用課題2</title>
+    </head>
+    <body>
+      <div class="ball">
+        <div class="slot">
+          <button class="arrow left" disabled><img src="./images/leftArrow.png" alt="左へ移動"></button>
+          <img class="ballImg" src="./images/ball.png" alt="ボール">
+          <button class="arrow right"><img src="./images/rightArrow.png" alt="右へ移動"></button>
+        </div>
+        <div class="slot">
+          <button class="arrow left"><img src="./images/leftArrow.png" alt="左へ移動"></button>
+          <img class="ballImg" src="./images/ball.png" alt="ボール">
+          <button class="arrow right"><img src="./images/rightArrow.png" alt="右へ移動"></button>
+        </div>
+        <div class="slot">
+          <button class="arrow left"><img src="./images/leftArrow.png" alt="左へ移動"></button>
+          <img class="ballImg" src="./images/ball.png" alt="ボール">
+          <button class="arrow right"><img src="./images/rightArrow.png" alt="右へ移動"></button>
+        </div>
+        <div class="slot">
+          <button class="arrow left"><img src="./images/leftArrow.png" alt="左へ移動"></button>
+          <img class="ballImg" src="./images/ball.png" alt="ボール">
+          <button class="arrow right" disabled><img src="./images/rightArrow.png" alt="右へ移動"></button>
+        </div>
+      </div>
+
+      <div class="boxContainer">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+
+      <p class="correctAnswer"><span id="count">0</span>個正解しています。</p>
+
+      <div class="btn">
+        <!-- <button class="startBtn" id="start">スタート</button> -->
+        <button class="resetBtn" id="reset">リセット</button>
+      </div>
+
+      <script src="script.js"></script>
+    </body>
+  </html>
