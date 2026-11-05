@@ -126,6 +126,27 @@ const historyContainer = document.getElementById('historyContainer');
 
 // 履歴データ（新しいものが先頭）
 const searchHistory = [];
+const MAX_HISTORY = 50; // 履歴の最大件数
+
+
+// 履歴をセッションストレージに保存する
+function saveHistory() {
+  sessionStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+}
+
+// 履歴をセッションストレージから読み込む
+function loadHistory() {
+  const history = sessionStorage.getItem('searchHistory');
+  if (!history) return;
+
+  try {
+    JSON.parse(history).forEach(item => searchHistory.push(item));
+  } catch (error) {
+    // 保存データが壊れていた場合は捨てる
+    console.error('履歴の読み込みに失敗しました:', error);
+    sessionStorage.removeItem('searchHistory');
+  }
+}
 
 // 入力が空ならボタンを非活性にする
 function updateSearchBtnState() {
@@ -205,6 +226,19 @@ function renderHistory() {
   });
 }
 
+// 履歴の保存
+function saveHistory() {
+  sessionStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+}
+
+// 履歴の読み込み（init関数などで呼び出す）
+function loadHistory() {
+  const history = sessionStorage.getItem('searchHistory');
+  if (history) {
+    JSON.parse(history).forEach(item => searchHistory.push(item));
+  }
+}
+
 // 詳細画面
 const detailView = document.getElementById('detailView');
 const detailLoadingEl = document.getElementById('detailLoading');
@@ -252,6 +286,7 @@ function init() {
   currentOffset = savedOffset !== null ? parseInt(savedOffset, 10) : 0;
 
   fetchPokemonList(currentOffset);
+  loadHistory();  // 保存済みの履歴を復元
   renderHistory(); // 初期表示は「履歴なし」
 }
 
