@@ -1,0 +1,139 @@
+[hidden] {
+  display: none !important;
+}
+
+/* ページネーション */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 40px 0;
+}
+
+.pageLink {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  text-decoration: none;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.pageLink.prev,
+.pageLink.next {
+  padding: 0 16px;
+}
+
+/* 非活性（前へ・次へが押せないとき） */
+button.pageLink:disabled {
+  color: #cccccc;
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 現在のページ（disabledでも青で表示されるよう後ろに書く） */
+button.pageLink.current,
+button.pageLink.current:disabled {
+  color: #ffffff;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: default;
+}
+
+.pageLink:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #cccccc;
+  cursor: pointer;
+}
+
+/* 検索 */
+.searchContainer {
+  display: flex;
+  gap: 40px;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.searchMain {
+  flex: 1;
+}
+
+.searchSidebar {
+  width: 300px;
+  border-left: 1px solid #e0e0e0;
+  padding-left: 20px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.searchForm input {
+  padding: 8px;
+  font-size: 16px;
+  flex: 1;
+}
+
+#searchBtn {
+  padding: 0 20px;
+  height: 40px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#searchBtn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 検索履歴 */
+.historyScroll {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.historyItem {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.noHistory {
+  color: #999999;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 共通 */
+.loading {
+  margin: 10px 0;
+  color: #666666;
+}
