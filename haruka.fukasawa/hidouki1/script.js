@@ -24,14 +24,14 @@ function fetchDogImage() {
       console.error('画像の取得に失敗しました:', error);
       alert('画像の取得に失敗しました。');
     })
-    // 【修正2】finallyを使い、成功・失敗どちらでもローディングを消す
+    // finallyを使い、成功・失敗どちらでもローディングを消す
     .finally(() => {
       if (loadingEl) loadingEl.style.display = 'none';
     });
 }
 
-// 1. ページが読み込まれた時に最初の画像を取得
+// ページが読み込まれた時に最初の画像を取得
 fetchDogImage();
 
-// 2. ボタンがクリックされた時にも新しい画像を取得
+// ボタンがクリックされた時にも新しい画像を取得
 fetchBtn.addEventListener('click', fetchDogImage);
