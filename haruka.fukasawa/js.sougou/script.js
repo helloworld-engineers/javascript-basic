@@ -200,10 +200,11 @@ async function startBattle(monster) {
   monsterImg.src = currentMonster.image;
   monsterImg.alt = currentMonster.name;
 
-  setMode('battle');
-  setInactive(true);
-  await say(currentMonster.name + 'が現れた。');
-  setInactive(false);
+  if (!monster) throw new Error('モンスターが存在しません')
+    setMode('battle');
+    setInactive(true);
+    await say(currentMonster.name + 'が現れた。');
+    setInactive(false);
 }
 
 // 移動画面に戻る
