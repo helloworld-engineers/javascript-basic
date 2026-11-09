@@ -71,7 +71,7 @@ function setupPagination(totalCount, offset) {
   pageNumSpan.innerHTML = '';
 
   for (let i = 1; i <= totalPages; i++) {
-    // 現在ページの前後以外は「...」で省略
+    //  現在のページから離れたページは省略する
     if (i !== 1 && i !== totalPages && Math.abs(i - currentPage) > 4) {
       if (i === 5 || i === totalPages - 3) {
         const dot = document.createElement('span');
