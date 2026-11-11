@@ -1,3 +1,5 @@
+// 関数 / そのほかの処理をまとめたファイル
+
 // 共通処理
 function findById(list, id) {
   for (let i = 0; i < list.length; i++) {
@@ -37,7 +39,7 @@ function getAliveMembers(){
 // 画面を表示する
 
 // 左上のステータスをCSS（.member-status）の設計を活かして人数分縦に並べる
-function updataStatus(members) {
+function updateStatus(members) {
   const statusArea = document.querySelector('.status');
   if (!statusArea) return;
 
@@ -82,8 +84,8 @@ function initGame() {
   warriorImg.hidden = true;                    // 仲間になるまでは隠しておく
   additionBtn.hidden = true;                   // 戦士追加ボタンは最初は非表示
   gameoverImg.hidden = true;                   // ゲームオーバ画像非表示
-  updataStatus(party);
-  updataStage();
+  updateStatus(party);
+  updateStage();
   setMode('field');
 }
 
@@ -105,7 +107,7 @@ function getAreaId(x, y) {
 }
 
 // 背景を切り替える
-function updataStage() {
+function updateStage() {
   const areaId = getAreaId(position.x, position.y);
   // エリアが変わった時だけ処理する
   if (areaId !== currentAreaId) {
@@ -134,8 +136,8 @@ function setMode(newMode) {
     monsterImg.hidden = true;
     gameoverImg.hidden = true;
     commands.hidden = true;
-    updataArrows();
-  } else if (mode === 'battle') {
+    updateArrows();
+    } else if (mode === 'battle') {
     // 戦闘中：モンスターを表示、方向キーは非活性
     partyImgs.hidden = true;
     monsterImg.hidden = false;
@@ -143,7 +145,7 @@ function setMode(newMode) {
     commands.hidden = false;
     additionBtn.disabled = true;
     setArrowsDisabled(true);
-  } else if (mode === 'gameover') {
+    } else if (mode === 'gameover') {
     // GAME OVER：GAME OVER画像だけ表示、ボタンは全て非活性
     partyImgs.hidden = true;
     heroImg.hidden = true;
@@ -193,7 +195,7 @@ function setArrowsDisabled(disabled) {
 }
 
 // マップの端でその方向キーを非活性にする
-function updataArrows() {
+function updateArrows() {
   arrowRight.disabled = position.x === MAP_MAX;
   arrowLeft.disabled = position.x === MAP_MIN;
   arrowUp.disabled = position.y === MAP_MAX;
@@ -231,8 +233,8 @@ async function move(direction) {
   position.y = nextY;
   log(direction + '方向に進みました。');
 
-  updataStage();
-  updataArrows();
+  updateStage();
+  updateArrows();
 
   // モンスターが出現するか判定する
   if (encounterCheck()) {
@@ -312,7 +314,7 @@ async function monsterAttack() {
 
   const target = aliveMembers[Math.floor(Math.random() * aliveMembers.length)];
   target.hp = calculateHP(target.hp, currentMonster.attack);
-  updataStatus(party); // 左上のHPを減らす
+  updateStatus(party); // 左上のHPを減らす
 
   await say(currentMonster.name + 'の攻撃！' + target.name + 'は' + currentMonster.attack + 'ポイントのダメージを受けた。');
 
@@ -380,7 +382,7 @@ async function winBattle() {
   }
 
   endBattle();
-  updataJoinButton();  // 戦士追加ボタンを表示するか判定
+  updateJoinButton();  // 戦士追加ボタンを表示するか判定
 }
 
 // 全滅した時の処理
@@ -404,7 +406,7 @@ async function levelUp(member) {
     member.maxHp += LEVEL_UP_BONUS;
     member.attack += LEVEL_UP_BONUS;
     member.hp = member.maxHp;               // HP全回復
-    updataStatus(party);
+    updateStatus(party);
 
     await say(`${member.name}のレベルが1上がった。`);
     await say(`HP / 攻撃力が${LEVEL_UP_BONUS}アップした。`);
@@ -413,7 +415,7 @@ async function levelUp(member) {
 }
 
 // 戦士を仲間にするボタン処理
-async function updataJoinButton(){
+async function updateJoinButton(){
   const hero = findById(party, 1);                         // 勇者のデータをパーティーから探す
   const hasWarrior = party.includes(partyMembersData[1]);  // すでに戦士がパーティーにいるかチェック
   // 勇者のレベルが3以上でまだ戦士がパーティーにいない時だけボタン表示
@@ -431,7 +433,7 @@ async function joinWarrior(){
     additionBtn.hidden = true;   // 用済みになったボタンは消す
 
     setInactive(true);
-    updataStatus(party);              // 左上のステータス表示を2人分に切り替える
+    updateStatus(party);              // 左上のステータス表示を2人分に切り替える
     await say(warrior.name + 'が仲間になった！');
     setInactive(false);
   }
