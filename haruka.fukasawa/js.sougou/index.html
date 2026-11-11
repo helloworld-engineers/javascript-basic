@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS総合課題</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="game">
+      <!-- 左側：ゲーム画面（背景画像は script.js で切り替える） -->
+      <section class="screen" id="screen">
+        <!-- 主人公のステータス -->
+        <div class="status">
+          <p>HP:<span id="hp"></span></p>
+          <p>攻撃力:<span id="attack"></span></p>
+          <p>レベル:<span id="level"></span></p>
+        </div>
+
+        <!-- キャラクター表示エリア -->
+        <div class="stage">
+          <!-- パーティーメンバーの画像（src は initGame() で設定する） -->
+          <img id="member-img" class="character" src="" alt="主人公">
+          <!-- モンスターの画像（src は startBattle() で設定する） -->
+          <img id="monster-img" class="character" src="" alt="" hidden>
+          <!-- GAME OVER の画像 -->
+          <img id="gameover-img" class="gameover" src="./images/gameover.png" alt="GAME OVER" hidden>
+        </div>
+
+        <!-- 操作エリア -->
+        <div class="controls">
+          <!-- 方向キー -->
+          <div class="direction">
+            <button id="arrow-up" class="arrow arrow-up" data-direction="上"><img src="./images/arrow-up.png" alt="上方向"></button>
+            <button id="arrow-left" class="arrow arrow-left" data-direction="左"><img src="./images/arrow-left.png" alt="左方向"></button>
+            <button id="arrow-right" class="arrow arrow-right" data-direction="右"><img src="./images/arrow-right.png" alt="右方向"></button>
+            <button id="arrow-down" class="arrow arrow-down" data-direction="下"><img src="./images/arrow-down.png" alt="下方向"></button>
+          </div>
+
+          <!-- 戦闘コマンド（戦闘中だけ表示） -->
+          <div id="commands" class="commands" hidden>
+            <button id="fight-btn" class="command">戦う</button>
+            <button id="escape-btn" class="command">逃げる</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 右側：ログ -->
+      <aside class="log-area">
+        <h2 class="log-title">ログ</h2>
+        <div id="log" class="log"></div>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
