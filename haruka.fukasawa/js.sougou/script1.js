@@ -8,10 +8,11 @@ const FIRST_LEVEL_UP_EXP = 30;  // 最初のレベルアップに必要な経験
 const ADD_LEVEL_UP_EXP = 10;    // レベルアップごとに増える必要経験値
 const LEVEL_UP_BONUS = 20;      // ステータス上昇値
 const MESSAGE_DELAY = 500;      // ログ表示間隔
-const JOIN_LEVEL = 3.           // 勇者レベル3になったら戦士追加
+const JOIN_LEVEL = 3;           // 勇者レベル3になったら戦士追加
 const RATE_MAX = 100;           // モンスターのエンカウント率 MAX の値
 const SLIME_RATE = 65;          // スライムのエンカウント率
 const DRAGON_RATE = 25;         // ドラゴンのエンカウント率
+const DRAGON_BUFF_LEVEL = 3;    // ドラゴンが強化される勇者のレベル
 
 const MAP_MIN = 0;
 const MAP_MAX = 9;

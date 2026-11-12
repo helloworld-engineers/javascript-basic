@@ -278,6 +278,16 @@ function calculateHP(hp, attack) {
   return result;
 }
 
+
+// 攻撃を受けた後のHPを計算する（0未満にはしない）
+function calculateHP(hp, attack) {
+  let result = hp - attack;
+  if (result < 0) {
+    result = 0;
+  }
+  return result;
+}
+
 // 勇者たちの攻撃処理
 async function partyAttack() {
   const aliveMembers = getAliveMembers();
