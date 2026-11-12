@@ -134,9 +134,10 @@ function setMode(newMode) {
   gameoverImg.hidden = mode !== 'gameover';
 
   if (mode === 'field') {
-    // 移動中：パーティーを表示、方向キーは活性
+    // 移動中：パーティーを表示、方向キーは現在地に応じて活性/非活性
     heroImg.hidden = false;
     warriorImg.hidden = !party.includes(partyMembersData[1]);
+    setArrowsDisabled(false);
     updateArrowsDisabled();
   } else if (mode === 'battle') {
     // 戦闘中：方向キーと追加ボタンは非活性
@@ -153,13 +154,21 @@ function setMode(newMode) {
   }
 }
 
-// ログ表示中にボタンを押せなくする
+
+
 function setInactive(inactive) {
   isInactive = inactive;
   fightBtn.disabled = inactive;
   escapeBtn.disabled = inactive;
   additionBtn.disabled = inactive || mode !== 'field';
+
+  if (inactive) {
+    setArrowsDisabled(true);
+  } else if (mode === 'field') {
+    updateArrowsDisabled();
+  }
 }
+
 
 // バトル画面に移る
 async function startBattle(monster) {
@@ -169,7 +178,7 @@ async function startBattle(monster) {
 
   if (!monster) throw new Error('モンスターが存在しません');
   setMode('battle');
-  setInactive(false);
+  setInactive(true);
   await say(currentMonster.name + 'が現れた。');
   setInactive(false);
 }
@@ -326,7 +335,7 @@ async function fight() {
   if (mode !== 'battle' || isInactive) {
     return;
   }
-  setInactive(false);
+  setInactive(true);
 
   await partyAttack();
 
@@ -346,7 +355,7 @@ async function escape() {
   if (mode !== 'battle' || isInactive) {
     return;
   }
-  setInactive(false);
+  setInactive(true);
 
   await say(party[0].name + 'たちは逃げ出した。');
   // 逃げられるか判定する（50%）
@@ -430,8 +439,8 @@ async function joinWarrior(){
     warriorImg.hidden = false;   // 画面中央の戦士画像を表示させる
     additionBtn.hidden = true;   // 用済みになったボタンは消す
 
-    setInactive(false);
     updateStatus(party);              // 左上のステータス表示を2人分に切り替える
+    setInactive(true);
     await say(warrior.name + 'が仲間になった！');
     setInactive(false);
   }
