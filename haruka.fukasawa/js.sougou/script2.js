@@ -134,10 +134,9 @@ function setMode(newMode) {
   gameoverImg.hidden = mode !== 'gameover';
 
   if (mode === 'field') {
-    // 移動中：パーティーを表示、方向キーは活性
+    // 移動中：パーティーを表示、方向キーは現在地に応じて活性/非活性
     heroImg.hidden = false;
     warriorImg.hidden = !party.includes(partyMembersData[1]);
-    updateArrowsDisabled();
   } else if (mode === 'battle') {
     // 戦闘中：方向キーと追加ボタンは非活性
     additionBtn.disabled = true;
@@ -153,13 +152,21 @@ function setMode(newMode) {
   }
 }
 
-// ログ表示中にボタンを押せなくする
+
+
 function setInactive(inactive) {
   isInactive = inactive;
   fightBtn.disabled = inactive;
   escapeBtn.disabled = inactive;
   additionBtn.disabled = inactive || mode !== 'field';
+
+  if (inactive) {
+    setArrowsDisabled(true);
+  } else if (mode === 'field') {
+    updateArrowsDisabled();
+  }
 }
+
 
 // バトル画面に移る
 async function startBattle(monster) {
@@ -268,6 +275,16 @@ function pickMonster() {
   }
   return copyMonster(data);
 }
+
+// 攻撃を受けた後のHPを計算する（0未満にはしない）
+function calculateHP(hp, attack) {
+  let result = hp - attack;
+  if (result < 0) {
+    result = 0;
+  }
+  return result;
+}
+
 
 // 攻撃を受けた後のHPを計算する（0未満にはしない）
 function calculateHP(hp, attack) {
@@ -420,8 +437,8 @@ async function joinWarrior(){
     warriorImg.hidden = false;   // 画面中央の戦士画像を表示させる
     additionBtn.hidden = true;   // 用済みになったボタンは消す
 
-    setInactive(true);
     updateStatus(party);              // 左上のステータス表示を2人分に切り替える
+    setInactive(true);
     await say(warrior.name + 'が仲間になった！');
     setInactive(false);
   }
