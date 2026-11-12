@@ -40,14 +40,23 @@ body {
   background-position: center;
 }
 
-/* ステータス：背景の上でも文字が読めるように白っぽい板をしく */
+/* ステータス：メンバーごとに白っぽい板を横に並べる */
 .status {
+  display: flex;
+  gap: 8px;
+}
+
+.member-status {
   width: fit-content;
   line-height: 1.5;
   font-size: 18px;
   background: rgba(255, 255, 255, 0.8);
   padding: 8px 12px;
   border-radius: 4px;
+}
+
+.member-status .dead {
+  color: #c00;
 }
 
 /* キャラクターを画面の中央に置く */
@@ -58,9 +67,25 @@ body {
   align-items: center;
 }
 
-.character {
-  max-width: 220px;
-  max-height: 220px;
+/* パーティーメンバーを横に並べる */
+.party {
+  display: flex;
+  gap: 24px;
+}
+
+#monster-img {
+  width: 220px;
+  height: 220px;
+}
+
+#hero-img {
+  width: 250px;
+  height: 220px;
+}
+
+#warrior-img {
+  width: 170px;
+  height: 180px;
 }
 
 .gameover {
@@ -97,10 +122,10 @@ body {
   object-fit: contain;
 }
 
-.arrow-up    { grid-column: 2; grid-row: 1; }
-.arrow-left  { grid-column: 1; grid-row: 2; }
-.arrow-right { grid-column: 3; grid-row: 2; }
-.arrow-down  { grid-column: 2; grid-row: 3; }
+.arrow-up     { grid-column: 2; grid-row: 1; }
+.arrow-left   { grid-column: 1; grid-row: 2; }
+.arrow-right  { grid-column: 3; grid-row: 2; }
+.arrow-down   { grid-column: 2; grid-row: 3; }
 
 /* 非活性の方向キーは薄くする */
 .arrow:disabled {
