@@ -110,15 +110,15 @@ function getAreaId(x, y) {
 function updateStage() {
   const areaId = getAreaId(position.x, position.y);
   // エリアが変わった時だけ処理する
-  if (areaId !== currentAreaId) {
+  if (areaId !== stage.currentAreaId) {
     const area = findById(AREAS, areaId);  // id でエリアのデータを取り出す
 
     // 最初の表示の時はログを出さない
-    if (currentAreaId !== 0) {
+    if (stage.currentAreaId !== 0) {
       log(area.name + 'に入った。');
     }
     screen.style.backgroundImage = `url(${area.image})`;
-    currentAreaId = areaId;
+    stage.currentAreaId = areaId;
   }
 }
 
@@ -263,17 +263,17 @@ function copyMonster(masterMonster) {
 
 // 出現するモンスターを決める
 // 65% でスライム / 25% でドラゴン / 10% でメタルスライム
-function pickMonster(){
-  const random = Math.random() * 100;
+function pickMonster() {
+  const random = Math.random() * RATE_MAX;
   let data;
-  if (random < 65) {
-      data = MONSTERS[0];
-    } else if (random < 90) {
-      data = MONSTERS[1];
-    } else {
-      data = MONSTERS[2];
-    }
-    return copyMonster(data);
+  if (random < SLIME_RATE) {
+    data = MONSTERS[0];  // スライム
+  } else if (random < SLIME_RATE + DRAGON_RATE) {
+    data = MONSTERS[1];  // ドラゴン
+  } else {
+    data = MONSTERS[2];  // メタルスライム
+  }
+  return copyMonster(data);
 }
 
 // 攻撃を受けた後のHPを計算する（0未満にはしない）
@@ -285,22 +285,12 @@ function calculateHP(hp, attack) {
   return result;
 }
 
-// HPが0かどうか（生死判定）
-function isDie(hp) {
-  return hp <= 0;
-}
-
-// 逃げられるか判定する（50%）
-function isEscape() {
-  return Math.random() < ESCAPE_RATE;
-}
-
 // 勇者たちの攻撃処理
 async function partyAttack() {
   const aliveMembers = getAliveMembers();
 
   for (const member of aliveMembers) {
-    if (isDie(currentMonster.hp)) break; // すでにモンスターを倒していたら中断
+    if (currentMonster.hp <= 0) break; // すでにモンスターを倒していたら中断
 
     currentMonster.hp = calculateHP(currentMonster.hp, member.attack);
     await say(member.name + 'の攻撃！' + currentMonster.name + 'に' + member.attack + 'ポイントのダメージを与えた。');
@@ -318,8 +308,8 @@ async function monsterAttack() {
 
   await say(currentMonster.name + 'の攻撃！' + target.name + 'は' + currentMonster.attack + 'ポイントのダメージを受けた。');
 
-  if (isDie(target.hp)) {
-    await say(target.name + 'は倒れてしまった。');
+  if (target.hp <= 0) {
+  await say(target.name + 'は倒れてしまった。');
   }
 
   // 全滅したかどうか判定
@@ -337,10 +327,10 @@ async function fight() {
 
   await partyAttack();
 
-  if (isDie(currentMonster.hp)) {
-    await winBattle();
+  if (currentMonster.hp <= 0) {
+  await winBattle();
   } else {
-    await monsterAttack();
+  await monsterAttack();
   }
 
   if (mode !== 'gameover') {
@@ -356,9 +346,9 @@ async function escape() {
   setInactive(true);
 
   await say(party[0].name + 'たちは逃げ出した。');
-
-  if (isEscape()) {
-    await say('うまく逃げ切れた。')
+  // 逃げられるか判定する（50%）
+  if (Math.random() < ESCAPE_RATE) {
+    await say('うまく逃げ切れた。');
     endBattle();
   } else {
     await say('しかし、回り込まれてしまった！');
@@ -419,7 +409,12 @@ async function updateJoinButton(){
   const hero = findById(party, 1);                         // 勇者のデータをパーティーから探す
   const hasWarrior = party.includes(partyMembersData[1]);  // すでに戦士がパーティーにいるかチェック
   // 勇者のレベルが3以上でまだ戦士がパーティーにいない時だけボタン表示
-  additionBtn.hidden = !(hero && hero.level >= JOIN_LEVEL && !hasWarrior);
+  if (hero && hero.level >= JOIN_LEVEL) {
+    if (!hasWarrior) {
+      additionBtn.hidden = false;
+    }
+  }
+
   additionBtn.disabled = isInactive || mode !== 'field';   // 操作ロック中、または移動画面以外にいる場合戦士追加ボタンは押せない
 }
 
@@ -440,11 +435,10 @@ async function joinWarrior(){
 }
 
 // イベント処理
-for (let i = 0; i < arrows.length; i++) {
-  arrows[i].addEventListener('click', function () {
-    move(arrows[i].dataset.direction);
-  });
-}
+arrowUp.addEventListener('click', () => move('上'));
+arrowLeft.addEventListener('click', () => move('左'));
+arrowRight.addEventListener('click', () => move('右'));
+arrowDown.addEventListener('click', () => move('下'));
 fightBtn.addEventListener('click', fight);
 escapeBtn.addEventListener('click', escape);
 additionBtn.addEventListener('click', joinWarrior);

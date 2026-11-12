@@ -9,6 +9,9 @@ const ADD_LEVEL_UP_EXP = 10;    // レベルアップごとに増える必要経
 const LEVEL_UP_BONUS = 20;      // ステータス上昇値
 const MESSAGE_DELAY = 500;      // ログ表示間隔
 const JOIN_LEVEL = 3.           // 勇者レベル3になったら戦士追加
+const RATE_MAX = 100;           // モンスターのエンカウント率 MAX の値
+const SLIME_RATE = 65;          // スライムのエンカウント率
+const DRAGON_RATE = 25;         // ドラゴンのエンカウント率
 
 const MAP_MIN = 0;
 const MAP_MAX = 9;
@@ -58,12 +61,15 @@ const AREAS = [
   { name: '海', id: 5, image: './images/sea.png' },
 ];
 
+const stage = {
+  currentAreaId: 0,
+  currentStage: '',
+};
+
 // ゲームの状態
 let mode = 'field';     // 'field'（移動中） / 'battle'（戦闘中） / 'gameover'
 let isInactive = false;     // ログ表示中は操作を受け付けない
 let monster = null;     // 戦闘中のモンスター
-let currentAreaId = 0;  // 今いるエリアのid
-let currentStage = '';  // 今いるエリア
 let currentMonster = null;  //戦闘中のモンスター（マスタデータのコピーを入れる
 
 // HTML要素取得
