@@ -169,7 +169,7 @@ async function startBattle(monster) {
 
   if (!monster) throw new Error('モンスターが存在しません');
   setMode('battle');
-  setInactive(true);
+  setInactive(false);
   await say(currentMonster.name + 'が現れた。');
   setInactive(false);
 }
@@ -326,7 +326,7 @@ async function fight() {
   if (mode !== 'battle' || isInactive) {
     return;
   }
-  setInactive(true);
+  setInactive(false);
 
   await partyAttack();
 
@@ -346,7 +346,7 @@ async function escape() {
   if (mode !== 'battle' || isInactive) {
     return;
   }
-  setInactive(true);
+  setInactive(false);
 
   await say(party[0].name + 'たちは逃げ出した。');
   // 逃げられるか判定する（50%）
@@ -430,7 +430,7 @@ async function joinWarrior(){
     warriorImg.hidden = false;   // 画面中央の戦士画像を表示させる
     additionBtn.hidden = true;   // 用済みになったボタンは消す
 
-    setInactive(true);
+    setInactive(false);
     updateStatus(party);              // 左上のステータス表示を2人分に切り替える
     await say(warrior.name + 'が仲間になった！');
     setInactive(false);
