@@ -128,31 +128,24 @@ function updateStage() {
 function setMode(newMode) {
   mode = newMode;
 
+  partyImgs.hidden = mode !== 'field';
+  monsterImg.hidden = mode !== 'battle';
+  commands.hidden = mode !== 'battle';
+  gameoverImg.hidden = mode !== 'gameover';
+
   if (mode === 'field') {
     // 移動中：パーティーを表示、方向キーは活性
-    partyImgs.hidden = false;
     heroImg.hidden = false;
     warriorImg.hidden = !party.includes(partyMembersData[1]);
-    monsterImg.hidden = true;
-    gameoverImg.hidden = true;
-    commands.hidden = true;
     updateArrows();
-    } else if (mode === 'battle') {
-    // 戦闘中：モンスターを表示、方向キーは非活性
-    partyImgs.hidden = true;
-    monsterImg.hidden = false;
-    gameoverImg.hidden = true;
-    commands.hidden = false;
+  } else if (mode === 'battle') {
+    // 戦闘中：方向キーと追加ボタンは非活性
     additionBtn.disabled = true;
     setArrowsDisabled(true);
-    } else if (mode === 'gameover') {
-    // GAME OVER：GAME OVER画像だけ表示、ボタンは全て非活性
-    partyImgs.hidden = true;
+  } else if (mode === 'gameover') {
+    // GAME OVER：パーティー画像や追加ボタンを隠し、全ボタンを非活性
     heroImg.hidden = true;
     warriorImg.hidden = true;
-    monsterImg.hidden = true;
-    gameoverImg.hidden = false;
-    commands.hidden = true;
     additionBtn.hidden = true;
     setArrowsDisabled(true);
     fightBtn.disabled = true;
