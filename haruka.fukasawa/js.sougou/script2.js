@@ -188,7 +188,7 @@ function setArrowsDisabled(disabled) {
 }
 
 // マップの端でその方向キーを非活性にする
-function updateArrows() {
+function updateArrowsDisabled() {
   arrowRight.disabled = position.x === MAP_MAX;
   arrowLeft.disabled = position.x === MAP_MIN;
   arrowUp.disabled = position.y === MAP_MAX;
