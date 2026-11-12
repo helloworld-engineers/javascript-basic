@@ -137,7 +137,7 @@ function setMode(newMode) {
     // 移動中：パーティーを表示、方向キーは活性
     heroImg.hidden = false;
     warriorImg.hidden = !party.includes(partyMembersData[1]);
-    updateArrows();
+    updateArrowsDisabled();
   } else if (mode === 'battle') {
     // 戦闘中：方向キーと追加ボタンは非活性
     additionBtn.disabled = true;
@@ -177,7 +177,7 @@ async function startBattle(monster) {
 // 移動画面に戻る
 function endBattle() {
   currentMonster = null;
-  setMode('field');  // HPは戦闘時のまま。方向キーは updateArrows() で設定される
+  setMode('field');  // HPは戦闘時のまま。方向キーは updateArrowsDisabled() で設定される
 }
 
 // 方向キーを全部まとめて活性/非活性にする
@@ -227,7 +227,7 @@ async function move(direction) {
   log(direction + '方向に進みました。');
 
   updateStage();
-  updateArrows();
+  updateArrowsDisabled();
 
   // モンスターが出現するか判定する
   if (encounterCheck()) {
