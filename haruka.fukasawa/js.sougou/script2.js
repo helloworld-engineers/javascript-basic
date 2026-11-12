@@ -137,8 +137,6 @@ function setMode(newMode) {
     // 移動中：パーティーを表示、方向キーは現在地に応じて活性/非活性
     heroImg.hidden = false;
     warriorImg.hidden = !party.includes(partyMembersData[1]);
-    setArrowsDisabled(false);
-    updateArrowsDisabled();
   } else if (mode === 'battle') {
     // 戦闘中：方向キーと追加ボタンは非活性
     additionBtn.disabled = true;
